@@ -85,7 +85,7 @@
       .code-block {
         min-height: 2rem;
         background-color: navy;
-        padding-left: 0.5rem;
+        padding: 0 0 0 0.5rem;
         border-radius: 10px;
 
         width: max-content;
@@ -162,7 +162,8 @@
       /* Data Block --> Logic */
       /* Logic Type --> Arithmetic Operation */
 
-      .data-block[data-block-type="logic"] {
+      .data-block[data-block-type="logic"],
+      .code-block[data-block-type="logic"] {
         background-color: green;
       }
 
@@ -175,6 +176,34 @@
         cursor: default;
       }
 
+      /* Iterator - While Block */
+      .holder.children {
+        /* background-color: aqua; */
+        /* position: absolute; */
+        margin: 0 0 0 0.9rem;
+        padding: 0.07rem 0 0.07rem 0.07rem;
+        min-width: 5.6rem;
+        border-radius: 5px 0 0 5px;
+        /* background-color: red; */
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.07rem;
+      }
+
+      .code-block.block-header {
+        border-radius: 5px 5px 5px 0;
+      }
+
+      .code-block.block-body {
+        border-radius: 0 0 5px 5px;
+        padding: 0 0 0.5rem 0.5rem;
+      }
+
+      .code-block.block-header,
+      .code-block.block-body {
+        background-color: purple;
+      }
       /* Utility */
       .centered {
         display: flex;
@@ -200,7 +229,72 @@
         <h2 class="title">Code Area</h2>
         <div class="root area">
           <div class="code-blocks">
-            <!-- Variable block start-->
+            <!-- Iterator - While Block - Start -->
+            <div
+              data-block-type="loop"
+              data-variable-type="while"
+              draggable="true"
+            >
+              <div class="block-header code-block centered">
+                <p class="description">repeat "while"</p>
+                <!-- data-store section start -->
+                <div class="data-store">
+                  <div
+                    class="data-block centered"
+                    data-block-type="math"
+                    data-math-type="arithmetic-operation"
+                    draggable="true"
+                  >
+                    <input type="text" />
+                    <select name="arithmetic-operators">
+                      <option value="add" selected>+</option>
+                      <option value="sub">-</option>
+                      <option value="mult">x</option>
+                      <option value="div">÷</option>
+                      <option value="carret">^</option>
+                    </select>
+                    <input type="text" />
+                  </div>
+                </div>
+                <!-- data-store section end -->
+              </div>
+              <div class="block-body code-block centered">
+                <p class="description">do</p>
+                <div class="holder children">
+                  <div
+                    class="data-block centered"
+                    data-block-type="math"
+                    data-math-type="arithmetic-operation"
+                    draggable="true"
+                  >
+                    <input type="text" />
+                    <select name="arithmetic-operators">
+                      <option value="add" selected>+</option>
+                      <option value="sub">-</option>
+                      <option value="mult">x</option>
+                      <option value="div">÷</option>
+                      <option value="carret">^</option>
+                    </select>
+                    <input type="text" />
+                  </div>
+                  <div
+                    class="code-block"
+                    data-block-type="variable"
+                    data-variable-type="set-variable"
+                    data-variable-name="value"
+                    draggable="true"
+                  >
+                    <div class="block-header centered">
+                      <p class="description">set "value" to</p>
+                      <!-- data-store section -->
+                      <div class="data-store"></div>
+                      <!-- data-store section -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Iterator - While Block - End -->
             <div
               class="code-block"
               data-block-type="variable"
@@ -209,15 +303,12 @@
               draggable="true"
             >
               <div class="block-header centered">
-                <!-- TODO: Change class name from description to
-                  something specific to variable block -->
                 <p class="description">set "value" to</p>
                 <!-- data-store section -->
                 <div class="data-store"></div>
                 <!-- data-store section -->
               </div>
             </div>
-            <!-- Variable block end-->
             <div
               class="data-block centered"
               data-block-type="math"
