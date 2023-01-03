@@ -217,39 +217,105 @@
     <div class="canvas">
       <div class="constructs-area area">
         <h2 class="title">Sidebar</h2>
-        <div class="blocks">
-          <div class="block variable" draggable="true">Variable</div>
-          <div class="block for-loop" draggable="true">For loop</div>
-          <div class="block if" draggable="true">If</div>
-          <div class="block procedure" draggable="true">Procedure</div>
-        </div>
-      </div>
-
-      <!-- Overlay div section  -->
-      <div class="parent-overlay-bar">
-        hello world
-
-        <div
-          class="code-block sidebar"
-          data-block-type="variable"
-          data-variable-type="set-variable"
-          data-variable-name="value"
-          draggable="true"
-          onClick="hide_div()"
-        >
-          <div class="block-header centered">
-            <p class="description">set "value" to</p>
-            <!-- data-store section -->
-            <div class="data-store"></div>
-            <!-- data-store section -->
+        <div class="blocks menu">
+          <div
+            class="block variable"
+            draggable="true"
+            target="1"
+            onclick="makehide()"
+          >
+            Variable
+          </div>
+          <div
+            class="block for-loop"
+            draggable="true"
+            target="2"
+            onclick="makehide2()"
+          >
+            For loop
+          </div>
+          <div
+            class="block if"
+            draggable="true"
+            target="3"
+            onclick="makehide3()"
+          >
+            If
+          </div>
+          <div class="block procedure" draggable="true" target="4">
+            Procedure
           </div>
         </div>
       </div>
 
+      <!-- Overlay div section  -->
+
+      <section class="target-box">
+        <div class="parent-overlay-bar div1 hidden visible">
+          hello world
+
+          <div
+            class="code-block sidebar"
+            data-block-type="variable"
+            data-variable-type="set-variable"
+            data-variable-name="value"
+            draggable="true"
+            onClick="hide_div()"
+          >
+            <div class="block-header centered">
+              <p class="description">set "value" to</p>
+              <!-- data-store section -->
+              <div class="data-store"></div>
+              <!-- data-store section -->
+            </div>
+          </div>
+        </div>
+
+        <div class="parent-overlay-bar div2 hidden visible">
+          hiiiiiii
+
+          <div
+            class="code-block sidebar"
+            data-block-type="variable"
+            data-variable-type="set-variable"
+            data-variable-name="value"
+            draggable="true"
+            onClick="hide_div()"
+          >
+            <div class="block-header centered">
+              <p class="description">set "value" to</p>
+              <!-- data-store section -->
+              <div class="data-store"></div>
+              <!-- data-store section -->
+            </div>
+          </div>
+        </div>
+
+        <div class="parent-overlay-bar div3 hidden visible">
+          there is done
+
+          <div
+            class="code-block sidebar"
+            data-block-type="variable"
+            data-variable-type="set-variable"
+            data-variable-name="value"
+            draggable="true"
+            onClick="hide_div()"
+          >
+            <div class="block-header centered">
+              <p class="description">set "value" to</p>
+              <!-- data-store section -->
+              <div class="data-store"></div>
+              <!-- data-store section -->
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Below is a sensitive region -->
       <div class="code-blocks-area area">
         <h2 class="title">Code Area</h2>
-        <div class="root area">
+        <div class="root area" onclick="hide_div()">
           <div class="code-blocks">
             <!-- Iterator - While Block - Start -->
             <div
