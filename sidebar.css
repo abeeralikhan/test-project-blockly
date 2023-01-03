@@ -1,3 +1,6 @@
+.target-box {
+  position: absolute;
+}
 .parent-overlay-bar {
   position: absolute;
   border-radius: 6px;
@@ -9,8 +12,13 @@
   background-color: #00000040;
   min-width: 20rem;
   min-height: 26rem;
-  visibility: hidden;
   backdrop-filter: blur(2px);
+}
+.visible {
+  visibility: visible;
+  position: absolute;
+  left: 19rem;
+  top: 3rem;
 }
 .hidden {
   visibility: hidden;
