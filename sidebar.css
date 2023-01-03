@@ -1,0 +1,21 @@
+.parent-overlay-bar {
+  position: absolute;
+  border-radius: 6px;
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  top: 20%;
+  left: 26%;
+  background-color: #00000040;
+  min-width: 20rem;
+  min-height: 26rem;
+  visibility: hidden;
+  backdrop-filter: blur(2px);
+}
+.hidden {
+  visibility: hidden;
+}
+
+.sidebar[data-block-type="variable"]:hover {
+  outline: 2px solid yellow;
+}
