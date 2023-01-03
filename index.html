@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sidebar.css" />
     <title>Blockly Extension</title>
     <style>
       * {
@@ -224,6 +225,27 @@
         </div>
       </div>
 
+      <!-- Overlay div section  -->
+      <div class="parent-overlay-bar">
+        hello world
+
+        <div
+          class="code-block sidebar"
+          data-block-type="variable"
+          data-variable-type="set-variable"
+          data-variable-name="value"
+          draggable="true"
+          onClick="hide_div()"
+        >
+          <div class="block-header centered">
+            <p class="description">set "value" to</p>
+            <!-- data-store section -->
+            <div class="data-store"></div>
+            <!-- data-store section -->
+          </div>
+        </div>
+      </div>
+
       <!-- Below is a sensitive region -->
       <div class="code-blocks-area area">
         <h2 class="title">Code Area</h2>
@@ -367,6 +389,7 @@
         </div>
       </div>
     </div>
+    <script src="./sidebar.js"></script>
   </body>
 </html>
 
