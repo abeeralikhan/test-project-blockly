@@ -4,8 +4,233 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
     <title>Blockly Extension</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+
+      .canvas {
+        height: 95vh;
+        /* width: 100%; */
+        /* background-color: red; */
+        padding: 1rem 2rem 2rem 2rem;
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 1fr 3fr;
+        column-gap: 2rem;
+      }
+
+      /* Sidebar */
+      .parent-overlay-bar {
+        position: absolute;
+        border-radius: 6px;
+        padding: 1rem;
+        font-weight: 700;
+        font-size: 1rem;
+        top: 20%;
+        left: 26%;
+        background-color: #00000040;
+        min-width: 20rem;
+        min-height: 26rem;
+        visibility: hidden;
+        backdrop-filter: blur(2px);
+      }
+      .hidden {
+        visibility: hidden;
+      }
+
+      .sidebar[data-block-type="variable"]:hover {
+        outline: 2px solid yellow;
+      }
+
+      .code-blocks-area {
+        /* background-color: green; */
+        padding-inline: 1rem;
+      }
+
+      .title {
+        text-align: center;
+        margin-top: 1rem;
+        font-weight: 900;
+        /* font-size: 1.5rem; */
+      }
+
+      .area {
+        border: 2px dashed black;
+      }
+
+      .blocks {
+        /* background-color: red; */
+        padding-inline: 1rem;
+        margin-top: 1rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .block {
+        background-color: grey;
+        cursor: pointer;
+        /* padding: 2rem; */
+        height: 5rem;
+        font-size: 1.75rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Code Area */
+
+      .root {
+        min-height: 80%;
+        margin-top: 1rem;
+        padding: 1rem;
+      }
+
+      .root.area {
+        border-color: red;
+      }
+
+      .code-blocks {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+      }
+
+      .code-block {
+        min-height: 2rem;
+        background-color: navy;
+        padding: 0 0 0 0.5rem;
+        border-radius: 10px;
+
+        width: max-content;
+        cursor: grab;
+      }
+
+      .code-block .description {
+        color: white;
+        font-size: 1.1em;
+        /* line-height: 2rem; */
+      }
+
+      [data-block-type="variable"] {
+        background-color: crimson;
+      }
+
+      .block-header {
+        /* position: relative; */
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .code-block .data-store {
+        min-height: 2rem;
+        min-width: max-content;
+        /* background-color: white; */
+        /* position: absolute; */
+      }
+
+      .data-block {
+        /* min-height: 2rem; */
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: grey 0.5px solid;
+
+        width: max-content;
+        min-height: max-content;
+        cursor: grab;
+      }
+
+      .data-block[data-block-type="math"] {
+        background-color: navy;
+        height: 2.5rem;
+      }
+
+      .data-block[data-block-type="math"] input {
+        background-color: silver;
+        width: 2rem;
+        border-radius: 5px;
+        border: none;
+        text-align: center;
+        height: 1.5rem;
+        font-size: 1em;
+      }
+
+      .data-block {
+        gap: 0.3rem;
+      }
+
+      .data-block > select {
+        width: 4ch;
+        background-color: silver;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+
+        text-align: center;
+      }
+
+      .data-block[data-logic-type="boolean-operation"] > select {
+        width: 6.5ch;
+      }
+
+      /* Data Block --> Logic */
+      /* Logic Type --> Arithmetic Operation */
+
+      .data-block[data-block-type="logic"],
+      .code-block[data-block-type="logic"] {
+        background-color: green;
+      }
+
+      .holder {
+        min-width: 2rem;
+        min-height: 1.5rem;
+        background-color: white;
+
+        border-radius: 5px;
+        cursor: default;
+      }
+
+      /* Iterator - While Block */
+      .holder.children {
+        /* background-color: aqua; */
+        /* position: absolute; */
+        margin: 0 0 0 0.9rem;
+        padding: 0.07rem 0 0.07rem 0.07rem;
+        min-width: 5.6rem;
+        border-radius: 5px 0 0 5px;
+        /* background-color: red; */
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.07rem;
+      }
+
+      .code-block.block-header {
+        border-radius: 5px 5px 5px 0;
+      }
+
+      .code-block.block-body {
+        border-radius: 0 0 5px 5px;
+        padding: 0 0 0.5rem 0.5rem;
+      }
+
+      .code-block.block-header,
+      .code-block.block-body {
+        background-color: purple;
+      }
+      /* Utility */
+      .centered {
+        display: flex;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <h2 class="title">Webview</h2>
@@ -184,7 +409,7 @@
         </div>
       </div>
     </div>
-    <script src="./app.js"></script>
+    <script src="./sidebar.js"></script>
   </body>
 </html>
 
