@@ -26,7 +26,6 @@ const makehide = () => {
     var_div.classList.remove("visible");
     var_div.classList.add("hidden");
   }
-  // console.log(var_div.classList.contains("visible"));
 };
 
 const makehide2 = () => {
@@ -37,7 +36,6 @@ const makehide2 = () => {
     for_div.classList.remove("visible");
     for_div.classList.add("hidden");
   }
-  // console.log(var_div.classList.contains("visible"));
 };
 
 const makehide3 = () => {
@@ -48,7 +46,6 @@ const makehide3 = () => {
     if_div.classList.remove("visible");
     if_div.classList.add("hidden");
   }
-  // console.log(var_div.classList.contains("visible"));
 };
 
 const hide_div = () => {
