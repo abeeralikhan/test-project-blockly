@@ -110,7 +110,7 @@
 
       .code-block .data-store {
         min-height: 2rem;
-        min-width: max-content;
+        min-width: 2rem;
         /* background-color: white; */
         /* position: absolute; */
       }
@@ -204,10 +204,19 @@
       .code-block.block-body {
         background-color: purple;
       }
+
       /* Utility */
       .centered {
         display: flex;
         align-items: center;
+      }
+
+      .dragging {
+        opacity: 0.5;
+      }
+
+      .holder.dragged-over {
+        /* border: 5px solid rgba(255, 196, 0, 0.562); */
       }
     </style>
   </head>
@@ -230,11 +239,7 @@
         <div class="root area">
           <div class="code-blocks">
             <!-- Iterator - While Block - Start -->
-            <div
-              data-block-type="loop"
-              data-variable-type="while"
-              draggable="true"
-            >
+            <div data-block-type="loop" data-loop-type="while" draggable="true">
               <div class="block-header code-block centered">
                 <p class="description">repeat "while"</p>
                 <!-- data-store section start -->
@@ -260,22 +265,20 @@
               </div>
               <div class="block-body code-block centered">
                 <p class="description">do</p>
-                <div class="holder children">
+                <div class="holder children dragged-over">
                   <div
-                    class="data-block centered"
-                    data-block-type="math"
-                    data-math-type="arithmetic-operation"
+                    class="code-block"
+                    data-block-type="variable"
+                    data-variable-type="set-variable"
+                    data-variable-name="value"
                     draggable="true"
                   >
-                    <input type="text" />
-                    <select name="arithmetic-operators">
-                      <option value="add" selected>+</option>
-                      <option value="sub">-</option>
-                      <option value="mult">x</option>
-                      <option value="div">÷</option>
-                      <option value="carret">^</option>
-                    </select>
-                    <input type="text" />
+                    <div class="block-header centered">
+                      <p class="description">set "value" to</p>
+                      <!-- data-store section -->
+                      <div class="data-store"></div>
+                      <!-- data-store section -->
+                    </div>
                   </div>
                   <div
                     class="code-block"
@@ -294,6 +297,93 @@
                 </div>
               </div>
             </div>
+            <div data-block-type="loop" data-loop-type="while" draggable="true">
+              <div class="block-header code-block centered">
+                <p class="description">repeat "while"</p>
+                <!-- data-store section start -->
+                <div class="data-store">
+                  <div
+                    class="data-block centered"
+                    data-block-type="math"
+                    data-math-type="arithmetic-operation"
+                    draggable="true"
+                  >
+                    <input type="text" />
+                    <select name="arithmetic-operators">
+                      <option value="add" selected>+</option>
+                      <option value="sub">-</option>
+                      <option value="mult">x</option>
+                      <option value="div">÷</option>
+                      <option value="carret">^</option>
+                    </select>
+                    <input type="text" />
+                  </div>
+                </div>
+                <!-- data-store section end -->
+              </div>
+              <div class="block-body code-block centered">
+                <p class="description">do</p>
+                <div class="holder children dragged-over">
+                  <div
+                    class="code-block"
+                    data-block-type="variable"
+                    data-variable-type="set-variable"
+                    data-variable-name="value"
+                    draggable="true"
+                  >
+                    <div class="block-header centered">
+                      <p class="description">set "value" to</p>
+                      <!-- data-store section -->
+                      <div class="data-store"></div>
+                      <!-- data-store section -->
+                    </div>
+                  </div>
+                  <div
+                    class="code-block"
+                    data-block-type="variable"
+                    data-variable-type="set-variable"
+                    data-variable-name="value"
+                    draggable="true"
+                  >
+                    <div class="block-header centered">
+                      <p class="description">set "value" to</p>
+                      <!-- data-store section -->
+                      <div class="data-store"></div>
+                      <!-- data-store section -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-block-type="loop" data-loop-type="while" draggable="true">
+              <div class="block-header code-block centered">
+                <p class="description">repeat "while"</p>
+                <!-- data-store section start -->
+                <div class="data-store">
+                  <div
+                    class="data-block centered"
+                    data-block-type="math"
+                    data-math-type="arithmetic-operation"
+                    draggable="true"
+                  >
+                    <input type="text" />
+                    <select name="arithmetic-operators">
+                      <option value="add" selected>+</option>
+                      <option value="sub">-</option>
+                      <option value="mult">x</option>
+                      <option value="div">÷</option>
+                      <option value="carret">^</option>
+                    </select>
+                    <input type="text" />
+                  </div>
+                </div>
+                <!-- data-store section end -->
+              </div>
+              <div class="block-body code-block centered">
+                <p class="description">do</p>
+                <div class="holder children dragged-over"></div>
+              </div>
+            </div>
             <!-- Iterator - While Block - End -->
             <div
               class="code-block"
@@ -305,7 +395,61 @@
               <div class="block-header centered">
                 <p class="description">set "value" to</p>
                 <!-- data-store section -->
-                <div class="data-store"></div>
+                <div class="data-store">
+                  <div
+                    class="data-block centered"
+                    data-block-type="logic"
+                    data-logic-type="logical-operation"
+                    draggable="true"
+                  >
+                    <div class="left-holder holder">
+                      <div
+                        class="data-block centered"
+                        data-block-type="logic"
+                        data-logic-type="logical-operation"
+                        draggable="true"
+                      >
+                        <div class="left-holder holder">
+                          <div
+                            class="data-block centered"
+                            data-block-type="logic"
+                            data-logic-type="logical-operation"
+                            draggable="true"
+                          >
+                            <div class="left-holder holder"></div>
+                            <select name="logical-operation">
+                              <option value="eq" selected>=</option>
+                              <option value="neq">≠</option>
+                              <option value="lt"><</option>
+                              <option value="lte">≤</option>
+                              <option value="gt">></option>
+                              <option value="gte">≥</option>
+                            </select>
+                            <div class="right-holder holder"></div>
+                          </div>
+                        </div>
+                        <select name="logical-operation">
+                          <option value="eq" selected>=</option>
+                          <option value="neq">≠</option>
+                          <option value="lt"><</option>
+                          <option value="lte">≤</option>
+                          <option value="gt">></option>
+                          <option value="gte">≥</option>
+                        </select>
+                        <div class="right-holder holder"></div>
+                      </div>
+                    </div>
+                    <select name="logical-operation">
+                      <option value="eq" selected>=</option>
+                      <option value="neq">≠</option>
+                      <option value="lt"><</option>
+                      <option value="lte">≤</option>
+                      <option value="gt">></option>
+                      <option value="gte">≥</option>
+                    </select>
+                    <div class="right-holder holder"></div>
+                  </div>
+                </div>
                 <!-- data-store section -->
               </div>
             </div>
@@ -368,29 +512,112 @@
       </div>
     </div>
   </body>
+  <script>
+    // blocks and data-blocks
+    const blocks = document.querySelectorAll("[draggable='true']");
+
+    // drop areas
+    const dropZone = document.querySelector(".code-blocks");
+    const dataStores = document.querySelectorAll(".data-store");
+    const childHolders = document.querySelectorAll(".holder.children");
+    const dataHolders = [
+      ...document.querySelectorAll(".left-holder"),
+      ...document.querySelectorAll(".right-holder"),
+    ];
+
+    function getDragAfterBlock(containerClass, y) {
+      const blocks = [
+        ...document.querySelectorAll(`.${containerClass} > div:not(.dragging)`),
+      ];
+
+      return blocks.reduce(
+        (closest, block) => {
+          const box = block.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+          if (offset < 0 && offset > closest.offset) {
+            return { offset, element: block };
+          } else {
+            return closest;
+          }
+        },
+        { offset: Number.NEGATIVE_INFINITY }
+      ).element;
+    }
+
+    blocks.forEach((block) => {
+      block.addEventListener("dragstart", (e) => {
+        e.stopPropagation();
+
+        block.classList.add("dragging");
+      });
+
+      block.addEventListener("dragend", (e) => {
+        e.stopPropagation();
+
+        block.classList.remove("dragging");
+      });
+    });
+
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const draggedBlock = document.querySelector(".dragging");
+      const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
+      // console.log(draggedBlock.dataset.blockType, "drop zone -- dragged block");
+      // console.log(afterBlock.dataset.blockType, "drop zone -- after block");
+      if (!afterBlock) {
+        try {
+          dropZone.appendChild(draggedBlock);
+          return;
+        } catch (e) {
+          return;
+        }
+      }
+
+      try {
+        dropZone.insertBefore(draggedBlock, afterBlock);
+      } catch (e) {
+        return;
+      }
+    });
+
+    childHolders.forEach((holder) => {
+      holder.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const draggedBlock = document.querySelector(".dragging");
+        const afterBlock = getDragAfterBlock("holder.children", e.clientY);
+        // console.log(
+        //   draggedBlock.dataset.blockType,
+        //   "child holder -- dragged block"
+        // );
+        // console.log(
+        //   afterBlock.dataset.blockType,
+        //   "child holder -- after block"
+        // );
+        if (!afterBlock) {
+          try {
+            holder.appendChild(draggedBlock);
+            return;
+          } catch (e) {
+            return;
+          }
+        }
+
+        try {
+          holder.insertBefore(draggedBlock, afterBlock);
+        } catch (e) {
+          return;
+        }
+      });
+    });
+
+    // dataStores.forEach((dataStore) => {
+    //   dataStore.addEventListener("dragover", (e) => {
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //     // console.log("data-store");
+    //   });
+    // });
+  </script>
 </html>
-
-<!-- 
-  Below is the code for math-block - single-num
-<div
-  class="data-block centered"
-  data-block-type="math"
-  data-math-type="single-num"
-  draggable="true"
-  >
-    <input type="text" />
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
- -->
