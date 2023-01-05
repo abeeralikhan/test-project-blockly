@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="sidebar.css" />
     <title>Blockly Extension</title>
-    <style> -->
+    <style>
       * {
         padding: 0;
         margin: 0;
@@ -227,30 +227,13 @@
       <div class="constructs-area area">
         <h2 class="title">Sidebar</h2>
         <div class="blocks menu">
-          <div
-            class="block variable"
-            draggable="true"
-            target="1"
-            onclick="makehide()"
-          >
+          <div class="block variable nav-link" draggable="true" target="1">
             Variable
           </div>
-          <div
-            class="block for-loop"
-            draggable="true"
-            target="2"
-            onclick="makehide2()"
-          >
+          <div class="block for-loop nav-link" draggable="true" target="2">
             For loop
           </div>
-          <div
-            class="block if"
-            draggable="true"
-            target="3"
-            onclick="makehide3()"
-          >
-            If
-          </div>
+          <div class="block if nav-link" draggable="true" target="3">If</div>
           <div class="block procedure" draggable="true" target="4">
             Procedure
           </div>
@@ -269,7 +252,6 @@
             data-variable-type="set-variable"
             data-variable-name="value"
             draggable="true"
-            onClick="hide_div()"
           >
             <div class="block-header centered">
               <p class="description">set "value" to</p>
@@ -289,7 +271,6 @@
             data-variable-type="set-variable"
             data-variable-name="value"
             draggable="true"
-            onClick="hide_div()"
           >
             <div class="block-header centered">
               <p class="description">set "value" to</p>
@@ -309,7 +290,6 @@
             data-variable-type="set-variable"
             data-variable-name="value"
             draggable="true"
-            onClick="hide_div()"
           >
             <div class="block-header centered">
               <p class="description">set "value" to</p>
@@ -324,7 +304,7 @@
       <!-- Below is a sensitive region -->
       <div class="code-blocks-area area">
         <h2 class="title">Code Area</h2>
-        <div class="root area" onclick="hide_div()">
+        <div class="root area">
           <div class="code-blocks">
             <!-- Iterator - While Block - Start -->
             <div data-block-type="loop" data-loop-type="while" draggable="true">
