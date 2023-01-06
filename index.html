@@ -226,14 +226,16 @@
     <div class="canvas">
       <div class="constructs-area area">
         <h2 class="title">Sidebar</h2>
-        <nav class="side-nav-bar">
+        <nav class="side-navbar">
           <ul>
             <!-- Math nav section -->
             <li class="navs math-nav">
-              Math
-              <aside class="target-div math">
-                <div class="parent-overlay-bar math-side-bar hidden visible">
-                  math
+              <p class="math-color">Math</p>
+              <aside class="target-div math hidden">
+                <div class="parent-overlay-bar math-side-bar">
+                  <div class="header">
+                    <p>X</p>
+                  </div>
 
                   <div
                     id="math-block"
@@ -256,10 +258,12 @@
 
             <!-- variable nav section -->
             <li class="navs var-nav">
-              Variables
-              <aside class="target-div variable">
-                <div class="parent-overlay-bar var-side-bar hidden visible">
-                  variable
+              <p>Variables</p>
+              <aside class="target-div variable hidden">
+                <div class="parent-overlay-bar var-side-bar">
+                  <div class="header">
+                    <p>X</p>
+                  </div>
 
                   <div
                     id="var-block"
@@ -282,11 +286,12 @@
 
             <!-- loop nav section -->
             <li class="navs for-nav">
-              loops
-              <aside class="target-div loop">
-                <div class="parent-overlay-bar loop-side-bar hidden visible">
-                  hello world
-
+              <p>Loops</p>
+              <aside class="target-div loop hidden">
+                <div class="parent-overlay-bar loop-side-bar">
+                  <div class="header">
+                    <p>X</p>
+                  </div>
                   <div
                     id="loop-block"
                     class="code-block"
@@ -308,21 +313,14 @@
 
             <!-- condition nav section -->
             <li class="navs condition-nav">
-              conditions
-              <aside></aside>
-            </li>
-
-            <!-- procedure nav section -->
-            <li class="navs procedure-nav">
-              procedures
-              <aside class="target-div procedure">
-                <div
-                  class="parent-overlay-bar procedure-side-bar hidden visible"
-                >
-                  procedure
+              <p>Logic</p>
+              <aside class="target-div logic hidden">
+                <div class="parent-overlay-bar logic-side-bar">
+                  <div class="header">
+                    <p>X</p>
+                  </div>
 
                   <div
-                    id="procedure-block"
                     class="code-block"
                     data-block-type="procedure"
                     data-variable-type="set-procedure"
@@ -335,6 +333,28 @@
                       <div class="data-store"></div>
                       <!-- data-store section -->
                     </div>
+                  </div>
+                </div>
+              </aside>
+            </li>
+
+            <li class="navs text-nav">
+              <p>Text</p>
+              <aside class="target-div text hidden">
+                <div class="parent-overlay-bar text-side-bar">
+                  <div class="header">
+                    <p>X</p>
+                  </div>
+                </div>
+              </aside>
+            </li>
+
+            <!-- procedure nav section -->
+            <li class="navs procedure-nav">
+              <aside class="target-div procedure hidden">
+                <div class="parent-overlay-bar procedure-side-bar">
+                  <div class="header">
+                    <p>X</p>
                   </div>
                 </div>
               </aside>
