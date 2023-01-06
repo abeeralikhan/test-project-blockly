@@ -742,15 +742,17 @@
 
         // the data store does not have any child
         const draggedBlock = document.querySelector(".dragging");
-        console.log(draggedBlock.dataset?.variableType);
 
         if (
-          draggedBlock.dataset.variableType !== "get-variable"
-          // draggedBlock.dataset.blockType !== "math"
+          draggedBlock.dataset.blockType !== "math" &&
+          draggedBlock.dataset.blockType !== "variable"
         )
           return;
 
-        // the dragged block is not a loop, condition, procedure
+        if (draggedBlock.dataset.blockType === "variable") {
+          if (draggedBlock.dataset.variableType !== "get-variable") return;
+        }
+
         try {
           dataHolderMath.appendChild(draggedBlock);
           return;
