@@ -115,7 +115,8 @@
         /* position: absolute; */
       }
 
-      .data-block {
+      .data-block,
+      [data-variable-type="get-variable"] {
         /* min-height: 2rem; */
         padding: 0.5rem;
         border-radius: 5px;
@@ -128,10 +129,11 @@
 
       .data-block[data-block-type="math"] {
         background-color: navy;
-        height: 2.5rem;
+        /* height: 2.5rem; */
       }
 
-      .data-block[data-block-type="math"] input {
+      .data-block[data-block-type="math"] input,
+      .data-block[data-block-type="text"] input {
         background-color: silver;
         width: 2rem;
         border-radius: 5px;
@@ -165,6 +167,10 @@
       .data-block[data-block-type="logic"],
       .code-block[data-block-type="logic"] {
         background-color: green;
+      }
+
+      .data-block[data-block-type="text"] {
+        background-color: yellow;
       }
 
       .holder {
@@ -218,6 +224,11 @@
       .holder.dragged-over {
         /* border: 5px solid rgba(255, 196, 0, 0.562); */
       }
+
+      /* Follow same styling for not, true, etc blocks */
+      /* [data-variable-type="get-variable"] {
+        
+      } */
     </style>
   </head>
   <body>
@@ -250,7 +261,8 @@
                     data-math-type="arithmetic-operation"
                     draggable="true"
                   >
-                    <input type="text" />
+                    <div class="left-holder holder"></div>
+
                     <select name="arithmetic-operators">
                       <option value="add" selected>+</option>
                       <option value="sub">-</option>
@@ -258,7 +270,7 @@
                       <option value="div">÷</option>
                       <option value="carret">^</option>
                     </select>
-                    <input type="text" />
+                    <div class="right-holder holder"></div>
                   </div>
                 </div>
                 <!-- data-store section end -->
@@ -308,7 +320,8 @@
                     data-math-type="arithmetic-operation"
                     draggable="true"
                   >
-                    <input type="text" />
+                    <div class="left-holder holder"></div>
+
                     <select name="arithmetic-operators">
                       <option value="add" selected>+</option>
                       <option value="sub">-</option>
@@ -316,7 +329,7 @@
                       <option value="div">÷</option>
                       <option value="carret">^</option>
                     </select>
-                    <input type="text" />
+                    <div class="right-holder holder"></div>
                   </div>
                 </div>
                 <!-- data-store section end -->
@@ -366,7 +379,8 @@
                     data-math-type="arithmetic-operation"
                     draggable="true"
                   >
-                    <input type="text" />
+                    <div class="left-holder holder"></div>
+
                     <select name="arithmetic-operators">
                       <option value="add" selected>+</option>
                       <option value="sub">-</option>
@@ -374,7 +388,7 @@
                       <option value="div">÷</option>
                       <option value="carret">^</option>
                     </select>
-                    <input type="text" />
+                    <div class="right-holder holder"></div>
                   </div>
                 </div>
                 <!-- data-store section end -->
@@ -457,17 +471,32 @@
               class="data-block centered"
               data-block-type="math"
               data-math-type="single-num"
+              data-dtype="number"
               draggable="true"
             >
               <input type="text" />
             </div>
+
+            <div
+              class="data-block centered"
+              data-block-type="text"
+              data-math-type="single-text"
+              data-dtype="string"
+              draggable="true"
+            >
+              "
+              <input type="text" />
+              "
+            </div>
+
             <div
               class="data-block centered"
               data-block-type="math"
               data-math-type="arithmetic-operation"
               draggable="true"
             >
-              <input type="text" />
+              <div class="left-holder holder"></div>
+
               <select name="arithmetic-operators">
                 <option value="add" selected>+</option>
                 <option value="sub">-</option>
@@ -475,8 +504,9 @@
                 <option value="div">÷</option>
                 <option value="carret">^</option>
               </select>
-              <input type="text" />
+              <div class="right-holder holder"></div>
             </div>
+
             <div
               class="data-block centered"
               data-block-type="logic"
@@ -507,6 +537,17 @@
               </select>
               <div class="right-holder holder"></div>
             </div>
+            <div
+              class="code-block"
+              data-block-type="variable"
+              data-variable-type="get-variable"
+              data-variable-name="value"
+              draggable="true"
+            >
+              <div class="block-header centered">
+                <p class="description">value</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -520,11 +561,17 @@
     const dropZone = document.querySelector(".code-blocks");
     const dataStores = document.querySelectorAll(".data-store");
     const childHolders = document.querySelectorAll(".holder.children");
-    const dataHolders = [
-      ...document.querySelectorAll(".left-holder"),
-      ...document.querySelectorAll(".right-holder"),
+    const dataHoldersLogic = [
+      ...document.querySelectorAll("[data-block-type='logic'] > .left-holder"),
+      ...document.querySelectorAll("[data-block-type='logic'] > .right-holder"),
     ];
 
+    const dataHoldersMath = [
+      ...document.querySelectorAll("[data-block-type='math'] > .left-holder"),
+      ...document.querySelectorAll("[data-block-type='math'] > .right-holder"),
+    ];
+
+    // TODO: Instead of accepting class name as parameter, accept an actual container like in the video
     function getDragAfterBlock(containerClass, y) {
       const blocks = [
         ...document.querySelectorAll(`.${containerClass} > div:not(.dragging)`),
@@ -581,30 +628,48 @@
       }
     });
 
+    // TODO: Implement a different after block detecting algorithm for holders
     childHolders.forEach((holder) => {
       holder.addEventListener("dragover", (e) => {
         e.preventDefault();
         e.stopPropagation();
         const draggedBlock = document.querySelector(".dragging");
         const afterBlock = getDragAfterBlock("holder.children", e.clientY);
+
+        // console.log(draggedBlock, "dragged block");
+        // console.log(afterBlock, "after block");
+        // console.log(holder, "holder");
         // console.log(
-        //   draggedBlock.dataset.blockType,
-        //   "child holder -- dragged block"
+        //   afterBlock?.parentNode.parentNode.parentNode,
+        //   "grand parent"
         // );
-        // console.log(
-        //   afterBlock.dataset.blockType,
-        //   "child holder -- after block"
-        // );
-        if (!afterBlock) {
+
+        if (!holder.children.length) {
+          // console.log("first condition --> enter");
           try {
+            // console.log("first condition --> try");
             holder.appendChild(draggedBlock);
             return;
           } catch (e) {
+            // console.log("first condition --> catch");
+            return;
+          }
+        }
+
+        if (!afterBlock) {
+          // console.log("second condition --> enter");
+          try {
+            // console.log("second condition --> try");
+            holder.appendChild(draggedBlock);
+            return;
+          } catch (e) {
+            // console.log("second condition --> catch");
             return;
           }
         }
 
         try {
+          // console.log("third condition --> enter --> try");
           holder.insertBefore(draggedBlock, afterBlock);
         } catch (e) {
           return;
@@ -612,12 +677,88 @@
       });
     });
 
-    // dataStores.forEach((dataStore) => {
-    //   dataStore.addEventListener("dragover", (e) => {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     // console.log("data-store");
-    //   });
-    // });
+    dataStores.forEach((dataStore) => {
+      dataStore.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (dataStore.children.length) return;
+
+        // the data store does not have any child
+        const draggedBlock = document.querySelector(".dragging");
+
+        if (
+          draggedBlock.dataset.blockType === "loop" ||
+          draggedBlock.dataset.variableType === "set-variable" ||
+          draggedBlock.dataset.logicType === "if-do"
+        )
+          return;
+
+        // the dragged block is not a loop, condition, procedure
+        try {
+          dataStore.appendChild(draggedBlock);
+          return;
+        } catch (e) {
+          console.log(e);
+          return;
+        }
+      });
+    });
+
+    dataHoldersLogic.forEach((dataHolderLogic) => {
+      dataHolderLogic.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (dataHolderLogic.children.length) return;
+
+        // the data store does not have any child
+        const draggedBlock = document.querySelector(".dragging");
+
+        if (
+          draggedBlock.dataset.blockType === "loop" ||
+          draggedBlock.dataset.variableType === "set-variable" ||
+          draggedBlock.dataset.logicType === "if-do"
+        )
+          return;
+
+        // the dragged block is not a loop, condition, procedure
+        try {
+          dataHolderLogic.appendChild(draggedBlock);
+          return;
+        } catch (e) {
+          // console.log(e);
+          return;
+        }
+      });
+    });
+
+    dataHoldersMath.forEach((dataHolderMath) => {
+      dataHolderMath.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (dataHolderMath.children.length) return;
+
+        // the data store does not have any child
+        const draggedBlock = document.querySelector(".dragging");
+        console.log(draggedBlock.dataset?.variableType);
+
+        if (
+          draggedBlock.dataset.variableType !== "get-variable"
+          // draggedBlock.dataset.blockType !== "math"
+        )
+          return;
+
+        // the dragged block is not a loop, condition, procedure
+        try {
+          dataHolderMath.appendChild(draggedBlock);
+          return;
+        } catch (e) {
+          // console.log(e);
+          return;
+        }
+      });
+    });
   </script>
 </html>
