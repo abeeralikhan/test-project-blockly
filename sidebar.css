@@ -82,9 +82,13 @@ li:hover {
 .logic-color {
   background-color: green;
   color: white;
+
 }
 
 .text-color {
   background-color: yellow;
+}
+
+.colors {
   color: white;
 }

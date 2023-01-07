@@ -1,19 +1,7 @@
-// const menu_driven_div = document.querySelector(".target-div");
-// const root = document.querySelector("#coding-area");
-// const code_block = document.querySelector(".code-block");
-//for div on display
-// const math_div = document.querySelector(".math-side-bar");
-// const var_div = document.querySelector(".var-side-bar");
-// const for_div = document.querySelector(".loop-side-bar");
-
-//for navs to target
-// const math = document.querySelector(".math-nav");
-// const variable = document.querySelector(".var-nav");
-// const loop = document.querySelector(".for-nav");
-
 const sidebarLis = document.querySelectorAll(".navs > p");
 const subSidebars = document.querySelectorAll(".target-div");
 const closeButtons = document.querySelectorAll(".navs .header p");
+const navLis = document.querySelectorAll(".navs");
 
 console.log(closeButtons);
 
@@ -26,27 +14,39 @@ const loop_block = document.querySelector("#loop-block");
 
 // main funcion handling sidebar display
 
-const makeOneToggle = (target_nav, supporting_nav1, supporting_nav2) => {
-  if (target_nav.classList.contains("hidden")) {
-    supporting_nav1.classList.add("hidden");
-    supporting_nav2.classList.add("hidden");
-    target_nav.classList.remove("hidden");
-    target_nav.classList.add("visible");
-  } else {
-    target_nav.classList.remove("visible");
-    target_nav.classList.add("hidden");
-  }
-};
+// const makeOneToggle = (target_nav, supporting_nav1, supporting_nav2) => {
+//   if (target_nav.classList.contains("hidden")) {
+//     supporting_nav1.classList.add("hidden");
+//     supporting_nav2.classList.add("hidden");
+//     target_nav.classList.remove("hidden");
+//     target_nav.classList.add("visible");
+//   } else {
+//     target_nav.classList.remove("visible");
+//     target_nav.classList.add("hidden");
+//   }
+// };
+
+// navLis.forEach((navLi) => {
+//   navLi.addEventListener("click", () => {
+//       navLi.classList.add("colors");
+//   });
+// });
 
 const makeAllHidden = () => {
-  // if (!menu_driven_div.classList.contains("hidden")) {
-  //   menu_driven_div.classList.add("hidden");
-  //   menu_driven_div.classList.remove("visible");
-  // }
   subSidebars.forEach((subSidebar) => {
     if (!subSidebar.classList.contains("hidden")) {
       subSidebar.classList.add("hidden");
     }
+  });
+};
+
+const makeOneHide = () => {
+  subSidebars.forEach((targetBar) => {
+    targetBar.addEventListener("click", () => {
+      if (!targetBar.classList.contains("hidden")) {
+        targetBar.classList.add("hidden");
+      }
+    });
   });
 };
 
@@ -102,14 +102,41 @@ const makeClear = (inactive_nav1, inactive_nav2) => {
 //   makeAllHidden();
 // });
 
-sidebarLis.forEach((sidebarLi) => {
+// sidebarLis.forEach((sidebarLi) => {
+//   sidebarLi.addEventListener("click", () => {
+//     console.log(sidebarLi);
+//     makeAllHidden();
+//     const subSidebar = sidebarLi.parentNode.querySelector(".target-div");
+//     subSidebar.classList.contains("hidden");
+//     subSidebar.classList.remove("hidden");
+//   });
+// });
+
+navLis.forEach((sidebarLi) => {
   sidebarLi.addEventListener("click", () => {
     makeAllHidden();
     const subSidebar = sidebarLi.parentNode.querySelector(".target-div");
-
-    subSidebar.classList.remove("hidden");
+    if (
+      !sidebarLi.classList.contains("colors") &&
+      subSidebar.classList.contains("hidden")
+    ) {
+      sidebarLi.classList.add("colors");
+      subSidebar.classList.remove("hidden");
+    } else {
+      sidebarLi.classList.remove("colors");
+    }
+    console.log(sidebarLi);
   });
 });
+
+// sidebarLis.forEach((sidebar) => {
+//   sidebar.addEventListener("click", () => {
+//     const side = sidebar.parentNode.querySelector(".target-div");
+//     if (!side.classList.contains("hidden")) {
+//       side.classList.toggle("hidden");
+//     }
+//   });
+// });
 
 closeButtons.forEach((closeButton) => {
   closeButton.addEventListener("click", () => {
