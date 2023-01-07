@@ -66,18 +66,23 @@ li:hover {
 
 .math-color {
   background-color: navy;
+  color: white;
 }
 
 .variable-color {
   background-color: crimson;
+  color: white;
 }
 
 .loop-color {
   background-color: purple;
+  color: white;
 }
 
 .logic-color {
   background-color: green;
+  color: white;
+
 }
 
 .text-color {
