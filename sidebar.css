@@ -1,7 +1,20 @@
 .side-navbar {
   position: relative;
-  background-color: rgb(222, 222, 222);
-  height: 95vh;
+  /* background-color: rgb(222, 222, 222); */
+  /* height: 95vh; */
+}
+
+.sidebar-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sidebar-header > span {
+  color: black;
+  cursor: pointer;
+  font-weight: bolder;
 }
 
 ul {
@@ -9,15 +22,15 @@ ul {
   padding-top: 0.3rem;
 }
 
-li {
+li > p {
   text-align: center;
   font-size: 1.3rem;
   padding: 0.5em;
+  cursor: pointer;
 }
 
-li:hover {
+li:not(.fg-color) > p:hover {
   background-color: rgb(235, 235, 235);
-  cursor: context-menu;
 }
 
 /* .navs {
@@ -26,8 +39,8 @@ li:hover {
 
 .target-div {
   position: absolute;
-  left: 100%;
-  top: 0%;
+  left: 101%;
+  top: -19%;
   /* transform: translate(0, 0); */
 }
 
@@ -40,9 +53,9 @@ li:hover {
   /* top: 20%; */
   /* left: 26%; */
   background-color: #7a7a7a40;
-  min-width: 20rem;
-  min-height: 26rem;
-  backdrop-filter: blur(3px);
+  min-width: 19rem;
+  min-height: 30rem;
+  backdrop-filter: blur(2px);
 }
 
 /* .visible {
@@ -56,9 +69,9 @@ li:hover {
   display: none;
 }
 
-.code-block:hover {
+/* .code-block:hover {
   outline: 2px solid yellow;
-}
+} */
 
 .navs .header {
   cursor: pointer;
@@ -66,29 +79,28 @@ li:hover {
 
 .math-color {
   background-color: navy;
-  color: white;
 }
 
 .variable-color {
   background-color: crimson;
-  color: white;
 }
 
 .loop-color {
   background-color: purple;
-  color: white;
 }
 
 .logic-color {
   background-color: green;
-  color: white;
-
 }
 
 .text-color {
   background-color: yellow;
+  color: black !important;
+}
+.procedure-color {
+  background-color: orange;
 }
 
-.colors {
+.fg-color {
   color: white;
 }
