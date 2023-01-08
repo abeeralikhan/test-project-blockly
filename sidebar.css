@@ -49,8 +49,8 @@ li:not(.fg-color) > p:hover {
   /* position: absolute; */
   border-radius: 6px;
   padding: 1rem;
-  font-weight: 700;
-  font-size: 1rem;
+  /* font-weight: 700; */
+  /* font-size: 1rem; */
   /* top: 20%; */
   /* left: 26%; */
   background-color: #7a7a7a40;
