@@ -1,0 +1,113 @@
+.side-navbar {
+  position: relative;
+  /* background-color: rgb(222, 222, 222); */
+  min-height: 101%;
+}
+
+.sidebar-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sidebar-header > span {
+  color: black;
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+ul {
+  list-style-type: none;
+  padding-top: 0.3rem;
+}
+
+li > p {
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+li:not(.fg-color) > p:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+/* .navs {
+  position: relative;
+} */
+
+.target-div {
+  position: absolute;
+  left: 101%;
+  top: -3.3rem;
+  height: 100%;
+  /* transform: translate(0, 0); */
+}
+
+.parent-overlay-bar {
+  /* position: absolute; */
+  border-radius: 6px;
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  /* top: 20%; */
+  /* left: 26%; */
+  background-color: #7a7a7a40;
+  min-width: 19rem;
+  min-height: 100%;
+  backdrop-filter: blur(2px);
+}
+
+.blocks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* .visible {
+  visibility: visible;
+  position: absolute;
+  left: 21rem;
+  top: 5rem;
+} */
+
+.hidden {
+  display: none;
+}
+
+/* .code-block:hover {
+  outline: 2px solid yellow;
+} */
+
+.navs .header {
+  cursor: pointer;
+}
+
+.math-color {
+  background-color: navy;
+}
+
+.variable-color {
+  background-color: crimson;
+}
+
+.loop-color {
+  background-color: purple;
+}
+
+.logic-color {
+  background-color: green;
+}
+
+.text-color {
+  background-color: yellow;
+  color: black !important;
+}
+.procedure-color {
+  background-color: orange;
+}
+
+.fg-color {
+  color: white;
+}
