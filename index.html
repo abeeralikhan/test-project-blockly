@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sidebar.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
     <title>Blockly Extension</title>
     <style>
       * {
@@ -21,7 +26,7 @@
 
         display: grid;
         grid-auto-flow: column;
-        grid-template-columns: 1fr 3fr;
+        grid-template-columns: 19rem 3fr;
         column-gap: 2rem;
       }
 
@@ -236,12 +241,154 @@
     <div class="canvas">
       <div class="constructs-area area">
         <h2 class="title">Sidebar</h2>
-        <div class="blocks">
-          <div class="block variable" draggable="true">Variable</div>
-          <div class="block for-loop" draggable="true">For loop</div>
-          <div class="block if" draggable="true">If</div>
-          <div class="block procedure" draggable="true">Procedure</div>
-        </div>
+        <nav class="side-navbar">
+          <ul>
+            <!-- Math nav section -->
+            <li class="navs math-nav">
+              <p>Math</p>
+              <aside class="target-div math-subside hidden">
+                <div class="parent-overlay-bar">
+                  <div class="sidebar-header">
+                    <span class="material-symbols-outlined"> close </span>
+                  </div>
+                  <div class="blocks-list">
+                    <div
+                      class="data-block centered persist"
+                      data-index="0"
+                      data-block-type="math"
+                      data-math-type="single-num"
+                      data-dtype="number"
+                      draggable="true"
+                    >
+                      <input type="text" />
+                    </div>
+                    <div
+                      class="data-block centered persist"
+                      data-index="1"
+                      data-block-type="math"
+                      data-math-type="arithmetic-operation"
+                      draggable="true"
+                    >
+                      <div class="left-holder holder"></div>
+
+                      <select name="arithmetic-operators">
+                        <option value="add" selected>+</option>
+                        <option value="sub">-</option>
+                        <option value="mult">x</option>
+                        <option value="div">÷</option>
+                        <option value="carret">^</option>
+                      </select>
+                      <div class="right-holder holder"></div>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </li>
+
+            <!-- variable nav section -->
+            <li class="navs var-nav">
+              <p>Variables</p>
+              <aside class="target-div variable-subside hidden">
+                <div class="parent-overlay-bar">
+                  <div class="sidebar-header">
+                    <span class="material-symbols-outlined"> close </span>
+                  </div>
+                  <div
+                    id="var-block"
+                    class="code-block"
+                    data-block-type="variable"
+                    data-variable-type="set-variable"
+                    data-variable-name="value"
+                    draggable="true"
+                  >
+                    <div class="block-header centered">
+                      <p class="description">set "value" to</p>
+                      <!-- data-store section -->
+                      <div class="data-store"></div>
+                      <!-- data-store section -->
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </li>
+
+            <!-- loop nav section -->
+            <li class="navs for-nav">
+              <p>Loops</p>
+              <aside class="target-div loop-subside hidden">
+                <div class="parent-overlay-bar">
+                  <div class="sidebar-header">
+                    <span class="material-symbols-outlined"> close </span>
+                  </div>
+                  <div
+                    id="loop-block"
+                    class="code-block"
+                    data-block-type="loop"
+                    data-variable-type="set-loop"
+                    data-variable-name="value"
+                    draggable="true"
+                  >
+                    <div class="block-header centered">
+                      <p class="description">set "value" to</p>
+                      <!-- data-store section -->
+                      <div class="data-store"></div>
+                      <!-- data-store section -->
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </li>
+
+            <!-- condition nav section -->
+            <li class="navs condition-nav">
+              <p>Logic</p>
+              <aside class="target-div logic-subside hidden">
+                <div class="parent-overlay-bar">
+                  <div class="sidebar-header">
+                    <span class="material-symbols-outlined"> close </span>
+                  </div>
+                  <div
+                    class="code-block"
+                    data-block-type="procedure"
+                    data-variable-type="set-procedure"
+                    data-variable-name="value"
+                    draggable="true"
+                  >
+                    <div class="block-header centered">
+                      <p class="description">set "value" to</p>
+                      <!-- data-store section -->
+                      <div class="data-store"></div>
+                      <!-- data-store section -->
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </li>
+
+            <li class="navs text-nav">
+              <p>Text</p>
+              <aside class="target-div text-subside hidden">
+                <div class="parent-overlay-bar">
+                  <div class="sidebar-header">
+                    <span class="material-symbols-outlined"> close </span>
+                  </div>
+                </div>
+              </aside>
+            </li>
+
+            <!-- procedure nav section -->
+            <li class="navs procedure-nav">
+              <p>Procedure</p>
+              <aside class="target-div procedure-subside hidden">
+                <div class="parent-overlay-bar">
+                  <div class="sidebar-header">
+                    <span class="material-symbols-outlined"> close </span>
+                  </div>
+                </div>
+              </aside>
+            </li>
+          </ul>
+        </nav>
       </div>
 
       <!-- Below is a sensitive region -->
@@ -591,18 +738,29 @@
       ).element;
     }
 
-    blocks.forEach((block) => {
+    function closeSideBar(block) {
+      if (block.classList.contains("persist")) makeAllHiddenAndRemoveColor();
+    }
+
+    function addDraggingClass(block) {
       block.addEventListener("dragstart", (e) => {
         e.stopPropagation();
-
+        closeSideBar(block);
         block.classList.add("dragging");
       });
+    }
 
+    function removeDraggingClass(block) {
       block.addEventListener("dragend", (e) => {
         e.stopPropagation();
 
         block.classList.remove("dragging");
       });
+    }
+
+    blocks.forEach((block) => {
+      addDraggingClass(block);
+      removeDraggingClass(block);
     });
 
     dropZone.addEventListener("dragover", (e) => {
@@ -626,6 +784,69 @@
       } catch (e) {
         return;
       }
+    });
+
+    function getSubsideName(constructType) {
+      switch (constructType) {
+        case "math":
+          return "math-subside";
+        case "variable":
+          return "variable-subside";
+        case "loop":
+          return "loop-subside";
+        case "logic":
+          return "logic-subside";
+        case "text":
+          return "text-subside";
+        case "procedure":
+          return "procedure-subside";
+        default:
+          return "";
+      }
+    }
+
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const draggedBlock = document.querySelector(".dragging");
+
+      if (!draggedBlock.classList.contains("persist")) return;
+
+      draggedBlock.classList.remove("persist");
+
+      const parentName = getSubsideName(draggedBlock.dataset.blockType);
+      const parentNode = document.querySelector(`.${parentName} .blocks-list`);
+
+      if (!parentNode.childElementCount) return;
+
+      const nodeIndex = +draggedBlock.dataset.index;
+      const clonedBlock = draggedBlock.cloneNode(true);
+
+      clonedBlock.classList.remove("dragging");
+      clonedBlock.classList.add("persist");
+
+      addDraggingClass(clonedBlock);
+      removeDraggingClass(clonedBlock);
+
+      if (!parentNode.children[nodeIndex]) {
+        try {
+          parentNode.appendChild(clonedBlock);
+          return;
+        } catch (e) {
+          console.error(e);
+          return;
+        }
+      }
+
+      try {
+        parentNode.insertBefore(clonedBlock, parentNode.children[nodeIndex]);
+        return;
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+
+      // parentNode.children[+draggedBlock.dataset.index].insert;
     });
 
     // TODO: Implement a different after block detecting algorithm for holders
@@ -763,4 +984,5 @@
       });
     });
   </script>
+  <script src="./sidebar.js" defer></script>
 </html>
