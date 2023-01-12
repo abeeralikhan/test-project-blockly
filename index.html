@@ -187,10 +187,6 @@
         cursor: default;
       }
 
-      /* .blocks-list .holder {
-        background-color: sil
-      } */
-
       /* Iterator - While Block */
       .holder.children {
         /* background-color: aqua; */
@@ -370,18 +366,39 @@
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
                   </div>
-                  <div
-                    class="code-block"
-                    data-block-type="procedure"
-                    data-variable-type="set-procedure"
-                    data-variable-name="value"
-                    draggable="true"
-                  >
-                    <div class="block-header centered">
-                      <p class="description">set "value" to</p>
-                      <!-- data-store section -->
-                      <div class="data-store"></div>
-                      <!-- data-store section -->
+                  <div class="blocks-list">
+                    <div
+                      class="data-block centered persist"
+                      data-index="0"
+                      data-block-type="logic"
+                      data-logic-type="logical-operation"
+                      draggable="true"
+                    >
+                      <div class="left-holder holder"></div>
+                      <select name="logical-operation">
+                        <option value="eq" selected>=</option>
+                        <option value="neq">≠</option>
+                        <option value="lt"><</option>
+                        <option value="lte">≤</option>
+                        <option value="gt">></option>
+                        <option value="gte">≥</option>
+                      </select>
+                      <div class="right-holder holder"></div>
+                    </div>
+
+                    <div
+                      class="data-block centered persist"
+                      data-index="1"
+                      data-block-type="logic"
+                      data-logic-type="boolean-operation"
+                      draggable="true"
+                    >
+                      <div class="left-holder holder"></div>
+                      <select name="boolean-operation">
+                        <option value="and" selected>and</option>
+                        <option value="or">or</option>
+                      </select>
+                      <div class="right-holder holder"></div>
                     </div>
                   </div>
                 </div>
@@ -395,6 +412,20 @@
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
                   </div>
+                  <div class="blocks-list">
+                    <div
+                      class="data-block centered persist"
+                      data-index="0"
+                      data-block-type="text"
+                      data-math-type="single-text"
+                      data-dtype="string"
+                      draggable="true"
+                    >
+                      "
+                      <input type="text" />
+                      "
+                    </div>
+                  </div>
                 </div>
               </aside>
             </li>
@@ -407,6 +438,7 @@
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
                   </div>
+                  <div class="blocks-list"><span>In progress...</span></div>
                 </div>
               </aside>
             </li>
@@ -872,23 +904,32 @@
         });
       }
 
-      // if (
-      //   clonedBlock.dataset.logicType === "logical-operation" ||
-      //   clonedBlock.dataset.logicType === "boolean-operation"
-      // ) {
-      //   const leftContainer = clonedBlock.children[0];
-      //   const rightContainer = clonedBlock.children[2];
+      if (
+        clonedBlock.dataset.logicType === "logical-operation" ||
+        clonedBlock.dataset.logicType === "boolean-operation"
+      ) {
+        const leftContainer = clonedBlock.children[0];
+        const rightContainer = clonedBlock.children[2];
 
-      //   console.log(leftContainer);
-      //   console.log(rightContainer);
-
-      //   // listenToSomeNewBlocks(leftContainer, {
-      //   //   toInclude: ["math", "get-variable"],
-      //   // });
-      //   // listenToSomeNewBlocks(rightContainer, {
-      //   //   toInclude: ["math", "get-variable"],
-      //   // });
-      // }
+        listenToSomeNewBlocks(leftContainer, {
+          toInclude: [
+            "math",
+            "text",
+            "get-variable",
+            "logical-operation",
+            "boolean-operation",
+          ],
+        });
+        listenToSomeNewBlocks(rightContainer, {
+          toInclude: [
+            "math",
+            "text",
+            "get-variable",
+            "logical-operation",
+            "boolean-operation",
+          ],
+        });
+      }
 
       if (!parentNode.children[nodeIndex]) {
         try {
