@@ -1,6 +1,5 @@
 .side-navbar {
   position: relative;
-  /* background-color: rgb(222, 222, 222); */
   min-height: 101%;
 }
 
@@ -33,26 +32,16 @@ li:not(.fg-color) > p:hover {
   background-color: rgb(235, 235, 235);
 }
 
-/* .navs {
-  position: relative;
-} */
-
 .target-div {
   position: absolute;
   left: 101%;
   top: -3.3rem;
   height: 100%;
-  /* transform: translate(0, 0); */
 }
 
 .parent-overlay-bar {
-  /* position: absolute; */
   border-radius: 6px;
   padding: 1rem;
-  /* font-weight: 700; */
-  /* font-size: 1rem; */
-  /* top: 20%; */
-  /* left: 26%; */
   background-color: #7a7a7a40;
   min-width: 19rem;
   min-height: 100%;
@@ -73,20 +62,17 @@ li:not(.fg-color) > p:hover {
   background-color: transparent;
 }
 
-/* .visible {
-  visibility: visible;
-  position: absolute;
-  left: 21rem;
-  top: 5rem;
-} */
+.create-var {
+  padding: 0.5rem;
+  border-radius: 10px;
+  background-color: black;
+
+  cursor: pointer;
+}
 
 .hidden {
   display: none;
 }
-
-/* .code-block:hover {
-  outline: 2px solid yellow;
-} */
 
 .navs .header {
   cursor: pointer;
