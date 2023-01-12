@@ -230,6 +230,14 @@
         /* border: 5px solid rgba(255, 196, 0, 0.562); */
       }
 
+      .create-var {
+        padding: 0.5rem;
+        border-radius: 10px;
+        background-color: black;
+
+        cursor: pointer;
+      }
+
       /* Follow same styling for not, true, etc blocks */
       /* [data-variable-type="get-variable"] {
         
@@ -294,9 +302,15 @@
                     <span class="material-symbols-outlined"> close </span>
                   </div>
                   <div class="blocks-list">
+                    <div class="code-block create-var" data-index="0">
+                      <div class="block-header centered">
+                        <p class="description">Create a new variable...</p>
+                      </div>
+                    </div>
+
                     <div
                       class="code-block persist"
-                      data-index="0"
+                      data-index="1"
                       data-block-type="variable"
                       data-variable-type="set-variable"
                       data-variable-name="value"
@@ -311,7 +325,7 @@
                     </div>
                     <div
                       class="code-block persist"
-                      data-index="1"
+                      data-index="2"
                       data-block-type="variable"
                       data-variable-type="get-variable"
                       data-variable-name="value"
@@ -1046,4 +1060,5 @@
     );
   </script>
   <script src="./sidebar.js" defer></script>
+  <script src="./createVariable.js" defer></script>
 </html>
