@@ -65,6 +65,14 @@ li:not(.fg-color) > p:hover {
   gap: 1rem;
 }
 
+.blocks-list > span {
+  color: red;
+}
+
+.blocks-list [data-block-type="loop"] .holder {
+  background-color: transparent;
+}
+
 /* .visible {
   visibility: visible;
   position: absolute;
