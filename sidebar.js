@@ -2,8 +2,8 @@ const sidebarLis = document.querySelectorAll(".navs > p");
 const subSidebars = document.querySelectorAll(".target-div");
 const closeButtons = document.querySelectorAll(".sidebar-header > span");
 
-function getBlockColorClass(constructType) {
-  switch (constructType) {
+function getBlockColorClass(blockType) {
+  switch (blockType) {
     case "math-subside":
       return "math-color";
     case "variable-subside":
