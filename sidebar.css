@@ -62,14 +62,6 @@ li:not(.fg-color) > p:hover {
   background-color: transparent;
 }
 
-.create-var {
-  padding: 0.5rem;
-  border-radius: 10px;
-  background-color: black;
-
-  cursor: pointer;
-}
-
 .hidden {
   display: none;
 }
