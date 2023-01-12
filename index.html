@@ -187,6 +187,10 @@
         cursor: default;
       }
 
+      /* .blocks-list .holder {
+        background-color: sil
+      } */
+
       /* Iterator - While Block */
       .holder.children {
         /* background-color: aqua; */
@@ -334,19 +338,24 @@
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
                   </div>
-                  <div
-                    id="loop-block"
-                    class="code-block"
-                    data-block-type="loop"
-                    data-variable-type="set-loop"
-                    data-variable-name="value"
-                    draggable="true"
-                  >
-                    <div class="block-header centered">
-                      <p class="description">set "value" to</p>
-                      <!-- data-store section -->
-                      <div class="data-store"></div>
-                      <!-- data-store section -->
+                  <div class="blocks-list">
+                    <div
+                      class="persist"
+                      data-index="0"
+                      data-block-type="loop"
+                      data-loop-type="while"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">repeat "while"</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children dragged-over"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -533,25 +542,7 @@
               <div class="block-header code-block centered">
                 <p class="description">repeat "while"</p>
                 <!-- data-store section start -->
-                <div class="data-store">
-                  <div
-                    class="data-block centered"
-                    data-block-type="math"
-                    data-math-type="arithmetic-operation"
-                    draggable="true"
-                  >
-                    <div class="left-holder holder"></div>
-
-                    <select name="arithmetic-operators">
-                      <option value="add" selected>+</option>
-                      <option value="sub">-</option>
-                      <option value="mult">x</option>
-                      <option value="div">÷</option>
-                      <option value="carret">^</option>
-                    </select>
-                    <div class="right-holder holder"></div>
-                  </div>
-                </div>
+                <div class="data-store"></div>
                 <!-- data-store section end -->
               </div>
               <div class="block-body code-block centered">
@@ -788,8 +779,7 @@
       e.stopPropagation();
       const draggedBlock = document.querySelector(".dragging");
       const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
-      // console.log(draggedBlock.dataset.blockType, "drop zone -- dragged block");
-      // console.log(afterBlock.dataset.blockType, "drop zone -- after block");
+
       if (!afterBlock) {
         try {
           dropZone.appendChild(draggedBlock);
@@ -837,7 +827,7 @@
       const parentName = getSubsideName(draggedBlock.dataset.blockType);
       const parentNode = document.querySelector(`.${parentName} .blocks-list`);
 
-      if (!parentNode.childElementCount) return;
+      // if (!parentNode.childElementCount) return;
 
       const nodeIndex = +draggedBlock.dataset.index;
       const clonedBlock = draggedBlock.cloneNode(true);
@@ -847,6 +837,58 @@
 
       addDraggingClass(clonedBlock);
       removeDraggingClass(clonedBlock);
+
+      if (
+        clonedBlock.dataset.variableType === "set-variable" ||
+        clonedBlock.dataset.blockType === "loop"
+      ) {
+        const dataStore = clonedBlock.children[0].children[1];
+        listenToSomeNewBlocks(dataStore, {
+          toInclude: [
+            "math",
+            "text",
+            "get-variable",
+            "logical-operation",
+            "boolean-operation",
+          ],
+        });
+      }
+
+      // Same condition will be used for if then block etc
+      if (clonedBlock.dataset.blockType === "loop") {
+        const container = clonedBlock.children[1].children[1];
+        listenToAllNewBlocks(container);
+      }
+
+      if (clonedBlock.dataset.mathType === "arithmetic-operation") {
+        const leftContainer = clonedBlock.children[0];
+        const rightContainer = clonedBlock.children[2];
+
+        listenToSomeNewBlocks(leftContainer, {
+          toInclude: ["math", "get-variable"],
+        });
+        listenToSomeNewBlocks(rightContainer, {
+          toInclude: ["math", "get-variable"],
+        });
+      }
+
+      // if (
+      //   clonedBlock.dataset.logicType === "logical-operation" ||
+      //   clonedBlock.dataset.logicType === "boolean-operation"
+      // ) {
+      //   const leftContainer = clonedBlock.children[0];
+      //   const rightContainer = clonedBlock.children[2];
+
+      //   console.log(leftContainer);
+      //   console.log(rightContainer);
+
+      //   // listenToSomeNewBlocks(leftContainer, {
+      //   //   toInclude: ["math", "get-variable"],
+      //   // });
+      //   // listenToSomeNewBlocks(rightContainer, {
+      //   //   toInclude: ["math", "get-variable"],
+      //   // });
+      // }
 
       if (!parentNode.children[nodeIndex]) {
         try {
@@ -865,144 +907,102 @@
         console.error(e);
         return;
       }
-
-      // parentNode.children[+draggedBlock.dataset.index].insert;
     });
 
     // TODO: Implement a different after block detecting algorithm for holders
-    childHolders.forEach((holder) => {
-      holder.addEventListener("dragover", (e) => {
+    function listenToAllNewBlocks(container) {
+      container.addEventListener("dragover", (e) => {
         e.preventDefault();
         e.stopPropagation();
         const draggedBlock = document.querySelector(".dragging");
         const afterBlock = getDragAfterBlock("holder.children", e.clientY);
 
-        // console.log(draggedBlock, "dragged block");
-        // console.log(afterBlock, "after block");
-        // console.log(holder, "holder");
-        // console.log(
-        //   afterBlock?.parentNode.parentNode.parentNode,
-        //   "grand parent"
-        // );
-
-        if (!holder.children.length) {
-          // console.log("first condition --> enter");
+        if (!container.children.length) {
           try {
-            // console.log("first condition --> try");
-            holder.appendChild(draggedBlock);
+            container.appendChild(draggedBlock);
             return;
           } catch (e) {
-            // console.log("first condition --> catch");
             return;
           }
         }
 
         if (!afterBlock) {
-          // console.log("second condition --> enter");
           try {
-            // console.log("second condition --> try");
-            holder.appendChild(draggedBlock);
+            container.appendChild(draggedBlock);
             return;
           } catch (e) {
-            // console.log("second condition --> catch");
             return;
           }
         }
 
         try {
-          // console.log("third condition --> enter --> try");
-          holder.insertBefore(draggedBlock, afterBlock);
+          container.insertBefore(draggedBlock, afterBlock);
         } catch (e) {
           return;
         }
       });
-    });
+    }
 
-    dataStores.forEach((dataStore) => {
-      dataStore.addEventListener("dragover", (e) => {
+    childHolders.forEach((holder) => listenToAllNewBlocks(holder));
+
+    function listenToSomeNewBlocks(container, config) {
+      container.addEventListener("dragover", (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (dataStore.children.length) return;
+        if (container.children.length) return;
 
-        // the data store does not have any child
         const draggedBlock = document.querySelector(".dragging");
 
+        // TODO: Run a For..in loop over dataset, and dynamically check for the block type
         if (
-          draggedBlock.dataset.blockType === "loop" ||
-          draggedBlock.dataset.variableType === "set-variable" ||
-          draggedBlock.dataset.logicType === "if-do"
+          !config.toInclude.includes(draggedBlock.dataset.blockType) &&
+          !config.toInclude.includes(draggedBlock.dataset.logicType) &&
+          !config.toInclude.includes(draggedBlock.dataset.loopType) &&
+          !config.toInclude.includes(draggedBlock.dataset.variableType) &&
+          !config.toInclude.includes(draggedBlock.dataset.mathType) &&
+          !config.toInclude.includes(draggedBlock.dataset.textType)
         )
           return;
 
-        // the dragged block is not a loop, condition, procedure
         try {
-          dataStore.appendChild(draggedBlock);
+          container.appendChild(draggedBlock);
           return;
         } catch (e) {
-          console.log(e);
           return;
         }
       });
-    });
+    }
 
-    dataHoldersLogic.forEach((dataHolderLogic) => {
-      dataHolderLogic.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    dataStores.forEach((dataStore) =>
+      listenToSomeNewBlocks(dataStore, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      })
+    );
 
-        if (dataHolderLogic.children.length) return;
+    dataHoldersLogic.forEach((dataHolderLogic) =>
+      listenToSomeNewBlocks(dataHolderLogic, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      })
+    );
 
-        // the data store does not have any child
-        const draggedBlock = document.querySelector(".dragging");
-
-        if (
-          draggedBlock.dataset.blockType === "loop" ||
-          draggedBlock.dataset.variableType === "set-variable" ||
-          draggedBlock.dataset.logicType === "if-do"
-        )
-          return;
-
-        // the dragged block is not a loop, condition, procedure
-        try {
-          dataHolderLogic.appendChild(draggedBlock);
-          return;
-        } catch (e) {
-          // console.log(e);
-          return;
-        }
-      });
-    });
-
-    dataHoldersMath.forEach((dataHolderMath) => {
-      dataHolderMath.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (dataHolderMath.children.length) return;
-
-        // the data store does not have any child
-        const draggedBlock = document.querySelector(".dragging");
-
-        if (
-          draggedBlock.dataset.blockType !== "math" &&
-          draggedBlock.dataset.blockType !== "variable"
-        )
-          return;
-
-        if (draggedBlock.dataset.blockType === "variable") {
-          if (draggedBlock.dataset.variableType !== "get-variable") return;
-        }
-
-        try {
-          dataHolderMath.appendChild(draggedBlock);
-          return;
-        } catch (e) {
-          // console.log(e);
-          return;
-        }
-      });
-    });
+    dataHoldersMath.forEach((dataHolderMath) =>
+      listenToSomeNewBlocks(dataHolderMath, {
+        toInclude: ["math", "get-variable"],
+      })
+    );
   </script>
   <script src="./sidebar.js" defer></script>
 </html>
