@@ -36,6 +36,26 @@ function makeAllHiddenAndRemoveColor(ignoreSubSidebar = "") {
   });
 }
 
+// function updateVariablesSidebar() {
+//   const variableSubside = document.querySelector(
+//     ".variable-subside .blocks-list"
+//   );
+
+//   variableSubside.innerHTML += getSetVariableBlockTemplate();
+//   variableSubside.innerHTML += getGetVariableBlockTemplate();
+// }
+
+// function makeVariableBlocksDraggable() {
+//   const variableBlocks = [
+//     ...document.querySelector(".variable-subside .blocks-list").children,
+//   ];
+
+//   variableBlocks.forEach((variableBlock) => {
+//     if (variableBlock.dataset.blockType)
+//       variableBlock.setAttribute("draggable", "true");
+//   });
+// }
+
 sidebarLis.forEach((sidebarLi) => {
   sidebarLi.addEventListener("click", () => {
     const subSidebar = sidebarLi.parentNode.querySelector(".target-div");
