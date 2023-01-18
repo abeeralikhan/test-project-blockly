@@ -85,6 +85,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.1rem;
+        min-height: 90vh;
       }
 
       .code-block {
@@ -311,7 +312,7 @@
             <!-- variable nav section -->
             <li class="navs var-nav">
               <p>Variables</p>
-              <aside class="target-div variable-subside">
+              <aside class="target-div variable-subside hidden">
                 <div class="parent-overlay-bar">
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
@@ -496,146 +497,7 @@
       <div class="code-blocks-area area">
         <h2 class="title">Code Area</h2>
         <div class="root area">
-          <div class="code-blocks">
-            <div data-block-type="loop" data-loop-type="while" draggable="true">
-              <div class="block-header code-block centered">
-                <p class="description">repeat "while"</p>
-                <div class="data-store">
-                  <div
-                    class="data-block centered"
-                    data-block-type="math"
-                    data-math-type="arithmetic-operation"
-                    draggable="true"
-                  >
-                    <div class="left-holder holder"></div>
-
-                    <select name="arithmetic-operators">
-                      <option value="add" selected>+</option>
-                      <option value="sub">-</option>
-                      <option value="mult">x</option>
-                      <option value="div">÷</option>
-                      <option value="carret">^</option>
-                    </select>
-                    <div class="right-holder holder"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-body code-block centered">
-                <p class="description">do</p>
-                <div class="holder children dragged-over"></div>
-              </div>
-            </div>
-            <div data-block-type="loop" data-loop-type="while" draggable="true">
-              <div class="block-header code-block centered">
-                <p class="description">repeat "while"</p>
-                <div class="data-store">
-                  <div
-                    class="data-block centered"
-                    data-block-type="math"
-                    data-math-type="arithmetic-operation"
-                    draggable="true"
-                  >
-                    <div class="left-holder holder"></div>
-
-                    <select name="arithmetic-operators">
-                      <option value="add" selected>+</option>
-                      <option value="sub">-</option>
-                      <option value="mult">x</option>
-                      <option value="div">÷</option>
-                      <option value="carret">^</option>
-                    </select>
-                    <div class="right-holder holder"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-body code-block centered">
-                <p class="description">do</p>
-                <div class="holder children dragged-over"></div>
-              </div>
-            </div>
-            <div data-block-type="loop" data-loop-type="while" draggable="true">
-              <div class="block-header code-block centered">
-                <p class="description">repeat "while"</p>
-
-                <div class="data-store"></div>
-              </div>
-              <div class="block-body code-block centered">
-                <p class="description">do</p>
-                <div class="holder children dragged-over"></div>
-              </div>
-            </div>
-
-            <div
-              class="data-block centered"
-              data-block-type="math"
-              data-math-type="single-num"
-              data-dtype="number"
-              draggable="true"
-            >
-              <input type="text" />
-            </div>
-
-            <div
-              class="data-block centered"
-              data-block-type="text"
-              data-math-type="single-text"
-              data-dtype="string"
-              draggable="true"
-            >
-              "
-              <input type="text" />
-              "
-            </div>
-
-            <div
-              class="data-block centered"
-              data-block-type="math"
-              data-math-type="arithmetic-operation"
-              draggable="true"
-            >
-              <div class="left-holder holder"></div>
-
-              <select name="arithmetic-operators">
-                <option value="add" selected>+</option>
-                <option value="sub">-</option>
-                <option value="mult">x</option>
-                <option value="div">÷</option>
-                <option value="carret">^</option>
-              </select>
-              <div class="right-holder holder"></div>
-            </div>
-
-            <div
-              class="data-block centered"
-              data-block-type="logic"
-              data-logic-type="logical-operation"
-              draggable="true"
-            >
-              <div class="left-holder holder"></div>
-              <select name="logical-operation">
-                <option value="eq" selected>=</option>
-                <option value="neq">≠</option>
-                <option value="lt"><</option>
-                <option value="lte">≤</option>
-                <option value="gt">></option>
-                <option value="gte">≥</option>
-              </select>
-              <div class="right-holder holder"></div>
-            </div>
-            <div
-              class="data-block centered"
-              data-block-type="logic"
-              data-logic-type="boolean-operation"
-              draggable="true"
-            >
-              <div class="left-holder holder"></div>
-              <select name="boolean-operation">
-                <option value="and" selected>and</option>
-                <option value="or">or</option>
-              </select>
-              <div class="right-holder holder"></div>
-            </div>
-          </div>
+          <div class="code-blocks"></div>
         </div>
       </div>
     </div>
