@@ -644,7 +644,9 @@
       }
     }
 
-    dropZone.addEventListener("drop", (e) => {
+    dropZone.addEventListener("drop", handleNewBlock);
+
+    function handleNewBlock(e) {
       e.preventDefault();
       e.stopPropagation();
       const draggedBlock = document.querySelector(".dragging");
@@ -653,12 +655,8 @@
 
       draggedBlock.classList.remove("persist");
 
-      const parentName = getSubsideName(draggedBlock.dataset.blockType);
-      const parentNode = document.querySelector(`.${parentName} .blocks-list`);
-
       // if (!parentNode.childElementCount) return;
 
-      const nodeIndex = +draggedBlock.dataset.index;
       const clonedBlock = draggedBlock.cloneNode(true);
 
       clonedBlock.classList.remove("dragging");
@@ -728,9 +726,17 @@
         });
       }
 
+      addBlockBackToSidebar(clonedBlock);
+    }
+
+    function addBlockBackToSidebar(block) {
+      const parentName = getSubsideName(block.dataset.blockType);
+      const parentNode = document.querySelector(`.${parentName} .blocks-list`);
+      const nodeIndex = +block.dataset.index;
+
       if (!parentNode.children[nodeIndex]) {
         try {
-          parentNode.appendChild(clonedBlock);
+          parentNode.appendChild(block);
           return;
         } catch (e) {
           console.error(e);
@@ -739,13 +745,13 @@
       }
 
       try {
-        parentNode.insertBefore(clonedBlock, parentNode.children[nodeIndex]);
+        parentNode.insertBefore(block, parentNode.children[nodeIndex]);
         return;
       } catch (e) {
         console.error(e);
         return;
       }
-    });
+    }
 
     // TODO: Implement a different after block detecting algorithm for holders
     function listenToAllNewBlocks(container) {
