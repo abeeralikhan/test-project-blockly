@@ -147,7 +147,8 @@
       }
 
       .data-block[data-block-type="math"] input,
-      .data-block[data-block-type="text"] input {
+      .data-block[data-block-type="text"] input,
+      [data-block-type="procedure"] input {
         background-color: silver;
         width: 2rem;
         border-radius: 5px;
@@ -249,7 +250,7 @@
 
       /* Follow same styling for not, true, etc blocks */
       /* [data-variable-type="get-variable"] {
-        
+
       } */
 
       .variable-list > select {
@@ -281,6 +282,144 @@
         position: relative;
         left: 90%;
         top: -3.5%;
+      }
+
+      /* Procedures CSS */
+      [data-block-type="procedure"] > .block-header,
+      [data-block-type="procedure"] > .block-body,
+      .code-block[data-block-type="procedure"] {
+        background-color: rgb(204, 133, 0);
+      }
+
+      [data-block-type="procedure"] > .block-header {
+        position: relative;
+        /* min-width: 9.5rem; */
+      }
+
+      .parameter-display {
+        padding-right: 0.5rem;
+      }
+
+      [data-block-type="procedure"] > .block-header > input {
+        width: 7rem;
+        text-align: left;
+        padding-left: 5px;
+      }
+
+      .open-parameter-store {
+        color: #999;
+        background-color: rgb(29, 29, 255);
+        padding: 0 4px;
+        border-radius: 4px;
+        border: 1px solid #999;
+        cursor: pointer;
+      }
+
+      .open-parameter-store:hover {
+        background-color: rgb(52, 52, 255);
+      }
+
+      .parameter-store {
+        min-height: 100px;
+        min-width: 290px;
+        position: absolute;
+        top: 75px;
+        left: -40px;
+        z-index: 10;
+        background-color: white;
+        border: 4px solid orange;
+        border-radius: 10px;
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 160px 1fr;
+      }
+
+      .parameter-store::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-color: orange;
+        left: 61px;
+        top: -54px;
+        clip-path: polygon(0 0, 44% 100%, 100% 100%);
+      }
+
+      .create-new-parameter {
+        background-color: #e3e3e3;
+        flex: 1.3;
+        border-radius: 6px 10px 10px 6px;
+        padding: 10px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .create-new-parameter > div {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .view-parameters {
+        flex: 2;
+        padding: 17px;
+      }
+
+      .parameter-input {
+        width: 6.5rem !important;
+        background-color: #cccccc !important;
+        border: 1px solid rgb(175, 175, 175) !important;
+        text-align: left !important;
+        padding-left: 4px;
+      }
+
+      .parameter-input:focus,
+      .parameter-input:active {
+        outline: none;
+      }
+
+      .parameter-input + button {
+        padding: 2px 6px;
+        cursor: pointer;
+        border: 1px solid #b3b3b3;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+
+      label[for="parameter-input"] {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        color: rgb(75, 75, 75);
+      }
+
+      [data-procedure-type="input"] > .block-header {
+        min-width: 3.7rem;
+        min-height: 1.9rem;
+      }
+
+      [data-procedure-type="input"] > .block-header > .description {
+        font-size: 0.95rem;
+      }
+
+      [data-procedure-type="input"] > .block-body > .holder {
+        min-width: 2.4rem;
+        /* min-height: 1.75rem; */
+      }
+
+      [data-procedure-type="input-value"] {
+        /* min-height: 2rem; */
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: grey 0.5px solid;
+        font-weight: 500;
+        font-size: 0.9rem;
+
+        width: max-content;
+        min-height: max-content;
+        cursor: grab;
       }
     </style>
   </head>
@@ -419,7 +558,7 @@
                       </div>
                       <div class="block-body code-block centered">
                         <p class="description">do</p>
-                        <div class="holder children dragged-over"></div>
+                        <div class="holder children"></div>
                       </div>
                     </div>
                   </div>
@@ -507,7 +646,7 @@
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
                   </div>
-                  <div class="blocks-list"><span>In progress...</span></div>
+                  <div class="blocks-list"></div>
                 </div>
               </aside>
             </li>
@@ -518,7 +657,74 @@
       <!-- Below is a sensitive region -->
       <div class="code-blocks-area area">
         <div class="root area">
-          <div class="code-blocks"></div>
+          <div class="code-blocks">
+            <!-- PROCEDURE BLOCK START -->
+            <div
+              class="persist"
+              data-index="0"
+              data-block-type="procedure"
+              data-procedure-type="no-return"
+              draggable="true"
+            >
+              <div class="block-header code-block centered">
+                <span class="open-parameter-store">+</span>
+                <p class="description">to</p>
+                <input type="text" />
+                <p class="description parameter-display">
+                  with: status, element
+                </p>
+                <!-- parameter-store start -->
+                <div class="parameter-store">
+                  <div class="create-new-parameter">
+                    <label for="parameter-input">Input name</label>
+                    <div>
+                      <input type="text" class="parameter-input" />
+                      <button>></button>
+                    </div>
+                  </div>
+                  <div class="view-parameters">
+                    <div
+                      data-block-type="procedure"
+                      data-procedure-type="input"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">inputs</p>
+                      </div>
+                      <div class="block-body code-block centered">
+                        <div class="holder children">
+                          <div
+                            class="code-block"
+                            data-block-type="procedure"
+                            data-procedure-type="input-value"
+                            draggable="true"
+                          >
+                            <div class="block-header centered">
+                              <p class="description">input name: status</p>
+                            </div>
+                          </div>
+                          <div
+                            class="code-block"
+                            data-block-type="procedure"
+                            data-procedure-type="input-value"
+                            draggable="true"
+                          >
+                            <div class="block-header centered">
+                              <p class="description">input name: element</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- parameter-store end -->
+              </div>
+              <div class="block-body code-block centered">
+                <div class="holder children"></div>
+              </div>
+            </div>
+            <!-- PROCEDURE BLOCK END -->
+          </div>
         </div>
         <div class="code-delete-btn">
           <img src="./trash-bin-outline.svg" alt="bin" />
@@ -551,6 +757,67 @@
       ...document.querySelectorAll("[data-block-type='math'] > .left-holder"),
       ...document.querySelectorAll("[data-block-type='math'] > .right-holder"),
     ];
+
+    dropZone.addEventListener("drop", handleNewBlock);
+
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const draggedBlock = document.querySelector(".dragging");
+      const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
+
+      if (!afterBlock) {
+        try {
+          dropZone.appendChild(draggedBlock);
+          return;
+        } catch (e) {
+          return;
+        }
+      }
+
+      try {
+        dropZone.insertBefore(draggedBlock, afterBlock);
+      } catch (e) {
+        return;
+      }
+    });
+
+    blocks.forEach((block) => {
+      addDraggingClass(block);
+      removeDraggingClass(block);
+    });
+
+    childHolders.forEach((holder) => listenToAllNewBlocks(holder));
+
+    dataStores.forEach((dataStore) =>
+      listenToSomeNewBlocks(dataStore, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      })
+    );
+
+    dataHoldersLogic.forEach((dataHolderLogic) =>
+      listenToSomeNewBlocks(dataHolderLogic, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      })
+    );
+
+    dataHoldersMath.forEach((dataHolderMath) =>
+      listenToSomeNewBlocks(dataHolderMath, {
+        toInclude: ["math", "get-variable"],
+      })
+    );
 
     // TODO: Instead of accepting class name as parameter, accept an actual container like in the video
     function getDragAfterBlock(containerClass, y) {
@@ -598,33 +865,6 @@
           When user has clicked on one of the blocks from the sidebar
     */
 
-    blocks.forEach((block) => {
-      addDraggingClass(block);
-      removeDraggingClass(block);
-    });
-
-    dropZone.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const draggedBlock = document.querySelector(".dragging");
-      const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
-
-      if (!afterBlock) {
-        try {
-          dropZone.appendChild(draggedBlock);
-          return;
-        } catch (e) {
-          return;
-        }
-      }
-
-      try {
-        dropZone.insertBefore(draggedBlock, afterBlock);
-      } catch (e) {
-        return;
-      }
-    });
-
     function getSubsideName(constructType) {
       switch (constructType) {
         case "math":
@@ -644,8 +884,6 @@
       }
     }
 
-    dropZone.addEventListener("drop", handleNewBlock);
-
     function handleNewBlock(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -655,8 +893,6 @@
 
       draggedBlock.classList.remove("persist");
 
-      // if (!parentNode.childElementCount) return;
-
       const clonedBlock = draggedBlock.cloneNode(true);
 
       clonedBlock.classList.remove("dragging");
@@ -665,74 +901,99 @@
       addDraggingClass(clonedBlock);
       removeDraggingClass(clonedBlock);
 
-      if (
-        clonedBlock.dataset.variableType === "set-variable" ||
-        clonedBlock.dataset.blockType === "loop"
-      ) {
-        const dataStore = clonedBlock.children[0].children[1];
-        listenToSomeNewBlocks(dataStore, {
-          toInclude: [
-            "math",
-            "text",
-            "get-variable",
-            "logical-operation",
-            "boolean-operation",
-          ],
-        });
+      if (clonedBlock.dataset.variableType === "set-variable") {
+        addListnersToNewVariableEls(clonedBlock);
       }
 
       // Same condition will be used for if then block etc
       if (clonedBlock.dataset.blockType === "loop") {
-        const container = clonedBlock.children[1].children[1];
-        listenToAllNewBlocks(container);
+        addListnersToNewIteratorEls(clonedBlock);
       }
 
       if (clonedBlock.dataset.mathType === "arithmetic-operation") {
-        const leftContainer = clonedBlock.children[0];
-        const rightContainer = clonedBlock.children[2];
-
-        listenToSomeNewBlocks(leftContainer, {
-          toInclude: ["math", "get-variable"],
-        });
-        listenToSomeNewBlocks(rightContainer, {
-          toInclude: ["math", "get-variable"],
-        });
+        addListnersToNewMathEls(clonedBlock);
       }
 
       if (
         clonedBlock.dataset.logicType === "logical-operation" ||
         clonedBlock.dataset.logicType === "boolean-operation"
       ) {
-        const leftContainer = clonedBlock.children[0];
-        const rightContainer = clonedBlock.children[2];
-
-        listenToSomeNewBlocks(leftContainer, {
-          toInclude: [
-            "math",
-            "text",
-            "get-variable",
-            "logical-operation",
-            "boolean-operation",
-          ],
-        });
-        listenToSomeNewBlocks(rightContainer, {
-          toInclude: [
-            "math",
-            "text",
-            "get-variable",
-            "logical-operation",
-            "boolean-operation",
-          ],
-        });
+        addListnersToNewLogicEls(clonedBlock);
       }
 
       addBlockBackToSidebar(clonedBlock);
+    }
+
+    function addListnersToNewVariableEls(block) {
+      const dataStore = block.children[0].children[1];
+      listenToSomeNewBlocks(dataStore, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      });
+    }
+
+    function addListnersToNewIteratorEls(block) {
+      const container = block.children[1].children[1];
+      const dataStore = block.children[0].children[1];
+      listenToSomeNewBlocks(dataStore, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      });
+      listenToAllNewBlocks(container);
+    }
+
+    function addListnersToNewMathEls(block) {
+      const leftContainer = block.children[0];
+      const rightContainer = block.children[2];
+
+      listenToSomeNewBlocks(leftContainer, {
+        toInclude: ["math", "get-variable"],
+      });
+      listenToSomeNewBlocks(rightContainer, {
+        toInclude: ["math", "get-variable"],
+      });
+    }
+
+    function addListnersToNewLogicEls(block) {
+      const leftContainer = block.children[0];
+      const rightContainer = block.children[2];
+
+      listenToSomeNewBlocks(leftContainer, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      });
+      listenToSomeNewBlocks(rightContainer, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      });
     }
 
     function addBlockBackToSidebar(block) {
       const parentName = getSubsideName(block.dataset.blockType);
       const parentNode = document.querySelector(`.${parentName} .blocks-list`);
       const nodeIndex = +block.dataset.index;
+
+      // if (!parentNode.childElementCount) return;
 
       if (!parentNode.children[nodeIndex]) {
         try {
@@ -787,8 +1048,6 @@
       });
     }
 
-    childHolders.forEach((holder) => listenToAllNewBlocks(holder));
-
     function listenToSomeNewBlocks(container, config) {
       container.addEventListener("dragover", (e) => {
         e.preventDefault();
@@ -817,36 +1076,6 @@
         }
       });
     }
-
-    dataStores.forEach((dataStore) =>
-      listenToSomeNewBlocks(dataStore, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      })
-    );
-
-    dataHoldersLogic.forEach((dataHolderLogic) =>
-      listenToSomeNewBlocks(dataHolderLogic, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      })
-    );
-
-    dataHoldersMath.forEach((dataHolderMath) =>
-      listenToSomeNewBlocks(dataHolderMath, {
-        toInclude: ["math", "get-variable"],
-      })
-    );
   </script>
   <script src="./sidebar.js" defer></script>
   <script src="./createVariable.js" defer></script>

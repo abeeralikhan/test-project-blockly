@@ -46,6 +46,8 @@ li:not(.fg-color) > p:hover {
   min-width: 19rem;
   min-height: 100%;
   backdrop-filter: blur(2px);
+  position: relative;
+  z-index: 100;
 }
 
 .blocks-list {
@@ -95,7 +97,7 @@ li:not(.fg-color) > p:hover {
   color: black !important;
 }
 .procedure-color {
-  background-color: orange;
+  background-color: rgb(204, 133, 0);
 }
 
 .fg-color {
