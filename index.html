@@ -440,33 +440,39 @@
         outline: none;
       }
 
-      [data-block-type="procedure"] .block-header.call {
+      .args-store {
         display: flex;
         flex-direction: column;
         position: relative;
+        align-items: flex-end;
+        padding-block: 0.5rem;
+        display: none;
       }
 
-      .args-store {
-        background-color: red;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 5px;
+      [data-block-type="procedure"] > .description {
+        padding: 0.5rem;
+      }
 
-        position: relative;
-        right: -20%;
+      [data-block-type="procedure"] > .description > span {
+        padding: 0.5rem;
+        display: none;
       }
 
       .arg {
         display: flex;
+        align-items: center;
         text-align: right;
+        color: white;
+        margin-right: -15px;
       }
 
       .arg-holder {
-        background-color: green;
-        min-width: 50px;
-        min-height: 25px;
+        background-color: white;
+        min-width: 30px;
+        min-height: 40px;
         margin-left: 5px;
+        border-radius: 5px 0 0 5px;
+        position: relative;
       }
     </style>
   </head>
@@ -704,7 +710,7 @@
                       <div class="block-header code-block centered">
                         <span class="btn-parameter-store">+</span>
                         <p class="description">to</p>
-                        <input type="text" />
+                        <input type="text" class="procedure-name" />
                         <p class="description param-prefix hide">with:</p>
                         <p class="description parameter-display"></p>
                         <!-- parameter-store start -->
@@ -755,19 +761,17 @@
               data-procedure-type="call-void"
               draggable="true"
             >
-              <div class="block-header call centered">
-                <p class="description">doSodgwgwrgmething <span>with:</span></p>
+              <p class="description">doSodgwwefef <span>with:</span></p>
+              <div class="block-header args-store centered">
                 <!-- data-store section -->
-                <div class="args-store">
-                  <div class="arg">
-                    char name[]
-                    <div class="arg-holder"></div>
-                  </div>
-                  <div class="arg">
-                    int age
-                    <div class="arg-holder"></div>
-                  </div>
+                <!-- <div class="arg">
+                  <span>char name[ ]</span>
+                  <div class="arg-holder"></div>
                 </div>
+                <div class="arg">
+                  <span>int age</span>
+                  <div class="arg-holder"></div>
+                </div> -->
                 <!-- data-store section -->
               </div>
             </div>
@@ -778,13 +782,13 @@
         </div>
       </div>
 
-      <div class="code-generate-area area">
+      <!-- <div class="code-generate-area area">
         <h2 class="title">Code</h2>
         <p class="code-holder">int count = 0;</p>
         <div class="code-generate-btn">
           <img src="./play-circle-outline.svg" alt="play" />
         </div>
-      </div>
+      </div> -->
     </div>
   </body>
   <script>
@@ -809,6 +813,21 @@
     const newParameterBtns = [
       ...document.querySelectorAll(".parameter-input + button"),
     ];
+    const argHolders = [...document.querySelectorAll(".arg-holder")];
+
+    let unnamedProcedures = 0;
+
+    argHolders.forEach((argHolder) =>
+      listenToSomeNewBlocks(argHolder, {
+        toInclude: [
+          "math",
+          "text",
+          "get-variable",
+          "logical-operation",
+          "boolean-operation",
+        ],
+      })
+    );
 
     parameterStoreBtns.forEach((parameterStoreBtn) =>
       parameterStoreBtn.addEventListener("click", toggleParameterStore)
@@ -865,8 +884,6 @@
         );
 
       const params = getParamsAndDatatypes(paramsContainer);
-
-      console.log(paramsTitle);
 
       if (!params.length) {
         if (!paramsTitle.classList.contains("hide")) {
@@ -931,6 +948,73 @@
       `;
 
       return paramBlock;
+    }
+
+    function getNewProcedureName() {
+      let procedureName = "doSomething";
+      procedureName += unnamedProcedures ? unnamedProcedures : "";
+      unnamedProcedures += 1;
+
+      return procedureName;
+    }
+
+    function setNewProcedureName(block, procedureName) {
+      block.querySelector(".procedure-name").value = procedureName;
+    }
+
+    function createProcedureCallBlock(procedureName, id) {
+      const block = document.createElement("div");
+      block.classList.add("code-block", "persist", id);
+      block.setAttribute("data-block-type", "procedure");
+      block.setAttribute("data-procedure-type", "call-void");
+      block.setAttribute("draggable", "true");
+      block.setAttribute("data-index", getIndexForNewCallBlock());
+
+      block.innerHTML += `
+        <p class="description">${procedureName} <span>with:</span></p>
+        <div class="block-header args-store centered"></div>
+      `;
+
+      return block;
+    }
+
+    function getIndexForNewCallBlock() {
+      return (
+        document.querySelector(".procedure-subside .blocks-list")
+          .childElementCount + 1
+      );
+    }
+
+    function getNewProcedureId() {
+      return `P${unnamedProcedures}`;
+    }
+
+    function handleProcedureNameUpdate(block) {
+      const nameInputField = block.querySelector(".procedure-name");
+
+      nameInputField.addEventListener("change", (event) => {
+        if (!nameInputField.value) {
+          const newProcedureName = getNewProcedureName();
+          nameInputField.value = newProcedureName;
+          updateProcedureName(block.dataset.procedureId, newProcedureName);
+          return;
+        }
+        updateProcedureName(block.dataset.procedureId, nameInputField.value);
+      });
+    }
+
+    function updateProcedureName(procedureId, procedureName) {
+      const callProcedureBlocks = [
+        ...document.querySelectorAll(`.${procedureId} > .description`),
+      ];
+
+      const WITH_SPAN_TAG = document.createElement("span");
+      WITH_SPAN_TAG.innerText = "with:";
+
+      callProcedureBlocks.forEach((callProcedureBlock) => {
+        callProcedureBlock.innerText = procedureName;
+        callProcedureBlock.appendChild(WITH_SPAN_TAG);
+      });
     }
 
     dropZone.addEventListener("drop", handleNewBlock);
@@ -1076,15 +1160,43 @@
       addDraggingClass(clonedBlock);
       removeDraggingClass(clonedBlock);
 
-      if (clonedBlock.dataset.blockType === "procedure") {
+      if (
+        clonedBlock.dataset.procedureType === "no-return" ||
+        clonedBlock.dataset.procedureType === "return"
+      ) {
         const paramStoreBtn = clonedBlock.querySelector(".btn-parameter-store");
         const newParamBtn = clonedBlock.querySelector(
           ".parameter-input + button"
         );
+        const blocksContainer = clonedBlock.children[1].children[0];
+
+        const procedureName = getNewProcedureName();
+        const procedureId = getNewProcedureId();
+        const procedureCallBlock = createProcedureCallBlock(
+          procedureName,
+          procedureId
+        );
 
         paramStoreBtn.addEventListener("click", toggleParameterStore);
         newParamBtn.addEventListener("click", addNewParam);
+
+        draggedBlock.setAttribute("data-procedure-id", procedureId);
+
+        addDraggingClass(procedureCallBlock);
+        removeDraggingClass(procedureCallBlock);
+        addBlockBackToSidebar(procedureCallBlock);
+
+        listenToAllNewBlocks(blocksContainer);
+
+        setNewProcedureName(draggedBlock, procedureName);
+        handleProcedureNameUpdate(draggedBlock);
       }
+
+      // if (
+      //   clonedBlock.dataset.procedureType === "call-void" ||
+      //   clonedBlock.dataset.procedureType === "call-return"
+      // ) {
+      // }
 
       if (clonedBlock.dataset.variableType === "set-variable") {
         addListnersToNewVariableEls(clonedBlock);

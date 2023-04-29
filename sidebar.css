@@ -60,8 +60,9 @@ li:not(.fg-color) > p:hover {
   color: red;
 }
 
+.blocks-list [data-block-type="procedure"] .holder,
 .blocks-list [data-block-type="loop"] .holder {
-  background-color: transparent;
+  background-color: #dedede;
 }
 
 .create-var-section {
