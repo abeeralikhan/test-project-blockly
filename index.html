@@ -217,6 +217,23 @@
         gap: 0.07rem;
       }
 
+      /* Iterator For loop block */
+      .data-block > select[name="variable-selector"]{
+        background-color: silver;
+        font-size: 0.9rem;
+        min-width: 9ch;
+        min-height: 3ch;
+      }
+      [data-loop-type="for"] .data-block {
+        border: none;
+      }
+      [data-loop-type="for"] .data-store {
+        background-color: white;
+        border-radius: 5px;
+        min-height: 3.2ch;
+        margin: 0 3px;
+      }
+
       .code-block.block-header {
         border-radius: 5px 5px 5px 0;
       }
@@ -229,6 +246,10 @@
       .code-block.block-header,
       .code-block.block-body {
         background-color: purple;
+      }
+      .data-block[data-block-type="logic"] > .block-header,
+      [data-block-type="logic"] > .block-body {
+        background-color: green;
       }
 
       /* Utility */
@@ -608,6 +629,44 @@
                         <div class="holder children"></div>
                       </div>
                     </div>
+                    
+                    <!-- For Loop -->
+                    <div
+                      class="persist"
+                      data-index="0"
+                      data-block-type="loop"
+                      data-loop-type="for"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">
+                          repeat with
+                        <div
+                      class="data-block centered persist"
+                      data-index="1"
+                      data-block-type="math-block"
+                      data-math-type="arithmetic-operation"
+                      draggable="true"
+                    >
+                    <select name="variable-selector" class="variable-selector">
+                      <option value="add" selected>Select</option>
+                      <option value="sub">-</option>
+                    </select>
+                     <p class="description">from</p>
+                     <div class="data-store"></div>
+                      <p class="description">to</p>
+                     <div class="data-store"></div>
+                      <p class="description">by</p>
+                      <div class="data-store"></div>
+                    </div>
+                        </p>
+                      </div>
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </aside>
@@ -622,9 +681,29 @@
                     <span class="material-symbols-outlined"> close </span>
                   </div>
                   <div class="blocks-list">
+                    <!-- if block starts-->
+                    <div
+                      class="persist"
+                      data-index="0"
+                      data-block-type="logic"
+                      data-loop-type="logical-operation"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">if</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+                    <!-- if block ends -->
                     <div
                       class="data-block centered persist"
-                      data-index="0"
+                      data-index="1"
                       data-block-type="logic"
                       data-logic-type="logical-operation"
                       draggable="true"
@@ -643,7 +722,7 @@
 
                     <div
                       class="data-block centered persist"
-                      data-index="1"
+                      data-index="2s"
                       data-block-type="logic"
                       data-logic-type="boolean-operation"
                       draggable="true"
