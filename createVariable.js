@@ -24,16 +24,6 @@ createVariableBtn.addEventListener("click", (e) => {
     appendNewVariableToDom(newVariableEl);
     appendNewVariableToVariables(newVariableName);
 
-    const variableBlocksContainer = document.querySelector(
-      ".variable-subside .blocks-list"
-    );
-
-    if (
-      variables.length > 0 &&
-      variableBlocksContainer.classList.contains("hidden")
-    ) {
-      variableBlocksContainer.classList.remove("hidden");
-    }
     return;
   }
 });

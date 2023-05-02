@@ -26,7 +26,8 @@
 
         display: grid;
         grid-auto-flow: column;
-        grid-template-columns: 15rem 3fr 35rem;
+        /* grid-template-columns: 15rem 3fr 35rem; */
+        grid-template-columns: 15rem 1fr;
         column-gap: 2rem;
       }
 
@@ -42,11 +43,12 @@
         padding-top: 1rem;
         box-shadow: -5px 0px 10px -3px #dbd3c7;
       }
-      .title {
+
+      /* .title {
         text-align: center;
         font-weight: 900;
         font-size: 1.5rem;
-      }
+      } */
 
       /* .area {
         border: 2px dashed black;
@@ -135,7 +137,8 @@
       }
 
       .data-block,
-      [data-variable-type="get-variable"] {
+      [data-variable-type="get-variable"],
+      [data-procedure-type="get-arg"] {
         /* min-height: 2rem; */
         padding: 0.5rem;
         border-radius: 5px;
@@ -258,6 +261,7 @@
 
       } */
 
+      .args-list > select,
       .variable-list > select {
         border: none;
         border-radius: 5px;
@@ -269,6 +273,7 @@
         min-width: 5ch;
       }
 
+      .args-list > select > option,
       .variable-list > select > option {
         min-width: 5ch;
       }
@@ -298,7 +303,7 @@
 
       [data-block-type="procedure"] > .block-header {
         position: relative;
-        /* min-width: 9.5rem; */
+        min-width: 9.5rem;
       }
 
       .parameter-display {
@@ -473,6 +478,47 @@
         border-radius: 5px 0 0 5px;
         position: relative;
       }
+
+      .return-footer {
+        border-radius: 0 0 0 0 !important;
+        padding: 0 0 0 0.5rem !important;
+      }
+
+      .return-footer > .holder.children {
+        margin: 0 0 0 0.9rem;
+        min-width: 11.5rem;
+        min-height: 2.5rem;
+        /* background-color: red; */
+      }
+
+      .block-footer {
+        display: flex;
+        align-items: center;
+        /* justify-content: center; */
+        cursor: grab;
+        /* justify-content: flex-end; */
+        gap: 0.5rem;
+        background-color: rgb(204, 133, 0);
+        border-radius: 0 5px 5px 5px;
+        padding-block: 0.3rem;
+        width: 17.6rem !important;
+        padding-left: 7.8rem;
+        /* overflow: hidden; */
+        /* min-width: max-content; */
+      }
+
+      .block-footer > .data-store {
+        background-color: white;
+        border-radius: 5px;
+        min-height: 2rem;
+        min-width: 3rem;
+        margin-right: 6px;
+      }
+
+      .block-footer > p {
+        color: white;
+        /* font-size: 0.9rem; */
+      }
     </style>
   </head>
   <body>
@@ -537,7 +583,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="blocks-list hidden">
+                  <div class="blocks-list">
                     <div
                       class="code-block persist"
                       data-index="0"
@@ -552,7 +598,9 @@
                             for="variable-list"
                             class="variable-name variable-list"
                           >
-                            <select name="variable-name"></select>
+                            <select name="variable-name">
+                              <option value="default">--Select--</option>
+                            </select>
                           </label>
                           to
                         </p>
@@ -576,7 +624,9 @@
                             for="variable-list"
                             class="variable-name variable-list"
                           >
-                            <select name="variable-name"></select>
+                            <select name="variable-name">
+                              <option value="default">--Select--</option>
+                            </select>
                           </label>
                         </p>
                       </div>
@@ -699,6 +749,7 @@
                     <span class="material-symbols-outlined"> close </span>
                   </div>
                   <div class="blocks-list">
+                    <!-- Procedure with return -->
                     <div
                       class="persist"
                       data-index="0"
@@ -708,7 +759,7 @@
                     >
                       <div class="block-header code-block centered">
                         <span class="btn-parameter-store">+</span>
-                        <p class="description">to</p>
+                        <p class="description">function name</p>
                         <input type="text" class="procedure-name" />
                         <p class="description param-prefix hide">with:</p>
                         <p class="description parameter-display"></p>
@@ -730,7 +781,7 @@
                                 <p class="description">inputs</p>
                               </div>
                               <div class="block-body code-block centered">
-                                <div class="holder children"></div>
+                                <div class="holder children all-params"></div>
                               </div>
                             </div>
                           </div>
@@ -739,6 +790,105 @@
                       </div>
                       <div class="block-body code-block centered">
                         <div class="holder children"></div>
+                      </div>
+                    </div>
+
+                    <!-- Procedure w/ return -->
+                    <div
+                      class="persist"
+                      data-index="1"
+                      data-block-type="procedure"
+                      data-procedure-type="return"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <span class="btn-parameter-store">+</span>
+                        <p class="description">function name</p>
+                        <input type="text" class="procedure-name" />
+                        <p class="description param-prefix hide">with:</p>
+                        <p class="description parameter-display"></p>
+                        <!-- parameter-store start -->
+                        <div class="parameter-store hide">
+                          <div class="create-new-parameter">
+                            <label for="parameter-input">Input name</label>
+                            <div>
+                              <input type="text" class="parameter-input" />
+                              <button>></button>
+                            </div>
+                          </div>
+                          <div class="view-parameters">
+                            <div
+                              data-block-type="procedure"
+                              data-procedure-type="input"
+                            >
+                              <div class="block-header code-block centered">
+                                <p class="description">inputs</p>
+                              </div>
+                              <div class="block-body code-block centered">
+                                <div class="holder children all-params"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- parameter-store end -->
+                      </div>
+                      <div class="block-body code-block centered return-footer">
+                        <div class="holder children"></div>
+                      </div>
+                      <div class="block-footer">
+                        <p>return</p>
+                        <select name="datatype">
+                          <option value="int" selected>integer</option>
+                          <option value="float">float</option>
+                          <option value="double">double</option>
+                          <option value="char">character</option>
+                          <option value="string">string</option>
+                        </select>
+                        <div class="data-store"></div>
+                      </div>
+                    </div>
+
+                    <!-- SET ARGUMENT -->
+                    <div
+                      class="code-block persist"
+                      data-index="2"
+                      data-block-type="procedure"
+                      data-procedure-type="set-arg"
+                      draggable="true"
+                    >
+                      <div class="block-header centered">
+                        <p class="description">
+                          set
+                          <label for="args-list" class="arg-name args-list">
+                            <select name="arg-name">
+                              <option value="default">--Select--</option>
+                            </select>
+                          </label>
+                          to
+                        </p>
+                        <!-- data-store section -->
+                        <div class="data-store"></div>
+                        <!-- data-store section -->
+                      </div>
+                    </div>
+
+                    <!-- GET ARGUMENT -->
+                    <div
+                      class="code-block persist"
+                      data-index="3"
+                      data-block-type="procedure"
+                      data-procedure-type="get-arg"
+                      draggable="true"
+                    >
+                      <div class="block-header centered">
+                        <p class="description">
+                          get
+                          <label for="args-list" class="arg-name args-list">
+                            <select name="arg-name">
+                              <option value="default">--Select--</option>
+                            </select>
+                          </label>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -752,71 +902,7 @@
       <!-- Below is a sensitive region -->
       <div class="code-blocks-area area">
         <div class="root area">
-          <div class="code-blocks">
-            <div
-              class="persist"
-              data-index="0"
-              data-block-type="procedure"
-              data-procedure-type="no-return"
-              draggable="true"
-            >
-              <div class="block-header code-block centered">
-                <span class="btn-parameter-store">+</span>
-                <p class="description">to</p>
-                <input type="text" class="procedure-name" />
-                <p class="description param-prefix hide">with:</p>
-                <p class="description parameter-display"></p>
-                <!-- parameter-store start -->
-                <div class="parameter-store hide">
-                  <div class="create-new-parameter">
-                    <label for="parameter-input">Input name</label>
-                    <div>
-                      <input type="text" class="parameter-input" />
-                      <button>></button>
-                    </div>
-                  </div>
-                  <div class="view-parameters">
-                    <div
-                      data-block-type="procedure"
-                      data-procedure-type="input"
-                    >
-                      <div class="block-header code-block centered">
-                        <p class="description">inputs</p>
-                      </div>
-                      <div class="block-body code-block centered">
-                        <div class="holder children"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- parameter-store end -->
-              </div>
-              <div class="block-body code-block centered">
-                <div class="holder children"></div>
-              </div>
-            </div>
-            <div
-              class="code-block persist"
-              data-index="0"
-              data-block-type="procedure"
-              data-procedure-type="call-void"
-              draggable="true"
-            >
-              <p class="description">doSodgwwefef <span>with:</span></p>
-              <div class="block-header args-store centered">
-                <!-- data-store section -->
-                <!-- <div class="arg">
-                  <span>char name[ ]</span>
-                  <div class="arg-holder"></div>
-                </div>
-                <div class="arg">
-                  <span>int age</span>
-                  <div class="arg-holder"></div>
-                </div> -->
-                <!-- data-store section -->
-              </div>
-            </div>
-          </div>
+          <div class="code-blocks"></div>
         </div>
         <div class="code-delete-btn">
           <img src="./trash-bin-outline.svg" alt="bin" />
@@ -866,6 +952,7 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       })
     );
@@ -906,6 +993,7 @@
       addDraggingClass(newParamBlock);
       removeDraggingClass(newParamBlock);
 
+      // issue is here
       newParamBlock.addEventListener("dragend", (event) => {
         updateParams(viewParamsContainer, paramsContainer);
         handleProcedureCallBlocks(procedureId, {
@@ -927,10 +1015,41 @@
       updateParams(viewParamsContainer, paramsContainer);
       paramInputEl.value = "";
 
+      // Code related to adding new parameter to relevant places
+      const params = getParamsAndDatatypes(paramsContainer);
+      const getNewlyAddedParam = () => {
+        return params[params.length - 1];
+      };
+      const getOnlyParamName = () => {
+        return getNewlyAddedParam().split(" ")[1];
+      };
+
       handleProcedureCallBlocks(procedureId, {
         type: "ADD_NEW_PARAM",
-        params: getParamsAndDatatypes(paramsContainer),
+        param: getNewlyAddedParam(),
       });
+
+      handleArgsUpdate(procedureId, {
+        type: "ADD_NEW_ARG",
+        arg: getOnlyParamName(),
+      });
+    }
+
+    function handleArgsUpdate(procedureId, action) {
+      const argsListEls = [
+        ...document.querySelectorAll(
+          `[data-current-procedure="${procedureId}"] [name="arg-name"]`
+        ),
+      ];
+
+      if (!argsListEls.length) return;
+
+      if (action.type === "ADD_NEW_ARG") {
+        const { arg } = action;
+        argsListEls.forEach((argsListEl) =>
+          argsListEl.appendChild(getNewArgOption(arg))
+        );
+      }
     }
 
     function handleProcedureCallBlocks(procedureId, action) {
@@ -939,8 +1058,8 @@
       ];
 
       if (action.type === "ADD_NEW_PARAM") {
-        const { params } = action;
-        addProcedureCallBlock(params[params.length - 1], argStores);
+        const { param } = action;
+        addProcedureCallBlock(param, argStores);
       }
 
       if (action.type === "UPDATE_DATATYPE") {
@@ -955,9 +1074,11 @@
       if (action.type === "UPDATE_PARAMS") {
         const { params, paramsHolder } = action;
         if (paramsHolder.childElementCount === params.length) {
+          // TODO
           // handleArgsPositionSwap(params, argStores);
           return;
         }
+        // TODO
         // handleArgDeleted(params, argStores);
       }
     }
@@ -1008,6 +1129,7 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       });
 
@@ -1190,7 +1312,10 @@
       removeDraggingClass(block);
     });
 
-    childHolders.forEach((holder) => listenToAllNewBlocks(holder));
+    childHolders.forEach((holder) => {
+      if (holder.classList.contains("all-params")) return;
+      listenToAllNewBlocks(holder);
+    });
 
     dataStores.forEach((dataStore) =>
       listenToSomeNewBlocks(dataStore, {
@@ -1200,6 +1325,7 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       })
     );
@@ -1212,13 +1338,14 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       })
     );
 
     dataHoldersMath.forEach((dataHolderMath) =>
       listenToSomeNewBlocks(dataHolderMath, {
-        toInclude: ["math", "get-variable"],
+        toInclude: ["math", "get-variable", "get-arg"],
       })
     );
 
@@ -1313,6 +1440,7 @@
           ".parameter-input + button"
         );
         const blocksContainer = clonedBlock.children[1].children[0];
+        const paramsContainer = draggedBlock.querySelector(".all-params");
 
         const procedureName = getNewProcedureName();
         const procedureId = getNewProcedureId();
@@ -1331,19 +1459,51 @@
         addBlockBackToSidebar(procedureCallBlock);
 
         listenToAllNewBlocks(blocksContainer);
+        listenToAllNewBlocks(paramsContainer);
 
         setNewProcedureName(draggedBlock, procedureName);
         handleProcedureNameUpdate(draggedBlock);
       }
 
-      // if (
-      //   clonedBlock.dataset.procedureType === "call-void" ||
-      //   clonedBlock.dataset.procedureType === "call-return"
-      // ) {
-      // }
+      if (clonedBlock.dataset.procedureType === "return") {
+        const dataStore = clonedBlock.querySelector(
+          ".block-footer > .data-store"
+        );
+
+        listenToSomeNewBlocks(dataStore, {
+          toInclude: [
+            "math",
+            "text",
+            "get-variable",
+            "logical-operation",
+            "boolean-operation",
+            "get-arg",
+          ],
+        });
+      }
+
+      if (
+        clonedBlock.dataset.procedureType === "get-arg" ||
+        clonedBlock.dataset.procedureType === "set-arg"
+      ) {
+        // if (
+        //   clonedBlock.dataset.procedureType === "call-void" ||
+        //   clonedBlock.dataset.procedureType === "call-return"
+        // ) {
+        // }
+        handleNewParamCall(draggedBlock);
+
+        draggedBlock.addEventListener("dragend", (event) =>
+          handleNewParamCall(draggedBlock)
+        );
+      }
 
       if (clonedBlock.dataset.variableType === "set-variable") {
-        addListnersToNewVariableEls(clonedBlock);
+        addListnersToNewSetBlock(clonedBlock);
+      }
+
+      if (clonedBlock.dataset.procedureType === "set-arg") {
+        addListnersToNewSetBlock(clonedBlock);
       }
 
       // Same condition will be used for if then block etc
@@ -1365,7 +1525,65 @@
       addBlockBackToSidebar(clonedBlock);
     }
 
-    function addListnersToNewVariableEls(block) {
+    function handleNewParamCall(block) {
+      const { procedureId, params, didFound } = findAndGetProcedure(block);
+      const argsListEl = block.querySelector('[name="arg-name"]');
+      const refreshArgsList = () => {
+        argsListEl.innerHTML = "";
+        argsListEl.innerHTML += `
+          <option value="default">--Select--</option>
+        `;
+      };
+
+      if (!didFound) {
+        block.removeAttribute("data-current-procedure", "");
+        refreshArgsList();
+        return;
+      }
+
+      // Dont update params if moving in the same procedure
+      if (block.dataset.currentProcedure === procedureId) return;
+
+      block.setAttribute("data-current-procedure", procedureId);
+
+      refreshArgsList();
+
+      params.forEach((param) => {
+        argsListEl.appendChild(getNewArgOption(param));
+      });
+    }
+
+    function getNewArgOption(paramName) {
+      const option = document.createElement("option");
+      option.value = paramName;
+      option.innerText = paramName;
+
+      return option;
+    }
+
+    function findAndGetProcedure(block) {
+      let parentBlock = block.parentNode;
+      while (!parentBlock.classList.contains("code-blocks")) {
+        if (
+          parentBlock.dataset.procedureType === "no-return" ||
+          parentBlock.dataset.procedureType === "return"
+        ) {
+          const paramsContainer = parentBlock.querySelector(".all-params");
+          const params = getAllParamNames(paramsContainer);
+
+          return {
+            params,
+            procedureId: parentBlock.dataset.procedureId,
+            didFound: true,
+          };
+        }
+        parentBlock = parentBlock.parentNode;
+      }
+
+      return { didFound: false };
+    }
+
+    function addListnersToNewSetBlock(block) {
       const dataStore = block.children[0].children[1];
       listenToSomeNewBlocks(dataStore, {
         toInclude: [
@@ -1374,6 +1592,7 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       });
     }
@@ -1388,6 +1607,7 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       });
       listenToAllNewBlocks(container);
@@ -1398,10 +1618,10 @@
       const rightContainer = block.children[2];
 
       listenToSomeNewBlocks(leftContainer, {
-        toInclude: ["math", "get-variable"],
+        toInclude: ["math", "get-variable", "get-arg"],
       });
       listenToSomeNewBlocks(rightContainer, {
-        toInclude: ["math", "get-variable"],
+        toInclude: ["math", "get-variable", "get-arg"],
       });
     }
 
@@ -1416,6 +1636,7 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       });
       listenToSomeNewBlocks(rightContainer, {
@@ -1425,6 +1646,7 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
+          "get-arg",
         ],
       });
     }
@@ -1462,6 +1684,12 @@
         e.stopPropagation();
         const draggedBlock = document.querySelector(".dragging");
         const afterBlock = getDragAfterBlock("holder.children", e.clientY);
+
+        if (
+          container.classList.contains("all-params") &&
+          draggedBlock.dataset.procedureType !== "input-value"
+        )
+          return;
 
         if (!container.children.length) {
           try {
@@ -1505,7 +1733,8 @@
           !config.toInclude.includes(draggedBlock.dataset.loopType) &&
           !config.toInclude.includes(draggedBlock.dataset.variableType) &&
           !config.toInclude.includes(draggedBlock.dataset.mathType) &&
-          !config.toInclude.includes(draggedBlock.dataset.textType)
+          !config.toInclude.includes(draggedBlock.dataset.textType) &&
+          !config.toInclude.includes(draggedBlock.dataset.procedureType)
         )
           return;
 

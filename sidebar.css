@@ -61,8 +61,21 @@ li:not(.fg-color) > p:hover {
 }
 
 .blocks-list [data-block-type="procedure"] .holder,
-.blocks-list [data-block-type="loop"] .holder {
+.blocks-list [data-block-type="loop"] .holder,
+.blocks-list .block-footer > .data-store {
   background-color: #dedede;
+}
+
+.blocks-list .block-footer > .data-store {
+  min-width: 1.4rem;
+}
+
+.blocks-list .block-footer > .data-store {
+  min-width: 1.4rem;
+}
+
+.blocks-list .return-footer > .holder.children {
+  min-width: 16.2rem;
 }
 
 .create-var-section {
