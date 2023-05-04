@@ -137,8 +137,7 @@
       }
 
       .data-block,
-      [data-variable-type="get-variable"],
-      [data-procedure-type="get-arg"] {
+      [data-variable-type="get-variable"] {
         /* min-height: 2rem; */
         padding: 0.5rem;
         border-radius: 5px;
@@ -519,6 +518,21 @@
         color: white;
         /* font-size: 0.9rem; */
       }
+
+      .vars-section,
+      .args-section {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #646464;
+      }
+
+      .vars-section > option,
+      .args-section > option {
+        font-weight: 500;
+        font-size: 1rem;
+        color: black;
+        transform: translateX(20px);
+      }
     </style>
   </head>
   <body>
@@ -576,13 +590,13 @@
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
                   </div>
-                  <div class="create-var-section">
+                  <!-- <div class="create-var-section">
                     <div class="code-block create-var" data-index="0">
                       <div class="block-header centered">
                         <p class="description">Create a new variable...</p>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="blocks-list">
                     <div
                       class="code-block persist"
@@ -600,6 +614,14 @@
                           >
                             <select name="variable-name">
                               <option value="default">--Select--</option>
+                              <optgroup
+                                class="vars-section"
+                                label="variables"
+                              ></optgroup>
+                              <optgroup
+                                class="args-section"
+                                label="arguements"
+                              ></optgroup>
                             </select>
                           </label>
                           to
@@ -626,6 +648,14 @@
                           >
                             <select name="variable-name">
                               <option value="default">--Select--</option>
+                              <optgroup
+                                class="vars-section"
+                                label="variables"
+                              ></optgroup>
+                              <optgroup
+                                class="args-section"
+                                label="arguements"
+                              ></optgroup>
                             </select>
                           </label>
                         </p>
@@ -749,7 +779,7 @@
                     <span class="material-symbols-outlined"> close </span>
                   </div>
                   <div class="blocks-list">
-                    <!-- Procedure with return -->
+                    <!-- Procedure without return -->
                     <div
                       class="persist"
                       data-index="0"
@@ -789,7 +819,7 @@
                         <!-- parameter-store end -->
                       </div>
                       <div class="block-body code-block centered">
-                        <div class="holder children"></div>
+                        <div class="holder children procedure"></div>
                       </div>
                     </div>
 
@@ -833,7 +863,7 @@
                         <!-- parameter-store end -->
                       </div>
                       <div class="block-body code-block centered return-footer">
-                        <div class="holder children"></div>
+                        <div class="holder children procedure"></div>
                       </div>
                       <div class="block-footer">
                         <p>return</p>
@@ -848,8 +878,7 @@
                       </div>
                     </div>
 
-                    <!-- SET ARGUMENT -->
-                    <div
+                    <!-- <div
                       class="code-block persist"
                       data-index="2"
                       data-block-type="procedure"
@@ -862,18 +891,24 @@
                           <label for="args-list" class="arg-name args-list">
                             <select name="arg-name">
                               <option value="default">--Select--</option>
+                              <optgroup
+                                class="vars-section"
+                                label="variables"
+                              ></optgroup>
+                              <optgroup
+                                class="args-section"
+                                label="arguements"
+                              ></optgroup>
                             </select>
                           </label>
                           to
                         </p>
-                        <!-- data-store section -->
                         <div class="data-store"></div>
-                        <!-- data-store section -->
-                      </div>
-                    </div>
 
-                    <!-- GET ARGUMENT -->
-                    <div
+                      </div>
+                    </div> -->
+
+                    <!-- <div
                       class="code-block persist"
                       data-index="3"
                       data-block-type="procedure"
@@ -886,11 +921,19 @@
                           <label for="args-list" class="arg-name args-list">
                             <select name="arg-name">
                               <option value="default">--Select--</option>
+                              <optgroup
+                                class="vars-section"
+                                label="variables"
+                              ></optgroup>
+                              <optgroup
+                                class="args-section"
+                                label="arguements"
+                              ></optgroup>
                             </select>
                           </label>
                         </p>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </aside>
@@ -921,49 +964,48 @@
   <script>
     // blocks and data-blocks
     const blocks = document.querySelectorAll("[draggable='true']");
-
-    // drop areas
     const dropZone = document.querySelector(".code-blocks");
-    const dataStores = document.querySelectorAll(".data-store");
-    const childHolders = document.querySelectorAll(".holder.children");
-    const dataHoldersLogic = [
-      ...document.querySelectorAll("[data-block-type='logic'] > .holder"),
-    ];
-    const dataHoldersMath = [
-      ...document.querySelectorAll("[data-block-type='math'] > .holder"),
-    ];
 
-    // Related to procedures
-    const parameterStoreBtns = [
-      ...document.querySelectorAll(".btn-parameter-store"),
+    const COMMON_WHITELIST_BLOCKS = [
+      "math",
+      "text",
+      "get-variable",
+      "logical-operation",
+      "boolean-operation",
     ];
-    const newParameterBtns = [
-      ...document.querySelectorAll(".parameter-input + button"),
-    ];
-    const argHolders = [...document.querySelectorAll(".arg-holder")];
+    const MATH_WHITELIST_BLOCKS = ["math", "get-variable"];
 
     let unnamedProcedures = 0;
 
-    argHolders.forEach((argHolder) =>
-      listenToSomeNewBlocks(argHolder, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-          "get-arg",
-        ],
-      })
-    );
+    dropZone.addEventListener("drop", handleNewBlock);
+    dropZone.addEventListener("dragover", addNewBlockToCanvas);
 
-    parameterStoreBtns.forEach((parameterStoreBtn) =>
-      parameterStoreBtn.addEventListener("click", toggleParameterStore)
-    );
+    blocks.forEach((block) => {
+      addDraggingClass(block);
+      removeDraggingClass(block);
+    });
 
-    newParameterBtns.forEach((newParameterBtn) =>
-      newParameterBtn.addEventListener("click", addNewParam)
-    );
+    function addNewBlockToCanvas(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const draggedBlock = document.querySelector(".dragging");
+      const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
+
+      if (!afterBlock) {
+        try {
+          dropZone.appendChild(draggedBlock);
+          return;
+        } catch (e) {
+          return;
+        }
+      }
+
+      try {
+        dropZone.insertBefore(draggedBlock, afterBlock);
+      } catch (e) {
+        return;
+      }
+    }
 
     function addNewParam(event) {
       const createParamBtn = event.target;
@@ -979,6 +1021,7 @@
       const paramsContainer =
         viewParamsContainer.querySelector(".holder.children");
 
+      // Paramter with that name already exists so return
       if (getAllParamNames(paramsContainer).includes(newParamName)) return;
 
       // variables needed in the creating of parameter block
@@ -993,7 +1036,6 @@
       addDraggingClass(newParamBlock);
       removeDraggingClass(newParamBlock);
 
-      // issue is here
       newParamBlock.addEventListener("dragend", (event) => {
         updateParams(viewParamsContainer, paramsContainer);
         handleProcedureCallBlocks(procedureId, {
@@ -1038,10 +1080,11 @@
     function handleArgsUpdate(procedureId, action) {
       const argsListEls = [
         ...document.querySelectorAll(
-          `[data-current-procedure="${procedureId}"] [name="arg-name"]`
+          `[data-current-procedure="${procedureId}"] [name="variable-name"] > .args-section`
         ),
       ];
 
+      // Procedure with that id does not have any arguements so return
       if (!argsListEls.length) return;
 
       if (action.type === "ADD_NEW_ARG") {
@@ -1129,7 +1172,6 @@
           "get-variable",
           "logical-operation",
           "boolean-operation",
-          "get-arg",
         ],
       });
 
@@ -1217,11 +1259,11 @@
     }
 
     function getNewProcedureName() {
-      let procedureName = "doSomething";
-      procedureName += unnamedProcedures ? unnamedProcedures : "";
+      let DEFAULT_PROCEDURE_NAME = "doSomething";
+      DEFAULT_PROCEDURE_NAME += unnamedProcedures ? unnamedProcedures : "";
       unnamedProcedures += 1;
 
-      return procedureName;
+      return DEFAULT_PROCEDURE_NAME;
     }
 
     function setNewProcedureName(block, procedureName) {
@@ -1283,71 +1325,59 @@
       });
     }
 
-    dropZone.addEventListener("drop", handleNewBlock);
+    function fetchArgs(block) {
+      const { procedureId, params, didFound } = findAndGetProcedure(block);
+      const argsListEl = block.querySelector(
+        '[name="variable-name"] > .args-section'
+      );
 
-    dropZone.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const draggedBlock = document.querySelector(".dragging");
-      const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
-
-      if (!afterBlock) {
-        try {
-          dropZone.appendChild(draggedBlock);
-          return;
-        } catch (e) {
-          return;
-        }
-      }
-
-      try {
-        dropZone.insertBefore(draggedBlock, afterBlock);
-      } catch (e) {
+      if (!didFound) {
+        block.removeAttribute("data-current-procedure", "");
+        argsListEl.innerHTML = "";
         return;
       }
-    });
 
-    blocks.forEach((block) => {
-      addDraggingClass(block);
-      removeDraggingClass(block);
-    });
+      // Dont update params if moving in the same procedure
+      if (block.dataset.currentProcedure === procedureId) return;
 
-    childHolders.forEach((holder) => {
-      if (holder.classList.contains("all-params")) return;
-      listenToAllNewBlocks(holder);
-    });
+      block.setAttribute("data-current-procedure", procedureId);
 
-    dataStores.forEach((dataStore) =>
-      listenToSomeNewBlocks(dataStore, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-          "get-arg",
-        ],
-      })
-    );
+      argsListEl.innerHTML = "";
 
-    dataHoldersLogic.forEach((dataHolderLogic) =>
-      listenToSomeNewBlocks(dataHolderLogic, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-          "get-arg",
-        ],
-      })
-    );
+      params.forEach((param) => {
+        argsListEl.appendChild(getNewArgOption(param));
+      });
+    }
 
-    dataHoldersMath.forEach((dataHolderMath) =>
-      listenToSomeNewBlocks(dataHolderMath, {
-        toInclude: ["math", "get-variable", "get-arg"],
-      })
-    );
+    function getNewArgOption(paramName) {
+      const option = document.createElement("option");
+      option.value = paramName;
+      option.innerText = paramName;
+
+      return option;
+    }
+
+    function findAndGetProcedure(block) {
+      let parentBlock = block.parentNode;
+      while (!parentBlock.classList.contains("code-blocks")) {
+        if (
+          parentBlock.dataset.procedureType === "no-return" ||
+          parentBlock.dataset.procedureType === "return"
+        ) {
+          const paramsContainer = parentBlock.querySelector(".all-params");
+          const params = getAllParamNames(paramsContainer);
+
+          return {
+            params,
+            procedureId: parentBlock.dataset.procedureId,
+            didFound: true,
+          };
+        }
+        parentBlock = parentBlock.parentNode;
+      }
+
+      return { didFound: false };
+    }
 
     // TODO: Instead of accepting class name as parameter, accept an actual container like in the video
     function getDragAfterBlock(containerClass, y) {
@@ -1417,6 +1447,7 @@
     function handleNewBlock(e) {
       e.preventDefault();
       e.stopPropagation();
+
       const draggedBlock = document.querySelector(".dragging");
 
       if (!draggedBlock.classList.contains("persist")) return;
@@ -1430,16 +1461,21 @@
 
       addDraggingClass(clonedBlock);
       removeDraggingClass(clonedBlock);
+      addBlockBackToSidebar(clonedBlock);
 
       if (
-        clonedBlock.dataset.procedureType === "no-return" ||
-        clonedBlock.dataset.procedureType === "return"
+        draggedBlock.dataset.procedureType === "no-return" ||
+        draggedBlock.dataset.procedureType === "return"
       ) {
-        const paramStoreBtn = clonedBlock.querySelector(".btn-parameter-store");
-        const newParamBtn = clonedBlock.querySelector(
+        const paramStoreBtn = draggedBlock.querySelector(
+          ".btn-parameter-store"
+        );
+        const newParamBtn = draggedBlock.querySelector(
           ".parameter-input + button"
         );
-        const blocksContainer = clonedBlock.children[1].children[0];
+        const blocksContainer = draggedBlock.querySelector(
+          ".holder.children.procedure"
+        );
         const paramsContainer = draggedBlock.querySelector(".all-params");
 
         const procedureName = getNewProcedureName();
@@ -1458,197 +1494,78 @@
         removeDraggingClass(procedureCallBlock);
         addBlockBackToSidebar(procedureCallBlock);
 
-        listenToAllNewBlocks(blocksContainer);
-        listenToAllNewBlocks(paramsContainer);
+        handleNewContainersListeners({
+          listenToAll: [blocksContainer, paramsContainer],
+        });
 
         setNewProcedureName(draggedBlock, procedureName);
         handleProcedureNameUpdate(draggedBlock);
       }
 
-      if (clonedBlock.dataset.procedureType === "return") {
-        const dataStore = clonedBlock.querySelector(
+      if (draggedBlock.dataset.procedureType === "return") {
+        const dataStore = draggedBlock.querySelector(
           ".block-footer > .data-store"
         );
 
-        listenToSomeNewBlocks(dataStore, {
-          toInclude: [
-            "math",
-            "text",
-            "get-variable",
-            "logical-operation",
-            "boolean-operation",
-            "get-arg",
-          ],
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.blockType === "variable") {
+        fetchArgs(draggedBlock);
+        // fetchVariables(draggedBlock)
+
+        draggedBlock.addEventListener("dragend", (event) => {
+          fetchArgs(draggedBlock);
+          // fetchVariables(draggedBlock);
+        });
+      }
+
+      if (draggedBlock.dataset.variableType === "set-variable") {
+        const dataStore = draggedBlock.querySelector(".data-store");
+
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      // Same condition will be used for if then block etc
+      if (draggedBlock.dataset.blockType === "loop") {
+        const container = draggedBlock.querySelector(".holder.children");
+        const dataStore = draggedBlock.querySelector(".data-store");
+
+        handleNewContainersListeners({
+          listenToAll: [container],
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.mathType === "arithmetic-operation") {
+        const leftContainer = draggedBlock.querySelector(".left-holder");
+        const rightContainer = draggedBlock.querySelector(".right-holder");
+
+        handleNewContainersListeners({
+          listenToSome: [leftContainer, rightContainer],
+          toInclude: MATH_WHITELIST_BLOCKS,
         });
       }
 
       if (
-        clonedBlock.dataset.procedureType === "get-arg" ||
-        clonedBlock.dataset.procedureType === "set-arg"
+        draggedBlock.dataset.logicType === "logical-operation" ||
+        draggedBlock.dataset.logicType === "boolean-operation"
       ) {
-        // if (
-        //   clonedBlock.dataset.procedureType === "call-void" ||
-        //   clonedBlock.dataset.procedureType === "call-return"
-        // ) {
-        // }
-        handleNewParamCall(draggedBlock);
+        const leftContainer = draggedBlock.querySelector(".left-holder");
+        const rightContainer = draggedBlock.querySelector(".right-holder");
 
-        draggedBlock.addEventListener("dragend", (event) =>
-          handleNewParamCall(draggedBlock)
-        );
+        handleNewContainersListeners({
+          listenToSome: [leftContainer, rightContainer],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
       }
-
-      if (clonedBlock.dataset.variableType === "set-variable") {
-        addListnersToNewSetBlock(clonedBlock);
-      }
-
-      if (clonedBlock.dataset.procedureType === "set-arg") {
-        addListnersToNewSetBlock(clonedBlock);
-      }
-
-      // Same condition will be used for if then block etc
-      if (clonedBlock.dataset.blockType === "loop") {
-        addListnersToNewIteratorEls(clonedBlock);
-      }
-
-      if (clonedBlock.dataset.mathType === "arithmetic-operation") {
-        addListnersToNewMathEls(clonedBlock);
-      }
-
-      if (
-        clonedBlock.dataset.logicType === "logical-operation" ||
-        clonedBlock.dataset.logicType === "boolean-operation"
-      ) {
-        addListnersToNewLogicEls(clonedBlock);
-      }
-
-      addBlockBackToSidebar(clonedBlock);
-    }
-
-    function handleNewParamCall(block) {
-      const { procedureId, params, didFound } = findAndGetProcedure(block);
-      const argsListEl = block.querySelector('[name="arg-name"]');
-      const refreshArgsList = () => {
-        argsListEl.innerHTML = "";
-        argsListEl.innerHTML += `
-          <option value="default">--Select--</option>
-        `;
-      };
-
-      if (!didFound) {
-        block.removeAttribute("data-current-procedure", "");
-        refreshArgsList();
-        return;
-      }
-
-      // Dont update params if moving in the same procedure
-      if (block.dataset.currentProcedure === procedureId) return;
-
-      block.setAttribute("data-current-procedure", procedureId);
-
-      refreshArgsList();
-
-      params.forEach((param) => {
-        argsListEl.appendChild(getNewArgOption(param));
-      });
-    }
-
-    function getNewArgOption(paramName) {
-      const option = document.createElement("option");
-      option.value = paramName;
-      option.innerText = paramName;
-
-      return option;
-    }
-
-    function findAndGetProcedure(block) {
-      let parentBlock = block.parentNode;
-      while (!parentBlock.classList.contains("code-blocks")) {
-        if (
-          parentBlock.dataset.procedureType === "no-return" ||
-          parentBlock.dataset.procedureType === "return"
-        ) {
-          const paramsContainer = parentBlock.querySelector(".all-params");
-          const params = getAllParamNames(paramsContainer);
-
-          return {
-            params,
-            procedureId: parentBlock.dataset.procedureId,
-            didFound: true,
-          };
-        }
-        parentBlock = parentBlock.parentNode;
-      }
-
-      return { didFound: false };
-    }
-
-    function addListnersToNewSetBlock(block) {
-      const dataStore = block.children[0].children[1];
-      listenToSomeNewBlocks(dataStore, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-          "get-arg",
-        ],
-      });
-    }
-
-    function addListnersToNewIteratorEls(block) {
-      const container = block.children[1].children[1];
-      const dataStore = block.children[0].children[1];
-      listenToSomeNewBlocks(dataStore, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-          "get-arg",
-        ],
-      });
-      listenToAllNewBlocks(container);
-    }
-
-    function addListnersToNewMathEls(block) {
-      const leftContainer = block.children[0];
-      const rightContainer = block.children[2];
-
-      listenToSomeNewBlocks(leftContainer, {
-        toInclude: ["math", "get-variable", "get-arg"],
-      });
-      listenToSomeNewBlocks(rightContainer, {
-        toInclude: ["math", "get-variable", "get-arg"],
-      });
-    }
-
-    function addListnersToNewLogicEls(block) {
-      const leftContainer = block.children[0];
-      const rightContainer = block.children[2];
-
-      listenToSomeNewBlocks(leftContainer, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-          "get-arg",
-        ],
-      });
-      listenToSomeNewBlocks(rightContainer, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-          "get-arg",
-        ],
-      });
     }
 
     function addBlockBackToSidebar(block) {
@@ -1674,6 +1591,20 @@
       } catch (e) {
         console.error(e);
         return;
+      }
+    }
+
+    function handleNewContainersListeners(config) {
+      const { listenToAll, listenToSome, toInclude } = config;
+
+      if (listenToAll?.length) {
+        listenToAll.forEach((container) => listenToAllNewBlocks(container));
+      }
+
+      if (listenToSome?.length) {
+        listenToSome.forEach((container) =>
+          listenToSomeNewBlocks(container, { toInclude })
+        );
       }
     }
 
@@ -1704,14 +1635,14 @@
           try {
             container.appendChild(draggedBlock);
             return;
-          } catch (e) {
+          } catch {
             return;
           }
         }
 
         try {
           container.insertBefore(draggedBlock, afterBlock);
-        } catch (e) {
+        } catch {
           return;
         }
       });
@@ -1748,6 +1679,6 @@
     }
   </script>
   <script src="./sidebar.js" defer></script>
-  <script src="./createVariable.js" defer></script>
-  <script src="./blocks.js" defer></script>
+  <!-- <script src="./createVariable.js" defer></script> -->
+  <!-- <script src="./blocks.js" defer></script> -->
 </html>
