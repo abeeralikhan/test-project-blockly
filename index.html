@@ -258,6 +258,202 @@
         gap: 0.07rem;
       }
 
+      /* Iterator - Do while Block */
+      [data-loop-type="do-while"] > .block-body.code-block {
+        min-height: 3rem;
+        border-radius: 5px 5px 0 0;
+        padding: 0.5rem 0 0.5rem 0.5rem;
+      }
+
+      [data-loop-type="do-while"] > .block-header.code-block {
+        min-height: 3rem;
+        border-radius: 0 8px 5px 5px;
+      }
+
+      [data-loop-type="do-while"] > .block-header > .data-store {
+        margin: 0 8px 0 1rem;
+      }
+
+      [data-loop-type="do-while"] > .block-body > .holder.children {
+        margin: 0 0 -0.9rem 0.9rem;
+        min-height: 2.5rem;
+        min-width: 9rem;
+      }
+
+      /* Iterator - For loop block */
+      .data-block > select[name="variable-selector"] {
+        background-color: silver;
+        font-size: 0.9rem;
+        min-width: 9ch;
+        min-height: 3ch;
+      }
+
+      [data-loop-type="for"] .data-block {
+        border: none;
+      }
+
+      [data-loop-type="for"] > .block-header > .data-block > .data-store {
+        background-color: white;
+        border-radius: 5px;
+        min-height: 3.2ch;
+        margin: 0 3px;
+      }
+
+      /* break and continue loop block */
+      [data-loop-type="break-continue"] > .block-header {
+        padding: 0.5rem;
+        border-radius: 5px;
+        /* border: grey 0.5px solid; */
+
+        width: max-content;
+        min-height: max-content;
+        cursor: grab;
+        border-radius: 7px;
+        height: 2.3em;
+      }
+
+      [data-loop-type="break-continue"] > .block-header {
+        background-color: purple;
+      }
+
+      [data-loop-type="break-continue"] > .block-header > .description {
+        color: white;
+      }
+
+      [data-loop-type="break-continue"]
+        > .block-header
+        > select[name="break-continue-loop"] {
+        background-color: silver;
+        font-size: 0.9rem;
+        min-width: 9ch;
+        min-height: 3ch;
+        border-radius: 7px;
+      }
+
+      /* if block  */
+      [data-logic-type="if-else"] .block-header > #star {
+        background-color: darkblue;
+        color: white;
+        width: 1.2rem;
+        text-align: center;
+        border: 1px solid silver;
+        border-radius: 5px;
+        font-size: 13px;
+        height: 1.3rem;
+      }
+
+      [data-logic-type="if"] > .block-body,
+      [data-logic-type="if"] > .block-header,
+      [data-logic-type="if-else"] > .block-body,
+      [data-logic-type="if-else"] > .block-header {
+        background-color: green;
+      }
+
+      [data-logic-type="if"] > .block-body {
+        min-width: 1em;
+      }
+
+      [data-logic-type="if"] > .block-header {
+        min-width: 4em;
+
+        min-height: 2.3em;
+      }
+
+      [data-logic-type="if"] > .block-body > .holder.children {
+        min-width: 2rem;
+        min-height: 1.8rem;
+      }
+
+      [data-logic-type="if"] > .block-header > .description {
+        margin: 0 0 0 10px;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+      }
+
+      /* if else block */
+      [data-logic-type="if-else"] > .block-body > .holder.children {
+        min-height: 3rem;
+        min-width: 9rem;
+      }
+
+      /* [data-logic-type="if-else"] > .block-body.if{
+
+      }  */
+
+      [data-logic-type="if-else"] > .block-body > .holder.children.if {
+        /* border: 1px solid red; */
+        margin: 0 0 -0.8rem 0.9rem;
+      }
+
+      [data-logic-type="if-else"] > .block-body {
+        /* border: 1px solid black; */
+        border-radius: 0;
+        /* max-width: 12em; */
+      }
+
+      [data-logic-type="if-else"] > .block-header.else {
+        max-width: 10em;
+        border-radius: 0 5px 5px 0;
+      }
+
+      [data-logic-type="if-else"] > .block-header.else > .data-store {
+        min-height: 2rem;
+        margin: 0.2rem 0 0 0;
+      }
+
+      [data-logic-type="if-else"] > .block-body.else {
+        border-radius: 0 0 5px 5px;
+      }
+
+      [data-logic-type="if-else"] > .block-body > .description,
+      [data-logic-type="if-else"] > .block-header > .description {
+        font-size: 1rem;
+      }
+
+      [data-logic-type="if-else"] > .block-header > .description {
+        margin: 10px 0;
+      }
+
+      /* not block */
+      [data-logic-type="not"] > .block-header > .data-store {
+        min-width: 3rem;
+        min-height: 2.5rem;
+      }
+
+      [data-logic-type="not"] > .block-header > .description {
+        color: white;
+      }
+
+      [data-logic-type="not"] > .block-header {
+        background-color: green;
+        border-radius: 5px 5px 5px 5px;
+      }
+
+      /* boolean block */
+      [data-logic-type="boolean"] > .block-header {
+        background-color: green;
+        border-radius: 5px 5px 5px 5px;
+      }
+
+      [data-logic-type="boolean"] > .block-header > select[name="boolean"] {
+        background-color: silver;
+        font-size: 0.9rem;
+        min-width: 9ch;
+        min-height: 3ch;
+        border-radius: 7px;
+        margin: 0.3rem 0.5rem 0.3rem 0;
+      }
+
+      /* print block */
+      [data-text-type="print"] > .block-header {
+        background-color: yellow;
+        border: grey 0.5px solid;
+        border-radius: 5px 5px 5px 5px;
+      }
+      [data-text-type="print"] > .block-header > .description {
+        color: black;
+      }
+
       .code-block.block-header {
         border-radius: 5px 5px 5px 0;
       }
@@ -267,8 +463,8 @@
         padding: 0 0 0.5rem 0.5rem;
       }
 
-      .code-block.block-header,
-      .code-block.block-body {
+      [data-block-type="loop"] > .block-header,
+      [data-block-type="loop"] > .block-body {
         background-color: purple;
       }
 
@@ -572,6 +768,68 @@
         color: black;
         transform: translateX(20px);
       }
+
+      /* CSS RELATED TO WARNING MESSAGES */
+      .warning {
+        background-color: red;
+        font-family: monospace, sans-serif;
+        color: white;
+        font-weight: 700;
+        width: 1.2rem;
+        text-align: center;
+        border: 1px solid silver;
+        border-radius: 5px;
+        font-size: 1rem;
+        height: 1.3rem;
+        cursor: pointer;
+        position: relative;
+
+        z-index: 10;
+
+        display: none;
+      }
+
+      .active.warning {
+        display: block;
+      }
+
+      .warning-message {
+        position: absolute;
+        top: 45px;
+        left: 10px;
+        min-width: 380px !important;
+        height: 30px;
+        background-color: rgb(169, 91, 221);
+        border-radius: 5px;
+        /* box-shadow: 2px 3px 0px 1px rgb(153, 0, 255); */
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .warning-message::after {
+        --size: 29px;
+        content: "";
+        width: var(--size);
+        height: var(--size);
+        background-color: rgb(187, 115, 235);
+        /* background-color: rgb(255, 0, 0); */
+        clip-path: polygon(0 0, 42% 100%, 100% 100%);
+
+        position: absolute;
+        top: -27px;
+        left: 5px;
+
+        z-index: 1;
+      }
+
+      .warning-message > .description {
+        font-family: monospace, sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -739,6 +997,7 @@
                     <span class="material-symbols-outlined">close</span>
                   </div>
                   <div class="blocks-list">
+                    <!-- While Loop -->
                     <div
                       class="persist"
                       data-index="0"
@@ -757,6 +1016,105 @@
                         <div class="holder children"></div>
                       </div>
                     </div>
+
+                    <!-- Until loop -->
+                    <div
+                      class="persist"
+                      data-index="1"
+                      data-block-type="loop"
+                      data-loop-type="until"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">repeat "until"</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+
+                    <!-- Do while loop -->
+                    <div
+                      class="persist"
+                      data-index="2"
+                      data-block-type="loop"
+                      data-loop-type="do-while"
+                      draggable="true"
+                    >
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                      <div class="block-header code-block centered">
+                        <p class="description">repeat "while"</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                    </div>
+
+                    <!-- For Loop -->
+                    <div
+                      class="persist"
+                      data-index="3"
+                      data-block-type="loop"
+                      data-loop-type="for"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">repeat with</p>
+                        <div
+                          class="data-block centered persist"
+                          data-index="1"
+                          data-block-type="math-block"
+                          data-math-type="arithmetic-operation"
+                          draggable="true"
+                        >
+                          <div class="data-store loop"></div>
+
+                          <p class="description">from</p>
+                          <div class="data-store"></div>
+                          <p class="description">to</p>
+                          <div class="data-store"></div>
+                          <p class="description">by</p>
+                          <div class="data-store"></div>
+                        </div>
+                      </div>
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+
+                    <!-- break and continue block -->
+                    <div
+                      class="persist"
+                      data-index="4"
+                      data-block-type="loop"
+                      data-loop-type="break-continue"
+                      draggable="true"
+                    >
+                      <div class="block-header centered">
+                        <div class="warning">
+                          !
+                          <div class="warning-message">
+                            <div class="description">
+                              Warning: This block may only be used within a
+                              loop.
+                            </div>
+                          </div>
+                        </div>
+                        <select name="break-continue-loop">
+                          <option value="">break out</option>
+                          <option value="">continue with next iteration</option>
+                        </select>
+                        <p class="description">of loop</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </aside>
@@ -771,9 +1129,63 @@
                     <span class="material-symbols-outlined"> close </span>
                   </div>
                   <div class="blocks-list">
+                    <!-- Just If -->
+                    <div
+                      class="persist"
+                      data-index="0"
+                      data-block-type="logic"
+                      data-logic-type="if"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">if</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+
+                    <!-- IF ELSE -->
+                    <div
+                      class="persist"
+                      data-index="1"
+                      data-block-type="logic"
+                      data-logic-type="if-else"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">
+                          if following value <br />matches with nothing
+                        </p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body if code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children if"></div>
+                      </div>
+
+                      <div class="block-header code-block centered else">
+                        <p class="description">matches with</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body code-block centered else">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+
+                    <!-- Logical Block -->
                     <div
                       class="data-block centered persist"
-                      data-index="0"
+                      data-index="2"
                       data-block-type="logic"
                       data-logic-type="logical-operation"
                       draggable="true"
@@ -790,9 +1202,10 @@
                       <div class="right-holder holder"></div>
                     </div>
 
+                    <!-- Boolean Block -->
                     <div
                       class="data-block centered persist"
-                      data-index="1"
+                      data-index="3"
                       data-block-type="logic"
                       data-logic-type="boolean-operation"
                       draggable="true"
@@ -803,6 +1216,38 @@
                         <option value="or">or</option>
                       </select>
                       <div class="right-holder holder"></div>
+                    </div>
+
+                    <!-- not block -->
+                    <div
+                      class="persist"
+                      data-index="4"
+                      data-block-type="logic"
+                      data-logic-type="not"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">not</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                    </div>
+
+                    <!-- boolean block -->
+                    <div
+                      class="persist"
+                      data-index="5"
+                      data-block-type="logic"
+                      data-logic-type="boolean"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <select name="boolean">
+                          <option value="">true</option>
+                          <option value="">false</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -828,6 +1273,22 @@
                       "
                       <input type="text" />
                       "
+                    </div>
+
+                    <!-- print block -->
+                    <div
+                      class="persist"
+                      data-index="1"
+                      data-block-type="text"
+                      data-text-type="print"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">print</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -988,6 +1449,8 @@
       "get-variable",
       "logical-operation",
       "boolean-operation",
+      "boolean",
+      "not",
     ];
     const MATH_WHITELIST_BLOCKS = ["math", "get-variable"];
     const DEFAULT_INPUT_WIDTH = "7rem";
@@ -1708,7 +2171,12 @@
         makeInputWidthDynamic(inputEl);
       }
 
-      if (draggedBlock.dataset.blockType === "loop") {
+      if (
+        draggedBlock.dataset.loopType === "while" ||
+        draggedBlock.dataset.loopType === "until" ||
+        draggedBlock.dataset.loopType === "do-while"
+      ) {
+        // while, until, do while
         const container = draggedBlock.querySelector(".holder.children");
         const dataStore = draggedBlock.querySelector(".data-store");
 
@@ -1717,6 +2185,44 @@
           listenToSome: [dataStore],
           toInclude: COMMON_WHITELIST_BLOCKS,
         });
+      }
+
+      // TODO: FIX IF BLOCK --> FETCH VARIABLES
+      // 1. Detect In Which Procedure it is
+      // 2. Climb up
+      if (draggedBlock.dataset.loopType === "for") {
+        const container = draggedBlock.children[1].children[1];
+        const loopDataStore = draggedBlock.children[0].children[1].children[0];
+        const datastores = [
+          draggedBlock.children[0].children[1].children[2],
+          draggedBlock.children[0].children[1].children[4],
+          draggedBlock.children[0].children[1].children[6],
+        ];
+
+        handleNewContainersListeners({
+          listenToAll: [container],
+          listenToSome: datastores,
+          toInclude: MATH_WHITELIST_BLOCKS,
+        });
+
+        handleNewContainersListeners({
+          listenToSome: loopDataStore,
+          toInclude: ["get-variable"],
+        });
+      }
+
+      if (draggedBlock.dataset.loopType === "break-continue") {
+        const warningBtn = draggedBlock.querySelector(".warning");
+        const warningMsg = draggedBlock.querySelector(".warning-message");
+
+        warningBtn.addEventListener("click", (event) => {
+          warningMsg.classList.toggle("hide");
+        });
+
+        handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg);
+        draggedBlock.addEventListener("dragend", (event) =>
+          handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg)
+        );
       }
 
       if (draggedBlock.dataset.mathType === "arithmetic-operation") {
@@ -1738,6 +2244,52 @@
 
         handleNewContainersListeners({
           listenToSome: [leftContainer, rightContainer],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.logicType === "if") {
+        const container = draggedBlock.children[1].children[1];
+        const dataStore = draggedBlock.children[0].children[1];
+
+        handleNewContainersListeners({
+          listenToAll: [container],
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.logicType === "if-else") {
+        const containers = [
+          draggedBlock.children[1].children[1],
+          draggedBlock.children[3].children[1],
+        ];
+        const dataStores = [
+          draggedBlock.children[0].children[1],
+          draggedBlock.children[2].children[1],
+        ];
+
+        handleNewContainersListeners({
+          listenToAll: containers,
+          listenToSome: dataStores,
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.logicType === "not") {
+        const dataStore = draggedBlock.children[0].children[1];
+
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.textType === "print") {
+        const dataStore = draggedBlock.children[0].children[1];
+
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
           toInclude: COMMON_WHITELIST_BLOCKS,
         });
       }
@@ -1767,6 +2319,32 @@
         console.error(e);
         return;
       }
+    }
+
+    function handleBreakContinueBlock(block, warning, message) {
+      const isInsideIterator = checkIterator(block.parentNode);
+
+      if (warning.classList.contains("active")) {
+        warning.classList.remove("active");
+      }
+
+      if (isInsideIterator) return;
+
+      warning.classList.add("active");
+      if (message.classList.contains("hide")) {
+        message.classList.remove("hide");
+      }
+    }
+
+    function checkIterator(block) {
+      // base case --> How will we know when to stop?
+      if (block.classList.contains("code-blocks")) return false;
+
+      // actual case --> What shall we do when we found our target?
+      if (block.dataset.blockType === "loop") return true;
+
+      // recursive call
+      return checkIterator(block.parentNode);
     }
 
     function handleNewContainersListeners(config) {
