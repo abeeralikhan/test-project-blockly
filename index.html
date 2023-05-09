@@ -1853,19 +1853,6 @@
       updateVariablesList(variableList, variables);
     }
 
-    // block.previousElementSibling
-    // block.parentNode
-    // block.dataset.variableType="create-variable"
-
-    function setVariable(block) {
-      while (block.classList.contains("code-blocks")) {
-        if (bl) {
-        }
-
-        block = block.previousElementSibling;
-      }
-    }
-
     // function clearOptionsButKeepSelection(selectEl, targetSection) {
     //   if (selectEl.value === "default") return;
 
@@ -1917,6 +1904,10 @@
       return variables.reverse();
     }
 
+    function updateVariablesOfThisProcedure(procedureId) {
+      console.log(procedureId);
+    }
+
     function fetchArgs(block) {
       const { procedureId, params, didFound } = findAndGetProcedure(block);
       const argsListEl = block.querySelector(
@@ -1961,6 +1952,24 @@
 
           return {
             params,
+            procedureId: parentBlock.dataset.procedureId,
+            didFound: true,
+          };
+        }
+        parentBlock = parentBlock.parentNode;
+      }
+
+      return { didFound: false };
+    }
+
+    function findProcedureId(block) {
+      let parentBlock = block.parentNode;
+      while (!parentBlock.classList.contains("code-blocks")) {
+        if (
+          parentBlock.dataset.procedureType === "no-return" ||
+          parentBlock.dataset.procedureType === "return"
+        ) {
+          return {
             procedureId: parentBlock.dataset.procedureId,
             didFound: true,
           };
@@ -2136,8 +2145,8 @@
 
         draggedBlock.setAttribute("data-reference-id", getNewVariableRefId());
 
-        fetchArgs(draggedBlock);
-        fetchVariables(draggedBlock);
+        // fetchArgs(draggedBlock);
+        // fetchVariables(draggedBlock);
         makeSelectWidthDynamic(selectEl);
 
         draggedBlock.addEventListener("dragend", (event) => {
@@ -2163,12 +2172,39 @@
         const inputEl = draggedBlock.querySelector(".variable-name");
         const variableName = getNewVariableName();
         const variableId = getNewVariableId();
+        const { procedureId, didFound } = findProcedureId(draggedBlock);
+
+        if (didFound) {
+          draggedBlock.setAttribute("data-current-procedure", procedureId);
+        }
 
         draggedBlock.setAttribute("data-variable-id", variableId);
         inputEl.value = variableName;
 
         handleVariableNameUpdate(draggedBlock, inputEl);
         makeInputWidthDynamic(inputEl);
+
+        draggedBlock.addEventListener("dragend", (event) => {
+          const { procedureId, didFound } = findAndGetProcedure(draggedBlock);
+          if (!didFound) {
+            draggedBlock.removeAttribute("data-current-procedure");
+            return;
+          }
+
+          draggedBlock.setAttribute("data-variable-id", procedureId);
+          updateVariablesOfThisProcedure(procedureId);
+        });
+
+        draggedBlock.addEventListener("dragstart", (event) => {
+          const { procedureId, didFound } = findAndGetProcedure(draggedBlock);
+          if (!didFound) {
+            draggedBlock.removeAttribute("data-current-procedure");
+            return;
+          }
+
+          draggedBlock.setAttribute("data-variable-id", procedureId);
+          updateVariablesOfThisProcedure(procedureId);
+        });
       }
 
       if (
@@ -2219,7 +2255,7 @@
           warningMsg.classList.toggle("hide");
         });
 
-        handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg);
+        // handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg);
         draggedBlock.addEventListener("dragend", (event) =>
           handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg)
         );
