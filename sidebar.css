@@ -62,7 +62,9 @@ li:not(.fg-color) > p:hover {
 
 .blocks-list [data-block-type="procedure"] .holder,
 .blocks-list [data-block-type="loop"] .holder,
-.blocks-list .block-footer > .data-store {
+.blocks-list .block-footer > .data-store,
+.blocks-list .holder,
+.blocks-list .datastore {
   background-color: #dedede;
 }
 
