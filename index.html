@@ -813,7 +813,7 @@
         cursor: pointer;
         position: relative;
 
-        z-index: 10;
+        /* z-index: 10; */
 
         display: none;
       }
@@ -828,13 +828,15 @@
         left: 10px;
         min-width: 380px !important;
         height: 30px;
-        background-color: rgb(169, 91, 221);
+        background-color: rgb(235, 115, 115);
         border-radius: 5px;
         /* box-shadow: 2px 3px 0px 1px rgb(153, 0, 255); */
 
         display: flex;
         justify-content: center;
         align-items: center;
+
+        z-index: 10;
       }
 
       .warning-message::after {
@@ -842,7 +844,7 @@
         content: "";
         width: var(--size);
         height: var(--size);
-        background-color: rgb(187, 115, 235);
+        background-color: rgb(235, 115, 115);
         /* background-color: rgb(255, 0, 0); */
         clip-path: polygon(0 0, 42% 100%, 100% 100%);
 
@@ -953,6 +955,15 @@
                       draggable="true"
                     >
                       <div class="block-header centered">
+                        <div class="warning">
+                          !
+                          <div class="warning-message">
+                            <div class="description">
+                              Warning: This block may only be used within a
+                              function.
+                            </div>
+                          </div>
+                        </div>
                         <p class="description">
                           set
                           <label
@@ -989,6 +1000,15 @@
                       draggable="true"
                     >
                       <div class="block-header centered">
+                        <div class="warning">
+                          !
+                          <div class="warning-message">
+                            <div class="description">
+                              Warning: This block may only be used within a
+                              function.
+                            </div>
+                          </div>
+                        </div>
                         <p class="description">
                           get
                           <label
@@ -1932,13 +1952,16 @@
       const { procedureId, didFound } = findAndGetProcedure(block);
       const selectEl = block.querySelector("[name='variable-name']");
       const variableList = block.querySelector(".vars-section");
+      const warning = block.querySelector(".warning");
+      const message = block.querySelector(".warning-message");
+
+      hideError(warning);
 
       if (!didFound) {
-        // handle error state
-        // place this block inside a function
         // clearOptionsButKeepSelection(selectEl, variableList);
         variableList.innerHTML = "";
-        console.log("is not inside any procedure");
+        showError(warning, message);
+        // console.log("is not inside any procedure");
         return;
       }
 
@@ -1947,7 +1970,7 @@
       const variables = getVariables(block);
 
       if (!variables.length) {
-        console.log("no variables found");
+        // console.log("no variables found");
         return;
       }
 
@@ -2243,11 +2266,15 @@
         draggedBlock.dataset.variableType === "get-variable"
       ) {
         const selectEl = draggedBlock.querySelector(".variable-name > select");
+        const warningBtn = draggedBlock.querySelector(".warning");
+        const warningMsg = draggedBlock.querySelector(".warning-message");
+
+        warningBtn.addEventListener("click", (event) => {
+          warningMsg.classList.toggle("hide");
+        });
 
         draggedBlock.setAttribute("data-reference-id", getNewVariableRefId());
 
-        // fetchArgs(draggedBlock);
-        // fetchVariables(draggedBlock);
         makeSelectWidthDynamic(selectEl);
 
         draggedBlock.addEventListener("dragend", (event) => {
@@ -2357,7 +2384,6 @@
           warningMsg.classList.toggle("hide");
         });
 
-        // handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg);
         draggedBlock.addEventListener("dragend", (event) =>
           handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg)
         );
@@ -2462,15 +2488,23 @@
     function handleBreakContinueBlock(block, warning, message) {
       const isInsideIterator = checkIterator(block.parentNode);
 
-      if (warning.classList.contains("active")) {
-        warning.classList.remove("active");
-      }
+      hideError(warning);
 
       if (isInsideIterator) return;
 
+      showError(warning, message);
+    }
+
+    function showError(warning, message) {
       warning.classList.add("active");
       if (message.classList.contains("hide")) {
         message.classList.remove("hide");
+      }
+    }
+
+    function hideError(warning) {
+      if (warning.classList.contains("active")) {
+        warning.classList.remove("active");
       }
     }
 
