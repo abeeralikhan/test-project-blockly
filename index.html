@@ -26,7 +26,8 @@
 
         display: grid;
         grid-auto-flow: column;
-        grid-template-columns: 15rem 3fr 35rem;
+        /* grid-template-columns: 15rem 3fr 35rem; */
+        grid-template-columns: 15rem 1fr;
         column-gap: 2rem;
       }
 
@@ -42,11 +43,12 @@
         padding-top: 1rem;
         box-shadow: -5px 0px 10px -3px #dbd3c7;
       }
-      .title {
+
+      /* .title {
         text-align: center;
         font-weight: 900;
         font-size: 1.5rem;
-      }
+      } */
 
       /* .area {
         border: 2px dashed black;
@@ -153,7 +155,8 @@
 
       .data-block[data-block-type="math"] input,
       .data-block[data-block-type="text"] input,
-      [data-block-type="procedure"] input {
+      [data-block-type="procedure"] input,
+      [data-variable-type="create-variable"] > .block-header > input {
         background-color: silver;
         width: 2rem;
         border-radius: 5px;
@@ -161,6 +164,44 @@
         text-align: center;
         height: 1.5rem;
         font-size: 1em;
+      }
+
+      [data-block-type="procedure"] input:active,
+      [data-block-type="procedure"] input:focus,
+      data-block[data-block-type="math"] input:active,
+      data-block[data-block-type="math"] input:focus,
+      .data-block[data-block-type="text"] input:active,
+      .data-block[data-block-type="text"] input:focus,
+      [data-variable-type="create-variable"] > .block-header > input:active,
+      [data-variable-type="create-variable"] > .block-header > input:focus {
+        outline: none;
+      }
+
+      [data-variable-type="create-variable"] > .block-header > input {
+        width: 7rem;
+        height: 1.5rem;
+        text-align: left;
+        font-size: 0.9rem;
+        padding-left: 3px;
+        background-color: #d6d6d6;
+      }
+
+      [data-variable-type="create-variable"] > .block-header > select {
+        height: 1.5rem;
+      }
+
+      [data-variable-type="create-variable"] {
+        min-width: 25.3rem;
+      }
+
+      [data-variable-type="create-variable"] > .block-header {
+        padding-block: 5px;
+        padding-right: 7px;
+      }
+
+      [data-variable-type="create-variable"] > .block-header > .data-store {
+        background-color: white;
+        border-radius: 5px;
       }
 
       .data-block {
@@ -216,22 +257,230 @@
         flex-direction: column;
         gap: 0.07rem;
       }
+      [data-loop-type="while"] > 
 
-      /* Iterator For loop block */
-      .data-block > select[name="variable-selector"]{
+
+      /* Iterator - Do while Block */
+      [data-block-type="loop"] {
+        /* min-height: 3.2rem;
+        border-radius: 5px 5px 0 0;
+        padding: 0.5rem 0 0.5rem 0.5rem; */
+        border: 1px solid red;
+        /* overflow: none; */
+      }
+
+      [data-loop-type="do-while"] > .block-body.code-block {
+        /* border: 1px solid black; */
+        min-height: 3.2rem;
+        border-radius: 5px 5px 0 0;
+        padding: 0.5rem 0 0 0.5rem;
+        overflow: none;
+      }
+
+      [data-loop-type="do-while"] > .block-header.code-block {
+        min-height: 3rem;
+        /* margin-top: 0.9rem; */
+        border-radius: 0 8px 5px 5px;
+        /* border: 1px solid black; */
+      }
+
+      [data-loop-type="do-while"] > .block-header > .data-store {
+        margin: 0 0 0 1rem;
+        /* background-color: red; */
+        min-height: 2.73rem;
+        min-width: 2.5rem;
+      }
+
+      [data-loop-type="do-while"] > .block-body > .holder.children {
+        margin: 0.5rem 0 0 0.9rem;
+        min-height: 3rem;
+        min-width: 9rem;
+      }
+
+      /* Iterator - For loop block */
+      /* [data-loop-type="for"] > .block-header > .data-store.loop {
         background-color: silver;
         font-size: 0.9rem;
         min-width: 9ch;
         min-height: 3ch;
-      }
+      } */
+
       [data-loop-type="for"] .data-block {
         border: none;
       }
-      [data-loop-type="for"] .data-store {
+
+      [data-loop-type="for"] > .block-header > .data-block > .data-store {
         background-color: white;
         border-radius: 5px;
-        min-height: 3.2ch;
-        margin: 0 3px;
+        min-height: 2.5rem;
+        min-width: 2.5rem;
+        margin: 3px;
+        padding: 0.4px 0.7px 0.7px 0.7px;
+      }
+
+      /* break and continue loop block */
+      [data-loop-type="break-continue"] > .block-header {
+        padding: 0.5rem;
+        border-radius: 5px;
+        /* border: grey 0.5px solid; */
+
+        width: max-content;
+        min-height: max-content;
+        cursor: grab;
+        border-radius: 7px;
+        height: 2.3em;
+      }
+
+      [data-loop-type="break-continue"] > .block-header {
+        background-color: purple;
+      }
+
+      [data-loop-type="break-continue"] > .block-header > .description {
+        color: white;
+      }
+
+      [data-loop-type="break-continue"]
+        > .block-header
+        > select[name="break-continue-loop"] {
+        background-color: silver;
+        font-size: 0.9rem;
+        min-width: 9ch;
+        min-height: 3ch;
+        border-radius: 7px;
+      }
+
+      /* if block  */
+      [data-logic-type="if-else"] .block-header > #star {
+        background-color: darkblue;
+        color: white;
+        width: 1.2rem;
+        text-align: center;
+        border: 1px solid silver;
+        border-radius: 5px;
+        font-size: 13px;
+        height: 1.3rem;
+      }
+
+      [data-logic-type="if"] > .block-body,
+      [data-logic-type="if"] > .block-header,
+      [data-logic-type="if-else"] > .block-body,
+      [data-logic-type="if-else"] > .block-header {
+        background-color: green;
+      }
+
+      [data-logic-type="if"] > .block-body {
+        min-width: 1em;
+      }
+
+      [data-logic-type="if"] > .block-header {
+        min-width: 4em;
+
+        min-height: 2.3em;
+      }
+
+      [data-logic-type="if"] > .block-body > .holder.children {
+        min-width: 2rem;
+        min-height: 1.8rem;
+      }
+
+      [data-logic-type="if"] > .block-header > .description {
+        margin: 0 0 0 10px;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+      }
+
+      /* if else block */
+      [data-logic-type="if-else"] > .block-body > .holder.children {
+        min-height: 3rem;
+        min-width: 9rem;
+        /* border: 1px solid red; */
+      }
+
+      [data-logic-type="if-else"] > .block-body > .holder.children.if {
+        /* border: 1px solid red; */
+        margin: 0 0 0 0.9rem;
+      }
+
+      [data-logic-type="if-else"] > .block-body.if {
+        border-radius: 0;
+        /* border: 1px solid red; */
+        padding: 0 0 0 0.5rem;
+        /* max-width: 12em; */
+      }
+
+      [data-logic-type="if-else"] > .block-header.else {
+        /* border: 1px solid black; */
+        /* margin-top: 0.1rem; */
+        /* max-width: 10em; */
+        border-radius: 0 5px 5px 0;
+      }
+
+      [data-logic-type="if-else"] > .block-header.else > .data-store {
+        min-height: 2.5rem;
+        /* background-color: red; */
+        /* margin: 0.2rem 0 0 0; */
+      }
+
+      [data-logic-type="if-else"] > .block-header > .data-store {
+        min-height: 3rem;
+        min-width: 2.5rem;
+        margin-right: 3px;
+        padding: 5px 0.5px;
+        /* background-color: red; */
+        /* margin: 0.2rem 0 0 0; */
+      }
+
+      [data-logic-type="if-else"] > .block-body.else {
+        border-radius: 0 0 5px 5px;
+      }
+
+      [data-logic-type="if-else"] > .block-body > .description,
+      [data-logic-type="if-else"] > .block-header > .description {
+        font-size: 1rem;
+      }
+
+      [data-logic-type="if-else"] > .block-header > .description {
+        margin: 10px 0;
+      }
+
+      /* not block */
+      [data-logic-type="not"] > .block-header > .data-store {
+        min-width: 3rem;
+        min-height: 2.5rem;
+      }
+
+      [data-logic-type="not"] > .block-header > .description {
+        color: white;
+      }
+
+      [data-logic-type="not"] > .block-header {
+        background-color: green;
+        border-radius: 5px 5px 5px 5px;
+      }
+
+      /* boolean block */
+      [data-logic-type="boolean"] > .block-header {
+        background-color: green;
+        border-radius: 5px 5px 5px 5px;
+      }
+
+      [data-logic-type="boolean"] > .block-header > select[name="boolean"] {
+        background-color: silver;
+        font-size: 0.9rem;
+        min-width: 9ch;
+        min-height: 3ch;
+        border-radius: 7px;
+        margin: 0.3rem 0.5rem 0.3rem 0;
+      }
+
+      /* print block */
+      [data-text-type="print"] > .block-header {
+        background-color: yellow;
+        border: grey 0.5px solid;
+        border-radius: 5px 5px 5px 5px;
+      }
+      [data-text-type="print"] > .block-header > .description {
+        color: black;
       }
 
       .code-block.block-header {
@@ -243,13 +492,9 @@
         padding: 0 0 0.5rem 0.5rem;
       }
 
-      .code-block.block-header,
-      .code-block.block-body {
+      [data-block-type="loop"] > .block-header,
+      [data-block-type="loop"] > .block-body {
         background-color: purple;
-      }
-      .data-block[data-block-type="logic"] > .block-header,
-      [data-block-type="logic"] > .block-body {
-        background-color: green;
       }
 
       /* Utility */
@@ -279,6 +524,7 @@
 
       } */
 
+      .args-list > select,
       .variable-list > select {
         border: none;
         border-radius: 5px;
@@ -287,9 +533,10 @@
         margin: 1px;
         background-color: silver;
         text-align: center;
-        min-width: 5ch;
+        width: 12ch;
       }
 
+      .args-list > select > option,
       .variable-list > select > option {
         min-width: 5ch;
       }
@@ -319,7 +566,7 @@
 
       [data-block-type="procedure"] > .block-header {
         position: relative;
-        /* min-width: 9.5rem; */
+        min-width: 9.5rem;
       }
 
       .parameter-display {
@@ -461,33 +708,156 @@
         outline: none;
       }
 
-      [data-block-type="procedure"] .block-header.call {
+      .args-store {
         display: flex;
         flex-direction: column;
         position: relative;
+        align-items: flex-end;
+        padding-block: 0.5rem;
       }
 
-      .args-store {
-        background-color: red;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 5px;
+      [data-block-type="procedure"] > .description {
+        padding: 0.5rem;
+      }
 
-        position: relative;
-        right: -20%;
+      [data-block-type="procedure"] > .description > span {
+        padding: 0.5rem;
+        display: none;
       }
 
       .arg {
         display: flex;
+        align-items: center;
         text-align: right;
+        color: white;
+        margin-right: -15px;
       }
 
       .arg-holder {
-        background-color: green;
-        min-width: 50px;
-        min-height: 25px;
+        background-color: white;
+        min-width: 30px;
+        min-height: 40px;
         margin-left: 5px;
+        border-radius: 5px 0 0 5px;
+        position: relative;
+      }
+
+      .return-footer {
+        border-radius: 0 0 0 0 !important;
+        padding: 0 0 0 0.5rem !important;
+      }
+
+      .return-footer > .holder.children {
+        margin: 0 0 0 0.9rem;
+        min-width: 11.5rem;
+        min-height: 2.5rem;
+        /* background-color: red; */
+      }
+
+      .block-footer {
+        display: flex;
+        align-items: center;
+        /* justify-content: center; */
+        cursor: grab;
+        /* justify-content: flex-end; */
+        gap: 0.5rem;
+        background-color: rgb(204, 133, 0);
+        border-radius: 0 5px 5px 5px;
+        padding-block: 0.3rem;
+        width: 17.6rem !important;
+        padding-left: 7.8rem;
+        /* overflow: hidden; */
+        /* min-width: max-content; */
+      }
+
+      .block-footer > .data-store {
+        background-color: white;
+        border-radius: 5px;
+        min-height: 2rem;
+        min-width: 3rem;
+        margin-right: 6px;
+      }
+
+      .block-footer > p {
+        color: white;
+        /* font-size: 0.9rem; */
+      }
+
+      .vars-section,
+      .args-section {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #646464;
+      }
+
+      .vars-section > option,
+      .args-section > option {
+        font-weight: 500;
+        font-size: 1rem;
+        color: black;
+        transform: translateX(20px);
+      }
+
+      /* CSS RELATED TO WARNING MESSAGES */
+      .warning {
+        background-color: red;
+        font-family: monospace, sans-serif;
+        color: white;
+        font-weight: 700;
+        width: 1.2rem;
+        text-align: center;
+        border: 1px solid silver;
+        border-radius: 5px;
+        font-size: 1rem;
+        height: 1.3rem;
+        cursor: pointer;
+        position: relative;
+
+        z-index: 10;
+
+        display: none;
+      }
+
+      .active.warning {
+        display: block;
+      }
+
+      .warning-message {
+        position: absolute;
+        top: 45px;
+        left: 10px;
+        min-width: 380px !important;
+        height: 30px;
+        background-color: rgb(169, 91, 221);
+        border-radius: 5px;
+        /* box-shadow: 2px 3px 0px 1px rgb(153, 0, 255); */
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .warning-message::after {
+        --size: 29px;
+        content: "";
+        width: var(--size);
+        height: var(--size);
+        background-color: rgb(187, 115, 235);
+        /* background-color: rgb(255, 0, 0); */
+        clip-path: polygon(0 0, 42% 100%, 100% 100%);
+
+        position: absolute;
+        top: -27px;
+        left: 5px;
+
+        z-index: 1;
+      }
+
+      .warning-message > .description {
+        font-family: monospace, sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: white;
       }
     </style>
   </head>
@@ -546,17 +916,38 @@
                   <div class="sidebar-header">
                     <span class="material-symbols-outlined"> close </span>
                   </div>
-                  <div class="create-var-section">
-                    <div class="code-block create-var" data-index="0">
-                      <div class="block-header centered">
-                        <p class="description">Create a new variable...</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="blocks-list hidden">
+                  <div class="blocks-list">
                     <div
                       class="code-block persist"
                       data-index="0"
+                      data-block-type="variable"
+                      data-variable-type="create-variable"
+                      draggable="true"
+                    >
+                      <div class="block-header centered">
+                        <p class="description">variable, type</p>
+                        <select name="datatype">
+                          <option value="int" selected>integer</option>
+                          <option value="float">float</option>
+                          <option value="double">double</option>
+                          <option value="char">character</option>
+                          <option value="string">string</option>
+                        </select>
+                        <p class="description">name</p>
+                        <input
+                          type="text"
+                          class="variable-name"
+                          name="variable-name"
+                        />
+                        <p class="description">initial value</p>
+                        <!-- data-store section -->
+                        <div class="data-store"></div>
+                        <!-- data-store section -->
+                      </div>
+                    </div>
+                    <div
+                      class="code-block persist"
+                      data-index="1"
                       data-block-type="variable"
                       data-variable-type="set-variable"
                       draggable="true"
@@ -568,7 +959,19 @@
                             for="variable-list"
                             class="variable-name variable-list"
                           >
-                            <select name="variable-name"></select>
+                            <select name="variable-name">
+                              <option value="default" selected>
+                                --Select--
+                              </option>
+                              <optgroup
+                                class="vars-section"
+                                label="variables"
+                              ></optgroup>
+                              <optgroup
+                                class="args-section"
+                                label="arguements"
+                              ></optgroup>
+                            </select>
                           </label>
                           to
                         </p>
@@ -579,7 +982,7 @@
                     </div>
                     <div
                       class="code-block persist"
-                      data-index="1"
+                      data-index="2"
                       data-block-type="variable"
                       data-variable-type="get-variable"
                       data-variable-name="value"
@@ -592,7 +995,19 @@
                             for="variable-list"
                             class="variable-name variable-list"
                           >
-                            <select name="variable-name"></select>
+                            <select name="variable-name">
+                              <option value="default" selected>
+                                --Select--
+                              </option>
+                              <optgroup
+                                class="vars-section"
+                                label="variables"
+                              ></optgroup>
+                              <optgroup
+                                class="args-section"
+                                label="arguements"
+                              ></optgroup>
+                            </select>
                           </label>
                         </p>
                       </div>
@@ -611,6 +1026,7 @@
                     <span class="material-symbols-outlined">close</span>
                   </div>
                   <div class="blocks-list">
+                    <!-- While Loop -->
                     <div
                       class="persist"
                       data-index="0"
@@ -629,37 +1045,20 @@
                         <div class="holder children"></div>
                       </div>
                     </div>
-                    
-                    <!-- For Loop -->
+
+                    <!-- Until loop -->
                     <div
                       class="persist"
-                      data-index="0"
+                      data-index="1"
                       data-block-type="loop"
-                      data-loop-type="for"
+                      data-loop-type="until"
                       draggable="true"
                     >
                       <div class="block-header code-block centered">
-                        <p class="description">
-                          repeat with
-                        <div
-                      class="data-block centered persist"
-                      data-index="1"
-                      data-block-type="math-block"
-                      data-math-type="arithmetic-operation"
-                      draggable="true"
-                    >
-                    <select name="variable-selector" class="variable-selector">
-                      <option value="add" selected>Select</option>
-                      <option value="sub">-</option>
-                    </select>
-                     <p class="description">from</p>
-                     <div class="data-store"></div>
-                      <p class="description">to</p>
-                     <div class="data-store"></div>
-                      <p class="description">by</p>
-                      <div class="data-store"></div>
-                    </div>
-                        </p>
+                        <p class="description">repeat "until"</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
                       </div>
                       <div class="block-body code-block centered">
                         <p class="description">do</p>
@@ -667,6 +1066,83 @@
                       </div>
                     </div>
 
+                    <!-- Do while loop -->
+                    <div
+                      class="persist"
+                      data-index="2"
+                      data-block-type="loop"
+                      data-loop-type="do-while"
+                      draggable="true"
+                    >
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                      <div class="block-header code-block centered">
+                        <p class="description">repeat "while"</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                    </div>
+
+                    <!-- For Loop -->
+                    <div
+                      class="persist"
+                      data-index="3"
+                      data-block-type="loop"
+                      data-loop-type="for"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">repeat with</p>
+                        <div
+                          class="data-block centered persist"
+                          data-index="1"
+                          data-block-type="math-block"
+                          data-math-type="arithmetic-operation"
+                          draggable="true"
+                        >
+                          <div class="data-store"></div>
+                          <p class="description">from</p>
+                          <div class="data-store"></div>
+                          <p class="description">to</p>
+                          <div class="data-store"></div>
+                          <p class="description">by</p>
+                          <div class="data-store"></div>
+                        </div>
+                      </div>
+                      <div class="block-body code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+
+                    <!-- break and continue block -->
+                    <div
+                      class="persist"
+                      data-index="4"
+                      data-block-type="loop"
+                      data-loop-type="break-continue"
+                      draggable="true"
+                    >
+                      <div class="block-header centered">
+                        <div class="warning">
+                          !
+                          <div class="warning-message">
+                            <div class="description">
+                              Warning: This block may only be used within a
+                              loop.
+                            </div>
+                          </div>
+                        </div>
+                        <select name="break-continue-loop">
+                          <option value="">break out</option>
+                          <option value="">continue with next iteration</option>
+                        </select>
+                        <p class="description">of loop</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </aside>
@@ -681,12 +1157,12 @@
                     <span class="material-symbols-outlined"> close </span>
                   </div>
                   <div class="blocks-list">
-                    <!-- if block starts-->
+                    <!-- Just If -->
                     <div
                       class="persist"
                       data-index="0"
                       data-block-type="logic"
-                      data-loop-type="logical-operation"
+                      data-logic-type="if"
                       draggable="true"
                     >
                       <div class="block-header code-block centered">
@@ -700,10 +1176,44 @@
                         <div class="holder children"></div>
                       </div>
                     </div>
-                    <!-- if block ends -->
+
+                    <!-- IF ELSE -->
+                    <div
+                      class="persist"
+                      data-index="1"
+                      data-block-type="logic"
+                      data-logic-type="if-else"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">
+                          if following value <br />matches with nothing
+                        </p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body if code-block centered">
+                        <p class="description">do</p>
+                        <div class="holder children if"></div>
+                      </div>
+
+                      <div class="block-header code-block centered else">
+                        <p class="description">matches with</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                      <div class="block-body code-block centered else">
+                        <p class="description">do</p>
+                        <div class="holder children"></div>
+                      </div>
+                    </div>
+
+                    <!-- Logical Block -->
                     <div
                       class="data-block centered persist"
-                      data-index="1"
+                      data-index="2"
                       data-block-type="logic"
                       data-logic-type="logical-operation"
                       draggable="true"
@@ -720,9 +1230,10 @@
                       <div class="right-holder holder"></div>
                     </div>
 
+                    <!-- Boolean Block -->
                     <div
                       class="data-block centered persist"
-                      data-index="2s"
+                      data-index="3"
                       data-block-type="logic"
                       data-logic-type="boolean-operation"
                       draggable="true"
@@ -733,6 +1244,38 @@
                         <option value="or">or</option>
                       </select>
                       <div class="right-holder holder"></div>
+                    </div>
+
+                    <!-- not block -->
+                    <div
+                      class="persist"
+                      data-index="4"
+                      data-block-type="logic"
+                      data-logic-type="not"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">not</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                    </div>
+
+                    <!-- boolean block -->
+                    <div
+                      class="persist"
+                      data-index="5"
+                      data-block-type="logic"
+                      data-logic-type="boolean"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <select name="boolean">
+                          <option value="">true</option>
+                          <option value="">false</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -759,6 +1302,22 @@
                       <input type="text" />
                       "
                     </div>
+
+                    <!-- print block -->
+                    <div
+                      class="persist"
+                      data-index="1"
+                      data-block-type="text"
+                      data-text-type="print"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">print</p>
+                        <!-- data-store section start -->
+                        <div class="data-store"></div>
+                        <!-- data-store section end -->
+                      </div>
+                    </div>
                   </div>
                 </div>
               </aside>
@@ -773,6 +1332,7 @@
                     <span class="material-symbols-outlined"> close </span>
                   </div>
                   <div class="blocks-list">
+                    <!-- Procedure without return -->
                     <div
                       class="persist"
                       data-index="0"
@@ -782,8 +1342,8 @@
                     >
                       <div class="block-header code-block centered">
                         <span class="btn-parameter-store">+</span>
-                        <p class="description">to</p>
-                        <input type="text" />
+                        <p class="description">function name</p>
+                        <input type="text" class="procedure-name" />
                         <p class="description param-prefix hide">with:</p>
                         <p class="description parameter-display"></p>
                         <!-- parameter-store start -->
@@ -804,7 +1364,7 @@
                                 <p class="description">inputs</p>
                               </div>
                               <div class="block-body code-block centered">
-                                <div class="holder children"></div>
+                                <div class="holder children all-params"></div>
                               </div>
                             </div>
                           </div>
@@ -812,7 +1372,62 @@
                         <!-- parameter-store end -->
                       </div>
                       <div class="block-body code-block centered">
-                        <div class="holder children"></div>
+                        <div class="holder children procedure"></div>
+                      </div>
+                    </div>
+
+                    <!-- Procedure w/ return -->
+                    <div
+                      class="persist"
+                      data-index="1"
+                      data-block-type="procedure"
+                      data-procedure-type="return"
+                      draggable="true"
+                    >
+                      <div class="block-header code-block centered">
+                        <span class="btn-parameter-store">+</span>
+                        <p class="description">function name</p>
+                        <input type="text" class="procedure-name" />
+                        <p class="description param-prefix hide">with:</p>
+                        <p class="description parameter-display"></p>
+                        <!-- parameter-store start -->
+                        <div class="parameter-store hide">
+                          <div class="create-new-parameter">
+                            <label for="parameter-input">Input name</label>
+                            <div>
+                              <input type="text" class="parameter-input" />
+                              <button>></button>
+                            </div>
+                          </div>
+                          <div class="view-parameters">
+                            <div
+                              data-block-type="procedure"
+                              data-procedure-type="input"
+                            >
+                              <div class="block-header code-block centered">
+                                <p class="description">inputs</p>
+                              </div>
+                              <div class="block-body code-block centered">
+                                <div class="holder children all-params"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- parameter-store end -->
+                      </div>
+                      <div class="block-body code-block centered return-footer">
+                        <div class="holder children procedure"></div>
+                      </div>
+                      <div class="block-footer">
+                        <p>return</p>
+                        <select name="datatype">
+                          <option value="int" selected>integer</option>
+                          <option value="float">float</option>
+                          <option value="double">double</option>
+                          <option value="char">character</option>
+                          <option value="string">string</option>
+                        </select>
+                        <div class="data-store"></div>
                       </div>
                     </div>
                   </div>
@@ -826,76 +1441,82 @@
       <!-- Below is a sensitive region -->
       <div class="code-blocks-area area">
         <div class="root area">
-          <div class="code-blocks">
-            <div
-              class="code-block persist"
-              data-index="0"
-              data-block-type="procedure"
-              data-procedure-type="call-void"
-              draggable="true"
-            >
-              <div class="block-header call centered">
-                <p class="description">doSodgwgwrgmething <span>with:</span></p>
-                <!-- data-store section -->
-                <div class="args-store">
-                  <div class="arg">
-                    char name[]
-                    <div class="arg-holder"></div>
-                  </div>
-                  <div class="arg">
-                    int age
-                    <div class="arg-holder"></div>
-                  </div>
-                </div>
-                <!-- data-store section -->
-              </div>
-            </div>
-          </div>
+          <div class="code-blocks"></div>
         </div>
         <div class="code-delete-btn">
           <img src="./trash-bin-outline.svg" alt="bin" />
         </div>
       </div>
 
-      <div class="code-generate-area area">
+      <!-- <div class="code-generate-area area">
         <h2 class="title">Code</h2>
         <p class="code-holder">int count = 0;</p>
         <div class="code-generate-btn">
           <img src="./play-circle-outline.svg" alt="play" />
         </div>
-      </div>
+      </div> -->
     </div>
   </body>
   <script>
+    /*
+      useIntersection
+      useScrollLock
+      useClipboard
+      useDebouncedValue
+      useMediaQuery
+      useClickOutside
+    */
+
     // blocks and data-blocks
     const blocks = document.querySelectorAll("[draggable='true']");
-
-    // drop areas
     const dropZone = document.querySelector(".code-blocks");
-    const dataStores = document.querySelectorAll(".data-store");
-    const childHolders = document.querySelectorAll(".holder.children");
-    const dataHoldersLogic = [
-      ...document.querySelectorAll("[data-block-type='logic'] > .holder"),
-    ];
-    const dataHoldersMath = [
-      ...document.querySelectorAll("[data-block-type='math'] > .holder"),
-    ];
 
-    // Related to procedures
-    const parameterStoreBtns = [
-      ...document.querySelectorAll(".btn-parameter-store"),
+    const COMMON_WHITELIST_BLOCKS = [
+      "math",
+      "text",
+      "get-variable",
+      "logical-operation",
+      "boolean-operation",
+      "boolean",
+      "not",
     ];
-    const newParameterBtns = [
-      ...document.querySelectorAll(".parameter-input + button"),
-    ];
+    const MATH_WHITELIST_BLOCKS = ["math", "get-variable"];
+    const DEFAULT_INPUT_WIDTH = "7rem";
+    const DEFAULT_SELECT_WIDTH = "12ch";
 
-    parameterStoreBtns.forEach((parameterStoreBtn) =>
-      parameterStoreBtn.addEventListener("click", toggleParameterStore)
-    );
+    let unnamedProcedures = 0;
+    let unnamedVariables = 0;
+    let varReferences = 0;
 
-    newParameterBtns.forEach((newParameterBtn) =>
-      newParameterBtn.addEventListener("click", addNewParam)
-    );
+    dropZone.addEventListener("drop", handleNewBlock);
+    dropZone.addEventListener("dragover", addNewBlockToCanvas);
+
+    blocks.forEach((block) => {
+      addDraggingClass(block);
+      removeDraggingClass(block);
+    });
+
+    function addNewBlockToCanvas(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const draggedBlock = document.querySelector(".dragging");
+      const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
+
+      if (!afterBlock) {
+        try {
+          dropZone.appendChild(draggedBlock);
+          return;
+        } catch (e) {
+          return;
+        }
+      }
+
+      try {
+        dropZone.insertBefore(draggedBlock, afterBlock);
+      } catch (e) {
+        return;
+      }
+    }
 
     function addNewParam(event) {
       const createParamBtn = event.target;
@@ -911,25 +1532,157 @@
       const paramsContainer =
         viewParamsContainer.querySelector(".holder.children");
 
+      // Paramter with that name already exists so return
       if (getAllParamNames(paramsContainer).includes(newParamName)) return;
 
+      // variables needed in the creating of parameter block
       const newParamBlock = createNewParamBlock(newParamName);
       const datatypeField = newParamBlock.querySelector('[name="datatype"]');
+
+      // variables needed to update procedure call blocks
+      const procedureBlock =
+        createParamBtn.parentNode.parentNode.parentNode.parentNode.parentNode;
+      const procedureId = procedureBlock.dataset.procedureId;
 
       addDraggingClass(newParamBlock);
       removeDraggingClass(newParamBlock);
 
-      newParamBlock.addEventListener("dragend", (event) =>
-        updateParams(viewParamsContainer, paramsContainer)
-      );
+      newParamBlock.addEventListener("dragend", (event) => {
+        updateParams(viewParamsContainer, paramsContainer);
+        handleProcedureCallBlocks(procedureId, {
+          type: "UPDATE_PARAMS",
+          params: getParamsAndDatatypes(paramsContainer),
+          paramsHolder: event.target.parentNode,
+        });
+      });
 
       datatypeField.addEventListener("change", (event) => {
         updateParams(viewParamsContainer, paramsContainer);
+        handleProcedureCallBlocks(procedureId, {
+          type: "UPDATE_DATATYPE",
+          datatypeSelectEl: event.target,
+        });
       });
 
       paramsContainer.appendChild(newParamBlock);
       updateParams(viewParamsContainer, paramsContainer);
       paramInputEl.value = "";
+
+      // Code related to adding new parameter to relevant places
+      const params = getParamsAndDatatypes(paramsContainer);
+      const getNewlyAddedParam = () => {
+        return params[params.length - 1];
+      };
+      const getOnlyParamName = () => {
+        return getNewlyAddedParam().split(" ")[1];
+      };
+
+      handleProcedureCallBlocks(procedureId, {
+        type: "ADD_NEW_PARAM",
+        param: getNewlyAddedParam(),
+      });
+
+      handleArgsUpdate(procedureId, {
+        type: "ADD_NEW_ARG",
+        arg: getOnlyParamName(),
+      });
+    }
+
+    function handleArgsUpdate(procedureId, action) {
+      const argsListEls = [
+        ...document.querySelectorAll(
+          `[data-current-procedure="${procedureId}"] [name="variable-name"] > .args-section`
+        ),
+      ];
+
+      // Procedure with that id does not have any arguements so return
+      if (!argsListEls.length) return;
+
+      if (action.type === "ADD_NEW_ARG") {
+        const { arg } = action;
+        argsListEls.forEach((argsListEl) =>
+          argsListEl.appendChild(getNewArgOption(arg))
+        );
+      }
+    }
+
+    function handleProcedureCallBlocks(procedureId, action) {
+      const argStores = [
+        ...document.querySelectorAll(`.${procedureId} > .args-store`),
+      ];
+
+      if (action.type === "ADD_NEW_PARAM") {
+        const { param } = action;
+        addProcedureCallBlock(param, argStores);
+      }
+
+      if (action.type === "UPDATE_DATATYPE") {
+        const { datatypeSelectEl } = action;
+        const updatedDatatype = datatypeSelectEl.value;
+        const param =
+          datatypeSelectEl.nextElementSibling.innerText.split(": ")[1];
+
+        updateProcedureCallBlocks(param, updatedDatatype, argStores);
+      }
+
+      if (action.type === "UPDATE_PARAMS") {
+        const { params, paramsHolder } = action;
+        if (paramsHolder.childElementCount === params.length) {
+          // TODO
+          // handleArgsPositionSwap(params, argStores);
+          return;
+        }
+        // TODO
+        // handleArgDeleted(params, argStores);
+      }
+    }
+
+    function updateProcedureCallBlocks(param, datatype, argStores) {
+      argStores.forEach((argStore) => {
+        [...argStore.children].forEach((arg) => {
+          if (getParamName(arg) !== param) return;
+
+          if (datatype !== "string") {
+            arg.children[0].innerText = `${datatype} ${param}`;
+            return;
+          }
+
+          arg.children[0].innerText = `${datatype} ${param}[ ]`;
+        });
+      });
+    }
+
+    function getParamName(arg) {
+      return arg.children[0].innerText.split(" ")[1];
+    }
+
+    function addProcedureCallBlock(arg, argStores) {
+      argStores.forEach((argStore) => {
+        if (argStore.classList.contains("hide")) {
+          argStore.classList.remove("hide");
+        }
+
+        argStore.appendChild(createNewArg(arg));
+      });
+    }
+
+    function createNewArg(arg) {
+      const argBlock = document.createElement("div");
+      const argHolder = document.createElement("div");
+      const span = document.createElement("span");
+
+      span.innerText = arg;
+
+      argBlock.classList.add("arg");
+      argHolder.classList.add("arg-holder");
+
+      listenToSomeNewBlocks(argHolder, {
+        toInclude: COMMON_WHITELIST_BLOCKS,
+      });
+
+      argBlock.append(span, argHolder);
+
+      return argBlock;
     }
 
     function updateParams(paramViewsContainer, paramsContainer) {
@@ -944,8 +1697,6 @@
         );
 
       const params = getParamsAndDatatypes(paramsContainer);
-
-      console.log(paramsTitle);
 
       if (!params.length) {
         if (!paramsTitle.classList.contains("hide")) {
@@ -1012,66 +1763,241 @@
       return paramBlock;
     }
 
-    dropZone.addEventListener("drop", handleNewBlock);
+    function getNewProcedureName() {
+      let DEFAULT_PROCEDURE_NAME = "doSomething";
+      DEFAULT_PROCEDURE_NAME += unnamedProcedures ? unnamedProcedures : "";
+      unnamedProcedures += 1;
 
-    dropZone.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const draggedBlock = document.querySelector(".dragging");
-      const afterBlock = getDragAfterBlock("code-blocks", e.clientY);
+      return DEFAULT_PROCEDURE_NAME;
+    }
 
-      if (!afterBlock) {
-        try {
-          dropZone.appendChild(draggedBlock);
-          return;
-        } catch (e) {
+    function getNewVariableName() {
+      let DEFAULT_VARIABLE_NAME = "myVariable";
+      DEFAULT_VARIABLE_NAME += unnamedVariables ? unnamedVariables : "";
+      unnamedVariables += 1;
+
+      return DEFAULT_VARIABLE_NAME;
+    }
+
+    function createProcedureCallBlock(procedureName, id) {
+      const block = document.createElement("div");
+      block.classList.add("code-block", "persist", id);
+      block.setAttribute("data-block-type", "procedure");
+      block.setAttribute("data-procedure-type", "call-void");
+      block.setAttribute("draggable", "true");
+      block.setAttribute("data-index", getIndexForNewCallBlock());
+
+      block.innerHTML += `
+        <p class="description">${procedureName} <span>with:</span></p>
+        <div class="block-header args-store centered hide"></div>
+      `;
+
+      return block;
+    }
+
+    function getIndexForNewCallBlock() {
+      return (
+        document.querySelector(".procedure-subside .blocks-list")
+          .childElementCount + 1
+      );
+    }
+
+    function getNewProcedureId() {
+      return `P${unnamedProcedures}`;
+    }
+
+    function getNewVariableId() {
+      return `V${unnamedVariables}`;
+    }
+
+    function getNewVariableRefId() {
+      const newReferenceId = `R${varReferences}`;
+      varReferences += 1;
+
+      return newReferenceId;
+    }
+
+    function handleProcedureNameUpdate(block, inputEl) {
+      inputEl.addEventListener("change", (event) => {
+        if (!inputEl.value) {
+          const newProcedureName = getNewProcedureName();
+          inputEl.value = newProcedureName;
+          updateAllCallBlocksName(block.dataset.procedureId, newProcedureName);
           return;
         }
-      }
+        updateAllCallBlocksName(block.dataset.procedureId, inputEl.value);
+      });
+    }
 
-      try {
-        dropZone.insertBefore(draggedBlock, afterBlock);
-      } catch (e) {
+    function handleVariableNameUpdate(block, inputEl) {
+      inputEl.addEventListener("change", (event) => {
+        if (!inputEl.value) {
+          const newVariableName = getNewVariableName();
+          inputEl.value = newVariableName;
+          // updateAllVariablesName(block.dataset.variableId, newVariableName);
+          return;
+        }
+        // updateAllVariablesName(block.dataset.variableId, inputEl.value);
+      });
+    }
+
+    function updateAllCallBlocksName(procedureId, procedureName) {
+      const callProcedureBlocks = [
+        ...document.querySelectorAll(`.${procedureId} > .description`),
+      ];
+
+      const WITH_SPAN_TAG = document.createElement("span");
+      WITH_SPAN_TAG.innerText = "with:";
+
+      callProcedureBlocks.forEach((callProcedureBlock) => {
+        callProcedureBlock.innerText = procedureName;
+        callProcedureBlock.appendChild(WITH_SPAN_TAG);
+      });
+    }
+
+    function fetchVariables(block) {
+      const { procedureId, didFound } = findAndGetProcedure(block);
+      const selectEl = block.querySelector("[name='variable-name']");
+      const variableList = block.querySelector(".vars-section");
+
+      if (!didFound) {
+        // handle error state
+        // place this block inside a function
+        // clearOptionsButKeepSelection(selectEl, variableList);
+        variableList.innerHTML = "";
+        console.log("is not inside any procedure");
         return;
       }
-    });
 
-    blocks.forEach((block) => {
-      addDraggingClass(block);
-      removeDraggingClass(block);
-    });
+      // clearOptionsButKeepSelection(selectEl, variableList);
+      variableList.innerHTML = "";
+      const variables = getVariables(block);
 
-    childHolders.forEach((holder) => listenToAllNewBlocks(holder));
+      if (!variables.length) {
+        console.log("no variables found");
+        return;
+      }
 
-    dataStores.forEach((dataStore) =>
-      listenToSomeNewBlocks(dataStore, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      })
-    );
+      updateVariablesList(variableList, variables);
+    }
 
-    dataHoldersLogic.forEach((dataHolderLogic) =>
-      listenToSomeNewBlocks(dataHolderLogic, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      })
-    );
+    // block.previousElementSibling
+    // block.parentNode
+    // block.dataset.variableType="create-variable"
 
-    dataHoldersMath.forEach((dataHolderMath) =>
-      listenToSomeNewBlocks(dataHolderMath, {
-        toInclude: ["math", "get-variable"],
-      })
-    );
+    function setVariable(block) {
+      while (block.classList.contains("code-blocks")) {
+        if (bl) {
+        }
+
+        block = block.previousElementSibling;
+      }
+    }
+
+    // function clearOptionsButKeepSelection(selectEl, targetSection) {
+    //   if (selectEl.value === "default") return;
+
+    //   const selectedOption = selectEl.options[selectEl.selectedIndex];
+    //   targetSection.innerHTML = "";
+    //   selectedOption.selected = true;
+    //   selectEl.options[selectEl.selectedIndex].textContent =
+    //     selectedOption.textContent;
+
+    //   for (let i = 0; i < selectEl.options.length; i++) {
+    //     if (selectEl.options[i] !== selectedOption) {
+    //       selectEl.options[i].style.display = "none";
+    //     }
+    //   }
+    // }
+
+    function updateVariablesList(variableSelectEl, variables) {
+      variables.forEach((variable) =>
+        variableSelectEl.appendChild(getNewVariableOption(variable))
+      );
+    }
+
+    function getNewVariableOption(variable) {
+      const option = document.createElement("option");
+      option.value = variable;
+      option.innerText = variable.split(" ")[1];
+
+      return option;
+    }
+
+    function getVariables(block) {
+      const variables = [];
+
+      while (!block.classList.contains("code-blocks")) {
+        if (block.dataset.blockType === "procedure") break;
+
+        if (block.dataset.variableType === "create-variable") {
+          const dtype = block.querySelector('[name="datatype"]').value;
+          const name = block.querySelector(".variable-name").value;
+
+          variables.push(`${dtype} ${name}`);
+        }
+
+        block = block.previousElementSibling
+          ? block.previousElementSibling
+          : block.parentNode;
+      }
+
+      return variables.reverse();
+    }
+
+    function fetchArgs(block) {
+      const { procedureId, params, didFound } = findAndGetProcedure(block);
+      const argsListEl = block.querySelector(
+        '[name="variable-name"] > .args-section'
+      );
+
+      if (!didFound) {
+        block.removeAttribute("data-current-procedure", "");
+        argsListEl.innerHTML = "";
+        return;
+      }
+
+      // Dont update params if moving in the same procedure
+      if (block.dataset.currentProcedure === procedureId) return;
+
+      block.setAttribute("data-current-procedure", procedureId);
+
+      argsListEl.innerHTML = "";
+
+      params.forEach((param) => {
+        argsListEl.appendChild(getNewArgOption(param));
+      });
+    }
+
+    function getNewArgOption(paramName) {
+      const option = document.createElement("option");
+      option.value = paramName;
+      option.innerText = paramName;
+
+      return option;
+    }
+
+    function findAndGetProcedure(block) {
+      let parentBlock = block.parentNode;
+      while (!parentBlock.classList.contains("code-blocks")) {
+        if (
+          parentBlock.dataset.procedureType === "no-return" ||
+          parentBlock.dataset.procedureType === "return"
+        ) {
+          const paramsContainer = parentBlock.querySelector(".all-params");
+          const params = getAllParamNames(paramsContainer);
+
+          return {
+            params,
+            procedureId: parentBlock.dataset.procedureId,
+            didFound: true,
+          };
+        }
+        parentBlock = parentBlock.parentNode;
+      }
+
+      return { didFound: false };
+    }
 
     // TODO: Instead of accepting class name as parameter, accept an actual container like in the video
     function getDragAfterBlock(containerClass, y) {
@@ -1138,9 +2064,31 @@
       }
     }
 
+    function makeInputWidthDynamic(inputEl) {
+      inputEl.addEventListener("keydown", (event) => {
+        if (inputEl.value.length < 1) return;
+
+        if (event.key === "Backspace" && inputEl.value.length === 1) {
+          inputEl.style.width = DEFAULT_INPUT_WIDTH;
+          return;
+        }
+
+        inputEl.style.width = inputEl.value.length + 2 + "ch";
+      });
+    }
+
+    function makeSelectWidthDynamic(selectEl) {
+      selectEl.addEventListener("change", (event) => {
+        selectEl.style.width = selectEl.value.length + 4 + "ch";
+      });
+    }
+
+    // TODO: Group loops, procedures, variables, logics
+    // Right now they all are together and kinda messy
     function handleNewBlock(e) {
       e.preventDefault();
       e.stopPropagation();
+
       const draggedBlock = document.querySelector(".dragging");
 
       if (!draggedBlock.classList.contains("persist")) return;
@@ -1154,102 +2102,226 @@
 
       addDraggingClass(clonedBlock);
       removeDraggingClass(clonedBlock);
+      addBlockBackToSidebar(clonedBlock);
 
-      if (clonedBlock.dataset.blockType === "procedure") {
-        const paramStoreBtn = clonedBlock.querySelector(".btn-parameter-store");
-        const newParamBtn = clonedBlock.querySelector(
+      if (
+        draggedBlock.dataset.procedureType === "no-return" ||
+        draggedBlock.dataset.procedureType === "return"
+      ) {
+        const paramStoreBtn = draggedBlock.querySelector(
+          ".btn-parameter-store"
+        );
+        const newParamBtn = draggedBlock.querySelector(
           ".parameter-input + button"
         );
+        const blocksContainer = draggedBlock.querySelector(
+          ".holder.children.procedure"
+        );
+        const paramsContainer = draggedBlock.querySelector(".all-params");
+        const inputEl = draggedBlock.querySelector(".procedure-name");
+
+        const procedureName = getNewProcedureName();
+        const procedureId = getNewProcedureId();
+        const procedureCallBlock = createProcedureCallBlock(
+          procedureName,
+          procedureId
+        );
+
+        inputEl.value = procedureName;
 
         paramStoreBtn.addEventListener("click", toggleParameterStore);
         newParamBtn.addEventListener("click", addNewParam);
+
+        draggedBlock.setAttribute("data-procedure-id", procedureId);
+
+        addDraggingClass(procedureCallBlock);
+        removeDraggingClass(procedureCallBlock);
+        addBlockBackToSidebar(procedureCallBlock);
+
+        handleNewContainersListeners({
+          listenToAll: [blocksContainer, paramsContainer],
+        });
+        handleProcedureNameUpdate(draggedBlock, inputEl);
+        makeInputWidthDynamic(inputEl);
       }
 
-      if (clonedBlock.dataset.variableType === "set-variable") {
-        addListnersToNewVariableEls(clonedBlock);
-      }
+      if (draggedBlock.dataset.procedureType === "return") {
+        const dataStore = draggedBlock.querySelector(
+          ".block-footer > .data-store"
+        );
 
-      // Same condition will be used for if then block etc
-      if (clonedBlock.dataset.blockType === "loop") {
-        addListnersToNewIteratorEls(clonedBlock);
-      }
-
-      if (clonedBlock.dataset.mathType === "arithmetic-operation") {
-        addListnersToNewMathEls(clonedBlock);
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
       }
 
       if (
-        clonedBlock.dataset.logicType === "logical-operation" ||
-        clonedBlock.dataset.logicType === "boolean-operation"
+        draggedBlock.dataset.variableType === "set-variable" ||
+        draggedBlock.dataset.variableType === "get-variable"
       ) {
-        addListnersToNewLogicEls(clonedBlock);
+        const selectEl = draggedBlock.querySelector(".variable-name > select");
+
+        draggedBlock.setAttribute("data-reference-id", getNewVariableRefId());
+
+        fetchArgs(draggedBlock);
+        fetchVariables(draggedBlock);
+        makeSelectWidthDynamic(selectEl);
+
+        draggedBlock.addEventListener("dragend", (event) => {
+          fetchArgs(draggedBlock);
+          fetchVariables(draggedBlock);
+        });
       }
 
-      addBlockBackToSidebar(clonedBlock);
-    }
+      if (
+        draggedBlock.dataset.variableType === "set-variable" ||
+        draggedBlock.dataset.variableType === "create-variable"
+      ) {
+        // Same logic for set and create variable
+        const dataStore = draggedBlock.querySelector(".data-store");
 
-    function addListnersToNewVariableEls(block) {
-      const dataStore = block.children[0].children[1];
-      listenToSomeNewBlocks(dataStore, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      });
-    }
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
 
-    function addListnersToNewIteratorEls(block) {
-      const container = block.children[1].children[1];
-      const dataStore = block.children[0].children[1];
-      listenToSomeNewBlocks(dataStore, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      });
-      listenToAllNewBlocks(container);
-    }
+      if (draggedBlock.dataset.variableType === "create-variable") {
+        const inputEl = draggedBlock.querySelector(".variable-name");
+        const variableName = getNewVariableName();
+        const variableId = getNewVariableId();
 
-    function addListnersToNewMathEls(block) {
-      const leftContainer = block.children[0];
-      const rightContainer = block.children[2];
+        draggedBlock.setAttribute("data-variable-id", variableId);
+        inputEl.value = variableName;
 
-      listenToSomeNewBlocks(leftContainer, {
-        toInclude: ["math", "get-variable"],
-      });
-      listenToSomeNewBlocks(rightContainer, {
-        toInclude: ["math", "get-variable"],
-      });
-    }
+        handleVariableNameUpdate(draggedBlock, inputEl);
+        makeInputWidthDynamic(inputEl);
+      }
 
-    function addListnersToNewLogicEls(block) {
-      const leftContainer = block.children[0];
-      const rightContainer = block.children[2];
+      if (
+        draggedBlock.dataset.loopType === "while" ||
+        draggedBlock.dataset.loopType === "until" ||
+        draggedBlock.dataset.loopType === "do-while"
+      ) {
+        // while, until, do while
+        const container = draggedBlock.querySelector(".holder.children");
+        const dataStore = draggedBlock.querySelector(".data-store");
 
-      listenToSomeNewBlocks(leftContainer, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      });
-      listenToSomeNewBlocks(rightContainer, {
-        toInclude: [
-          "math",
-          "text",
-          "get-variable",
-          "logical-operation",
-          "boolean-operation",
-        ],
-      });
+        handleNewContainersListeners({
+          listenToAll: [container],
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      // TODO: FIX IF BLOCK --> FETCH VARIABLES
+      // 1. Detect In Which Procedure it is
+      // 2. Climb up
+      if (draggedBlock.dataset.loopType === "for") {
+        const container = draggedBlock.children[1].children[1];
+        const loopDataStore = draggedBlock.children[0].children[1].children[0];
+        const datastores = [
+          draggedBlock.children[0].children[1].children[0],
+          draggedBlock.children[0].children[1].children[2],
+          draggedBlock.children[0].children[1].children[4],
+          draggedBlock.children[0].children[1].children[6],
+        ];
+
+        handleNewContainersListeners({
+          listenToAll: [container],
+          listenToSome: datastores,
+          toInclude: MATH_WHITELIST_BLOCKS,
+        });
+
+        handleNewContainersListeners({
+          listenToSome: loopDataStore,
+          toInclude: ["get-variable"],
+        });
+      }
+
+      if (draggedBlock.dataset.loopType === "break-continue") {
+        const warningBtn = draggedBlock.querySelector(".warning");
+        const warningMsg = draggedBlock.querySelector(".warning-message");
+
+        warningBtn.addEventListener("click", (event) => {
+          warningMsg.classList.toggle("hide");
+        });
+
+        handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg);
+        draggedBlock.addEventListener("dragend", (event) =>
+          handleBreakContinueBlock(draggedBlock, warningBtn, warningMsg)
+        );
+      }
+
+      if (draggedBlock.dataset.mathType === "arithmetic-operation") {
+        const leftContainer = draggedBlock.querySelector(".left-holder");
+        const rightContainer = draggedBlock.querySelector(".right-holder");
+
+        handleNewContainersListeners({
+          listenToSome: [leftContainer, rightContainer],
+          toInclude: MATH_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (
+        draggedBlock.dataset.logicType === "logical-operation" ||
+        draggedBlock.dataset.logicType === "boolean-operation"
+      ) {
+        const leftContainer = draggedBlock.querySelector(".left-holder");
+        const rightContainer = draggedBlock.querySelector(".right-holder");
+
+        handleNewContainersListeners({
+          listenToSome: [leftContainer, rightContainer],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.logicType === "if") {
+        const container = draggedBlock.children[1].children[1];
+        const dataStore = draggedBlock.children[0].children[1];
+
+        handleNewContainersListeners({
+          listenToAll: [container],
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.logicType === "if-else") {
+        const containers = [
+          draggedBlock.children[1].children[1],
+          draggedBlock.children[3].children[1],
+        ];
+        const dataStores = [
+          draggedBlock.children[0].children[1],
+          draggedBlock.children[2].children[1],
+        ];
+
+        handleNewContainersListeners({
+          listenToAll: containers,
+          listenToSome: dataStores,
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.logicType === "not") {
+        const dataStore = draggedBlock.children[0].children[1];
+
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (draggedBlock.dataset.textType === "print") {
+        const dataStore = draggedBlock.children[0].children[1];
+
+        handleNewContainersListeners({
+          listenToSome: [dataStore],
+          toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
     }
 
     function addBlockBackToSidebar(block) {
@@ -1278,6 +2350,46 @@
       }
     }
 
+    function handleBreakContinueBlock(block, warning, message) {
+      const isInsideIterator = checkIterator(block.parentNode);
+
+      if (warning.classList.contains("active")) {
+        warning.classList.remove("active");
+      }
+
+      if (isInsideIterator) return;
+
+      warning.classList.add("active");
+      if (message.classList.contains("hide")) {
+        message.classList.remove("hide");
+      }
+    }
+
+    function checkIterator(block) {
+      // base case --> How will we know when to stop?
+      if (block.classList.contains("code-blocks")) return false;
+
+      // actual case --> What shall we do when we found our target?
+      if (block.dataset.blockType === "loop") return true;
+
+      // recursive call
+      return checkIterator(block.parentNode);
+    }
+
+    function handleNewContainersListeners(config) {
+      const { listenToAll, listenToSome, toInclude } = config;
+
+      if (listenToAll?.length) {
+        listenToAll.forEach((container) => listenToAllNewBlocks(container));
+      }
+
+      if (listenToSome?.length) {
+        listenToSome.forEach((container) =>
+          listenToSomeNewBlocks(container, { toInclude })
+        );
+      }
+    }
+
     // TODO: Implement a different after block detecting algorithm for holders
     function listenToAllNewBlocks(container) {
       container.addEventListener("dragover", (e) => {
@@ -1285,6 +2397,12 @@
         e.stopPropagation();
         const draggedBlock = document.querySelector(".dragging");
         const afterBlock = getDragAfterBlock("holder.children", e.clientY);
+
+        if (
+          container.classList.contains("all-params") &&
+          draggedBlock.dataset.procedureType !== "input-value"
+        )
+          return;
 
         if (!container.children.length) {
           try {
@@ -1299,14 +2417,14 @@
           try {
             container.appendChild(draggedBlock);
             return;
-          } catch (e) {
+          } catch {
             return;
           }
         }
 
         try {
           container.insertBefore(draggedBlock, afterBlock);
-        } catch (e) {
+        } catch {
           return;
         }
       });
@@ -1328,7 +2446,8 @@
           !config.toInclude.includes(draggedBlock.dataset.loopType) &&
           !config.toInclude.includes(draggedBlock.dataset.variableType) &&
           !config.toInclude.includes(draggedBlock.dataset.mathType) &&
-          !config.toInclude.includes(draggedBlock.dataset.textType)
+          !config.toInclude.includes(draggedBlock.dataset.textType) &&
+          !config.toInclude.includes(draggedBlock.dataset.procedureType)
         )
           return;
 
@@ -1342,6 +2461,6 @@
     }
   </script>
   <script src="./sidebar.js" defer></script>
-  <script src="./createVariable.js" defer></script>
-  <script src="./blocks.js" defer></script>
+  <!-- <script src="./createVariable.js" defer></script> -->
+  <!-- <script src="./blocks.js" defer></script> -->
 </html>
