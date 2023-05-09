@@ -1413,7 +1413,64 @@
       <!-- Below is a sensitive region -->
       <div class="code-blocks-area area">
         <div class="root area">
-          <div class="code-blocks"></div>
+          <div class="code-blocks">
+            <div
+              class="main-func"
+              data-block-type="procedure"
+              data-procedure-type="return"
+            >
+              <div class="block-header code-block centered">
+                <!-- <span class="btn-parameter-store">+</span> -->
+                <p class="description">function name</p>
+                <input
+                  type="text"
+                  class="procedure-name"
+                  value="main"
+                  disabled
+                />
+                <p class="description param-prefix hide">with:</p>
+                <p class="description parameter-display"></p>
+                <!-- parameter-store start -->
+                <div class="parameter-store hide">
+                  <div class="create-new-parameter">
+                    <label for="parameter-input">Input name</label>
+                    <div>
+                      <input type="text" class="parameter-input" />
+                      <button>></button>
+                    </div>
+                  </div>
+                  <div class="view-parameters">
+                    <div
+                      data-block-type="procedure"
+                      data-procedure-type="input"
+                    >
+                      <div class="block-header code-block centered">
+                        <p class="description">inputs</p>
+                      </div>
+                      <div class="block-body code-block centered">
+                        <div class="holder children all-params"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- parameter-store end -->
+              </div>
+              <div class="block-body code-block centered return-footer">
+                <div class="holder children procedure"></div>
+              </div>
+              <div class="block-footer">
+                <p>return</p>
+                <select name="datatype" disabled>
+                  <option value="int" selected>integer</option>
+                  <option value="float">float</option>
+                  <option value="double">double</option>
+                  <option value="char">character</option>
+                  <option value="string">string</option>
+                </select>
+                <div class="data-store"></div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="code-delete-btn">
           <img src="./trash-bin-outline.svg" alt="bin" />
@@ -1467,6 +1524,20 @@
       addDraggingClass(block);
       removeDraggingClass(block);
     });
+
+    (function initMainFunc() {
+      const mainBlock = document.querySelector(".main-func");
+      const container = mainBlock.querySelector(".block-body > .procedure");
+      const returnDatastore = mainBlock.querySelector(
+        ".block-footer > .data-store"
+      );
+
+      handleNewContainersListeners({
+        listenToAll: [container],
+        listenToSome: [returnDatastore],
+        toInclude: MATH_WHITELIST_BLOCKS,
+      });
+    })();
 
     function addNewBlockToCanvas(e) {
       e.preventDefault();
