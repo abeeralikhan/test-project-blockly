@@ -257,36 +257,53 @@
         flex-direction: column;
         gap: 0.07rem;
       }
+      [data-loop-type="while"] > 
+
 
       /* Iterator - Do while Block */
-      [data-loop-type="do-while"] > .block-body.code-block {
-        min-height: 3rem;
+      [data-block-type="loop"] {
+        /* min-height: 3.2rem;
         border-radius: 5px 5px 0 0;
-        padding: 0.5rem 0 0.5rem 0.5rem;
+        padding: 0.5rem 0 0.5rem 0.5rem; */
+        border: 1px solid red;
+        /* overflow: none; */
+      }
+
+      [data-loop-type="do-while"] > .block-body.code-block {
+        /* border: 1px solid black; */
+        min-height: 3.2rem;
+        border-radius: 5px 5px 0 0;
+        padding: 0.5rem 0 0 0.5rem;
+        overflow: none;
       }
 
       [data-loop-type="do-while"] > .block-header.code-block {
         min-height: 3rem;
+        /* margin-top: 0.9rem; */
         border-radius: 0 8px 5px 5px;
+        /* border: 1px solid black; */
       }
 
       [data-loop-type="do-while"] > .block-header > .data-store {
-        margin: 0 8px 0 1rem;
+        margin: 0 0 0 1rem;
+        /* background-color: red; */
+        min-height: 2.73rem;
+        min-width: 2.5rem;
       }
 
       [data-loop-type="do-while"] > .block-body > .holder.children {
-        margin: 0 0 -0.9rem 0.9rem;
-        min-height: 2.5rem;
+        margin: 0.5rem 0 0 0.9rem;
+        min-height: 3rem;
         min-width: 9rem;
       }
 
       /* Iterator - For loop block */
-      .data-block > select[name="variable-selector"] {
+      /* [data-loop-type="for"] > .block-header > .data-store.loop {
         background-color: silver;
         font-size: 0.9rem;
         min-width: 9ch;
         min-height: 3ch;
-      }
+      } */
 
       [data-loop-type="for"] .data-block {
         border: none;
@@ -295,8 +312,10 @@
       [data-loop-type="for"] > .block-header > .data-block > .data-store {
         background-color: white;
         border-radius: 5px;
-        min-height: 3.2ch;
-        margin: 0 3px;
+        min-height: 2.5rem;
+        min-width: 2.5rem;
+        margin: 3px;
+        padding: 0.4px 0.7px 0.7px 0.7px;
       }
 
       /* break and continue loop block */
@@ -374,31 +393,41 @@
       [data-logic-type="if-else"] > .block-body > .holder.children {
         min-height: 3rem;
         min-width: 9rem;
+        /* border: 1px solid red; */
       }
-
-      /* [data-logic-type="if-else"] > .block-body.if{
-
-      }  */
 
       [data-logic-type="if-else"] > .block-body > .holder.children.if {
         /* border: 1px solid red; */
-        margin: 0 0 -0.8rem 0.9rem;
+        margin: 0 0 0 0.9rem;
       }
 
-      [data-logic-type="if-else"] > .block-body {
-        /* border: 1px solid black; */
+      [data-logic-type="if-else"] > .block-body.if {
         border-radius: 0;
+        /* border: 1px solid red; */
+        padding: 0 0 0 0.5rem;
         /* max-width: 12em; */
       }
 
       [data-logic-type="if-else"] > .block-header.else {
-        max-width: 10em;
+        /* border: 1px solid black; */
+        /* margin-top: 0.1rem; */
+        /* max-width: 10em; */
         border-radius: 0 5px 5px 0;
       }
 
       [data-logic-type="if-else"] > .block-header.else > .data-store {
-        min-height: 2rem;
-        margin: 0.2rem 0 0 0;
+        min-height: 2.5rem;
+        /* background-color: red; */
+        /* margin: 0.2rem 0 0 0; */
+      }
+
+      [data-logic-type="if-else"] > .block-header > .data-store {
+        min-height: 3rem;
+        min-width: 2.5rem;
+        margin-right: 3px;
+        padding: 5px 0.5px;
+        /* background-color: red; */
+        /* margin: 0.2rem 0 0 0; */
       }
 
       [data-logic-type="if-else"] > .block-body.else {
@@ -2230,6 +2259,7 @@
         const container = draggedBlock.children[1].children[1];
         const loopDataStore = draggedBlock.children[0].children[1].children[0];
         const datastores = [
+          draggedBlock.children[0].children[1].children[0],
           draggedBlock.children[0].children[1].children[2],
           draggedBlock.children[0].children[1].children[4],
           draggedBlock.children[0].children[1].children[6],
