@@ -174,6 +174,10 @@
         /* line-height: 2rem; */
       }
 
+      /* .data-store {
+        background-color: white !important;
+      } */
+
       [data-block-type="variable"] {
         background-color: crimson;
       }
@@ -400,7 +404,7 @@
         > select[name="break-continue-loop"] {
         background-color: silver;
         font-size: 0.9rem;
-        min-width: 9ch;
+        width: 11ch;
         min-height: 3ch;
         border-radius: 7px;
       }
@@ -430,8 +434,13 @@
 
       [data-logic-type="if"] > .block-header {
         min-width: 4em;
-
         min-height: 2.3em;
+      }
+
+      [data-logic-type="if"] > .block-header > .data-store {
+        min-width: 3rem;
+        min-height: 2.3em;
+        /* background-color: white; */
       }
 
       [data-logic-type="if"] > .block-body > .holder.children {
@@ -533,7 +542,7 @@
       [data-text-type="print"] > .block-header {
         background-color: yellow;
         border: grey 0.5px solid;
-        border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px !important;
       }
       [data-text-type="print"] > .block-header > .description {
         color: black;
@@ -867,7 +876,7 @@
         top: 45px;
         left: 10px;
         min-width: 380px !important;
-        height: 30px;
+        height: 40px;
         background-color: rgb(235, 115, 115);
         border-radius: 5px;
         /* box-shadow: 2px 3px 0px 1px rgb(153, 0, 255); */
@@ -897,7 +906,7 @@
 
       .warning-message > .description {
         font-family: monospace, sans-serif;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 500;
         color: white;
       }
@@ -1199,8 +1208,8 @@
                             </div>
                           </div>
                           <select name="break-continue-loop">
-                            <option value="">break out</option>
-                            <option value="">
+                            <option value="break out">break out</option>
+                            <option value="continue with next iteration">
                               continue with next iteration
                             </option>
                           </select>
@@ -2246,7 +2255,7 @@
 
     function makeSelectWidthDynamic(selectEl) {
       selectEl.addEventListener("change", (event) => {
-        selectEl.style.width = selectEl.value.length + 4 + "ch";
+        selectEl.style.width = selectEl.value.length + 2 + "ch";
       });
     }
 
@@ -2441,6 +2450,9 @@
       if (draggedBlock.dataset.loopType === "break-continue") {
         const warningBtn = draggedBlock.querySelector(".warning");
         const warningMsg = draggedBlock.querySelector(".warning-message");
+        const selectEl = draggedBlock.querySelector("select");
+
+        makeSelectWidthDynamic(selectEl);
 
         warningBtn.addEventListener("click", (event) => {
           warningMsg.classList.toggle("hide");
