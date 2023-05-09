@@ -226,6 +226,11 @@
         font-size: 1em;
       }
 
+      .data-block[data-block-type="math"] input,
+      .data-block[data-block-type="text"] input {
+        width: 4ch;
+      }
+
       [data-block-type="procedure"] input:active,
       [data-block-type="procedure"] input:focus,
       data-block[data-block-type="math"] input:active,
@@ -1617,6 +1622,7 @@
     ];
     const MATH_WHITELIST_BLOCKS = ["math", "get-variable"];
     const DEFAULT_INPUT_WIDTH = "7rem";
+    const DEFAULT_MATH_TEXT_INPUT_WIDTH = "4ch";
     const DEFAULT_SELECT_WIDTH = "12ch";
 
     let unnamedProcedures = 0;
@@ -2240,12 +2246,12 @@
       }
     }
 
-    function makeInputWidthDynamic(inputEl) {
+    function makeInputWidthDynamic(inputEl, defaultWidth) {
       inputEl.addEventListener("keydown", (event) => {
         if (inputEl.value.length < 1) return;
 
         if (event.key === "Backspace" && inputEl.value.length === 1) {
-          inputEl.style.width = DEFAULT_INPUT_WIDTH;
+          inputEl.style.width = defaultWidth;
           return;
         }
 
@@ -2318,7 +2324,7 @@
           listenToAll: [blocksContainer, paramsContainer],
         });
         handleProcedureNameUpdate(draggedBlock, inputEl);
-        makeInputWidthDynamic(inputEl);
+        makeInputWidthDynamic(inputEl, DEFAULT_INPUT_WIDTH);
       }
 
       if (draggedBlock.dataset.procedureType === "return") {
@@ -2381,7 +2387,7 @@
         inputEl.value = variableName;
 
         handleVariableNameUpdate(draggedBlock, inputEl);
-        makeInputWidthDynamic(inputEl);
+        makeInputWidthDynamic(inputEl, DEFAULT_INPUT_WIDTH);
 
         draggedBlock.addEventListener("dragend", (event) => {
           const { procedureId, didFound } = findAndGetProcedure(draggedBlock);
@@ -2529,6 +2535,25 @@
         handleNewContainersListeners({
           listenToSome: [dataStore],
           toInclude: COMMON_WHITELIST_BLOCKS,
+        });
+      }
+
+      if (
+        draggedBlock.dataset.textType === "single-text" ||
+        draggedBlock.dataset.mathType === "single-num"
+      ) {
+        const inputEl = draggedBlock.querySelector("input");
+        makeInputWidthDynamic(inputEl, DEFAULT_MATH_TEXT_INPUT_WIDTH);
+      }
+
+      if (draggedBlock.dataset.mathType === "single-num") {
+        const inputEl = draggedBlock.querySelector("input");
+
+        inputEl.addEventListener("change", (event) => {
+          if (!Number.isInteger(+inputEl.value)) {
+            inputEl.value = "";
+            inputEl.style.width = DEFAULT_MATH_TEXT_INPUT_WIDTH;
+          }
         });
       }
     }
