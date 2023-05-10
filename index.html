@@ -1610,6 +1610,7 @@
     // blocks and data-blocks
     const blocks = document.querySelectorAll("[draggable='true']");
     const dropZone = document.querySelector(".code-blocks");
+    const deleteZone = document.querySelector(".code-delete-btn");
 
     const COMMON_WHITELIST_BLOCKS = [
       "math",
@@ -1628,6 +1629,63 @@
     let unnamedProcedures = 0;
     let unnamedVariables = 0;
     let varReferences = 0;
+
+    let hasDeleteLogicRun = false;
+
+    deleteZone.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (hasDeleteLogicRun) return;
+
+      const draggedBlock = document.querySelector(".dragging");
+
+      draggedBlock.addEventListener("dragend", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        hasDeleteLogicRun = false;
+      });
+
+      if (draggedBlock.classList.contains("persist")) return;
+
+      hasDeleteLogicRun = true;
+
+      try {
+        if (draggedBlock.dataset.variableType === "create-variable") {
+          draggedBlock.addEventListener("dragend", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            deleteAllVariableOptions(draggedBlock.dataset.variableId);
+            hasDeleteLogicRun = false;
+          });
+
+          draggedBlock.remove();
+          return;
+        }
+
+        draggedBlock.addEventListener("dragend", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          hasDeleteLogicRun = false;
+        });
+
+        draggedBlock.remove();
+
+        return;
+      } catch {
+        return;
+      }
+    });
+
+    // deleteZone.addEventListener("drop", (event) => {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+
+    //   hasDeleteLogicRun = false;
+    // });
 
     dropZone.addEventListener("drop", handleNewBlock);
     dropZone.addEventListener("dragover", addNewBlockToCanvas);
@@ -2065,8 +2123,10 @@
 
     function getNewVariableOption(variable) {
       const option = document.createElement("option");
-      option.value = variable;
-      option.innerText = variable.split(" ")[1];
+      const [dtype, name, variableId] = variable.split(" ");
+      option.value = `${dtype} ${name}`;
+      option.innerText = name;
+      option.classList.add(variableId);
 
       return option;
     }
@@ -2080,8 +2140,9 @@
         if (block.dataset.variableType === "create-variable") {
           const dtype = block.querySelector('[name="datatype"]').value;
           const name = block.querySelector(".variable-name").value;
+          const variableId = block.dataset.variableId;
 
-          variables.push(`${dtype} ${name}`);
+          variables.push(`${dtype} ${name} ${variableId}`);
         }
 
         block = block.previousElementSibling
@@ -2090,6 +2151,11 @@
       }
 
       return variables.reverse();
+    }
+
+    function deleteAllVariableOptions(variableId) {
+      const options = document.querySelectorAll(`option.${variableId}`);
+      options.forEach((option) => option.remove());
     }
 
     function updateVariablesOfThisProcedure(procedureId) {
@@ -2143,6 +2209,12 @@
 
     function findAndGetProcedure(block) {
       let parentBlock = block.parentNode;
+
+      if (!parentBlock)
+        return {
+          didFound: false,
+        };
+
       while (!parentBlock.classList.contains("code-blocks")) {
         if (
           parentBlock.dataset.procedureType === "no-return" ||
@@ -2389,27 +2461,15 @@
         handleVariableNameUpdate(draggedBlock, inputEl);
         makeInputWidthDynamic(inputEl, DEFAULT_INPUT_WIDTH);
 
-        draggedBlock.addEventListener("dragend", (event) => {
-          const { procedureId, didFound } = findAndGetProcedure(draggedBlock);
-          if (!didFound) {
-            draggedBlock.removeAttribute("data-current-procedure");
-            return;
-          }
+        draggedBlock.addEventListener(
+          "dragend",
+          handleCreateVariableBlockMove(draggedBlock)
+        );
 
-          draggedBlock.setAttribute("data-variable-id", procedureId);
-          updateVariablesOfThisProcedure(procedureId);
-        });
-
-        draggedBlock.addEventListener("dragstart", (event) => {
-          const { procedureId, didFound } = findAndGetProcedure(draggedBlock);
-          if (!didFound) {
-            draggedBlock.removeAttribute("data-current-procedure");
-            return;
-          }
-
-          draggedBlock.setAttribute("data-variable-id", procedureId);
-          updateVariablesOfThisProcedure(procedureId);
-        });
+        draggedBlock.addEventListener(
+          "dragstart",
+          handleCreateVariableBlockMove(draggedBlock)
+        );
       }
 
       if (
@@ -2556,6 +2616,19 @@
           }
         });
       }
+    }
+
+    function handleCreateVariableBlockMove(block) {
+      return () => {
+        const { procedureId, didFound } = findAndGetProcedure(block);
+        if (!didFound) {
+          block.removeAttribute("data-current-procedure");
+          return;
+        }
+
+        block.setAttribute("data-current-procedure", procedureId);
+        updateVariablesOfThisProcedure(procedureId);
+      };
     }
 
     function addBlockBackToSidebar(block) {
